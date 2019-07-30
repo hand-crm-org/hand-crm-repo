@@ -1,9 +1,9 @@
-package com.hand.position.access.vo;
+package com.hand.organization.access.vo;
 
 import java.util.Date;
 
-public class Position {
-    private String code;//职位编码（唯一性标识）
+public class OrganizationVO {
+    private String code;//组织编码（唯一性标识）
     private Date created;//创建日期
     private String createdBy;//创建人
     private Date updated;//更新日期
@@ -11,8 +11,8 @@ public class Position {
     private String name;//名称
     private String level;//层级
     private String type;//类型
-    private String priEmpCode;//主要员工code
-    private String orgCode;//组织code
+    private String parOrgCode;//父组织编码
+    private String extFlg;//内/外部标识
     private String desc;//描述
     private String status;//状态
 
@@ -80,20 +80,20 @@ public class Position {
         this.type = type;
     }
 
-    public String getPriEmpCode() {
-        return priEmpCode;
+    public String getParOrgCode() {
+        return parOrgCode;
     }
 
-    public void setPriEmpCode(String priEmpCode) {
-        this.priEmpCode = priEmpCode;
+    public void setParOrgCode(String parOrgCode) {
+        this.parOrgCode = parOrgCode;
     }
 
-    public String getOrgCode() {
-        return orgCode;
+    public String getExtFlg() {
+        return extFlg;
     }
 
-    public void setOrgCode(String orgCode) {
-        this.orgCode = orgCode;
+    public void setExtFlg(String extFlg) {
+        this.extFlg = extFlg;
     }
 
     public String getDesc() {
@@ -114,7 +114,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
+        return "Organization{" +
                 "code='" + code + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
@@ -123,8 +123,8 @@ public class Position {
                 ", name='" + name + '\'' +
                 ", level='" + level + '\'' +
                 ", type='" + type + '\'' +
-                ", priEmpCode='" + priEmpCode + '\'' +
-                ", orgCode='" + orgCode + '\'' +
+                ", parOrgCode='" + parOrgCode + '\'' +
+                ", extFlg='" + extFlg + '\'' +
                 ", desc='" + desc + '\'' +
                 ", status='" + status + '\'' +
                 '}';
