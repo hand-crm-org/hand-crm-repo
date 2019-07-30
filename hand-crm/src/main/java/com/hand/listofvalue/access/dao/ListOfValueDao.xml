@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.listofvalue.access.dao.ListOfValueDao">
+    <select id="queryLstOfVaL" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.listofvalue.access.vo.ListOfValueVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_LST_OF_VAL
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryLstOfVaLCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+		SELECT count(*)
+		FROM HC_LST_OF_VAL
+		WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+	</select>
+    <select id="toUniqueVerify" resultType="int">
+        SELECT COUNT(*) FROM HC_LST_OF_VAL
+        WHERE
+        <if test="str=='update'">
+            code != #{listOfValueVO.code} AND
+        </if>
+        lang_id=#{listOfValueVO.langId} AND type=#{listOfValueVO.type} AND par_lst_code=#{listOfValueVO.parLstCode} AND (name=#{listOfValueVO.name} OR val=#{listOfValueVO.val})
+    </select>
+    <insert id="insertLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO" useGeneratedKeys="true" keyProperty="code">
+        INSERT INTO
+        HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`)
+        VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc})
+    </insert>
+    <delete id="deleteLstOfValByCode" parameterType="String">
+        DELETE
+        FROM
+        HC_LST_OF_VAL
+        WHERE
+        CODE = #{code}
+    </delete>
+    <update id="updateLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO"  useGeneratedKeys="true" keyProperty="code">
+        UPDATE HC_LST_OF_VAL SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
     <sql id="queryAllSql">
         SELECT
         CODE as code,
@@ -45,43 +86,4 @@
         <if test="actFlg!=null and actFlg!=''">,ACT_FLG=#{actFlg}</if>
         <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
     </sql>
-    <select id="queryLstOfVaL" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.listofvalue.access.vo.ListOfValueVO">
-        <include refid="queryAllSql"></include>
-        FROM
-        HC_LST_OF_VAL
-        WHERE
-        1=1
-        <include refid="queryALLConditionSql"></include>
-        limit #{start},#{pageSize}
-    </select>
-    <select id="queryLstOfVaLCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
-		SELECT count(*)
-		FROM HC_LST_OF_VAL
-		WHERE
-        1=1
-        <include refid="queryALLConditionSql"></include>
-	</select>
-    <select id="toUniqueVerify" resultType="int">
-        SELECT COUNT(*) FROM HC_LST_OF_VAL
-        WHERE
-        <if test="str=='update'">
-            code != #{listOfValueVO.code} AND
-        </if>
-        lang_id=#{listOfValueVO.langId} AND type=#{listOfValueVO.type} AND par_lst_code=#{listOfValueVO.parLstCode} AND (name=#{listOfValueVO.name} OR val=#{listOfValueVO.val})
-    </select>
-    <insert id="insertLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO" useGeneratedKeys="true" keyProperty="code">
-        INSERT INTO HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`) VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc})
-    </insert>
-    <delete id="deleteLstOfValByCode" parameterType="String">
-        DELETE
-        FROM
-        HC_LST_OF_VAL
-        WHERE
-        CODE = #{code}
-    </delete>
-    <update id="updateLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO"  useGeneratedKeys="true" keyProperty="code">
-        UPDATE HC_LST_OF_VAL SET UPDATED=sysdate(),
-        <include refid="updateConditionSql"></include>
-        WHERE CODE=#{code}
-    </update>
 </mapper>
