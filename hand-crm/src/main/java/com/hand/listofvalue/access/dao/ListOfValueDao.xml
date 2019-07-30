@@ -20,9 +20,9 @@
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null and entity.created!=''"> AND CREATED=#{entity.created}</if>
+            <if test="entity.created!=null"> AND CREATED=#{entity.created}</if>
             <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY=#{entity.createdBy}</if>
-            <if test="entity.updated!=null and entity.updated!=''"> AND UPDATED=#{entity.updated}</if>
+            <if test="entity.updated!=null "> AND UPDATED=#{entity.updated}</if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY=#{entity.updatedBy}</if>
             <if test="entity.type!=null and entity.type!=''"> AND TYPE=#{entity.type}</if>
             <if test="entity.langId!=null and entity.langId!=''"> AND LANG_ID=#{entity.langId}</if>
