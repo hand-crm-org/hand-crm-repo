@@ -13,4 +13,7 @@ springfox:
     documentation:
         swagger:
             v2:
-                path: /swagger.json        
+                path: /swagger.json
+mybatis:
+  type-aliases-package: com.hand.*.access.vo
+  mapper-locations: classpath*:com/hand/*/access/dao/*Dao.xml
