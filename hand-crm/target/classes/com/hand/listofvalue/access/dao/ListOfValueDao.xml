@@ -1,50 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.listofvalue.access.dao.ListOfValueDao">
-    <sql id="queryAllSql">
-        SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        TYPE as type,
-        LANG_ID as langId,
-        VAL as val,
-        NAME as name,
-        PAR_LST_CODE as parLstCode,
-        LEVEL as level,
-        ACT_FLG as actFlg,
-        `DESC` as `desc`
-    </sql>
-    <sql id="queryALLConditionSql">
-        <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null and entity.created!=''"> AND CREATED=#{entity.created}</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY=#{entity.createdBy}</if>
-            <if test="entity.updated!=null and entity.updated!=''"> AND UPDATED=#{entity.updated}</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY=#{entity.updatedBy}</if>
-            <if test="entity.type!=null and entity.type!=''"> AND TYPE=#{entity.type}</if>
-            <if test="entity.langId!=null and entity.langId!=''"> AND LANG_ID=#{entity.langId}</if>
-            <if test="entity.val!=null and entity.val!=''"> AND VAL=#{entity.val}</if>
-            <if test="entity.name!=null and entity.name!=''"> AND NAME=#{entity.name}</if>
-            <if test="entity.parLstCode!=null and entity.parLstCode!=''">AND PAR_LST_CODE=#{entity.parLstCode}</if>
-            <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
-            <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG=#{entity.actFlg}</if>
-            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC`=#{entity.desc}</if>
-        </if>
-    </sql>
-    <sql id="updateConditionSql">
-        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
-        <if test="type!=null and type!=''">,TYPE=#{type}</if>
-        <if test="langId!=null and langId!=''">,LANG_ID=#{langId}</if>
-        <if test="val!=null and val!=''">,VAL=#{val}</if>
-        <if test="name!=null and name!=''">,NAME=#{name}</if>
-        <if test="parLstCode!=null and parLstCode!=''">,PAR_LST_CODE=#{parLstCode}</if>
-        <if test="level!=null and level!=''">,LEVEL=#{level}</if>
-        <if test="actFlg!=null and actFlg!=''">,ACT_FLG=#{actFlg}</if>
-        <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
-    </sql>
     <select id="queryLstOfVaL" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.listofvalue.access.vo.ListOfValueVO">
         <include refid="queryAllSql"></include>
         FROM
@@ -70,7 +26,9 @@
         lang_id=#{listOfValueVO.langId} AND type=#{listOfValueVO.type} AND par_lst_code=#{listOfValueVO.parLstCode} AND (name=#{listOfValueVO.name} OR val=#{listOfValueVO.val})
     </select>
     <insert id="insertLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO" useGeneratedKeys="true" keyProperty="code">
-        INSERT INTO HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`) VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc})
+        INSERT INTO
+        HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`)
+        VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc})
     </insert>
     <delete id="deleteLstOfValByCode" parameterType="String">
         DELETE
@@ -84,4 +42,48 @@
         <include refid="updateConditionSql"></include>
         WHERE CODE=#{code}
     </update>
+    <sql id="queryAllSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        TYPE as type,
+        LANG_ID as langId,
+        VAL as val,
+        NAME as name,
+        PAR_LST_CODE as parLstCode,
+        LEVEL as level,
+        ACT_FLG as actFlg,
+        `DESC` as `desc`
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED=#{entity.created}</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY=#{entity.createdBy}</if>
+            <if test="entity.updated!=null "> AND UPDATED=#{entity.updated}</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY=#{entity.updatedBy}</if>
+            <if test="entity.type!=null and entity.type!=''"> AND TYPE=#{entity.type}</if>
+            <if test="entity.langId!=null and entity.langId!=''"> AND LANG_ID=#{entity.langId}</if>
+            <if test="entity.val!=null and entity.val!=''"> AND VAL=#{entity.val}</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME=#{entity.name}</if>
+            <if test="entity.parLstCode!=null and entity.parLstCode!=''">AND PAR_LST_CODE=#{entity.parLstCode}</if>
+            <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
+            <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG=#{entity.actFlg}</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC`=#{entity.desc}</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="type!=null and type!=''">,TYPE=#{type}</if>
+        <if test="langId!=null and langId!=''">,LANG_ID=#{langId}</if>
+        <if test="val!=null and val!=''">,VAL=#{val}</if>
+        <if test="name!=null and name!=''">,NAME=#{name}</if>
+        <if test="parLstCode!=null and parLstCode!=''">,PAR_LST_CODE=#{parLstCode}</if>
+        <if test="level!=null and level!=''">,LEVEL=#{level}</if>
+        <if test="actFlg!=null and actFlg!=''">,ACT_FLG=#{actFlg}</if>
+        <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
+    </sql>
 </mapper>
