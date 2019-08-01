@@ -1,7 +1,6 @@
 package com.hand.organization.access.dao;
 
 import com.hand.frame.util.PageQuery;
-import com.hand.listofvalue.access.vo.ListOfValueVO;
 import com.hand.organization.access.vo.OrganizationVO;
 import org.springframework.stereotype.Repository;
 
