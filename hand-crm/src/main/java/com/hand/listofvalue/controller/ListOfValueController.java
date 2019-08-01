@@ -24,7 +24,7 @@ public class ListOfValueController {
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int")
     })
-    @GetMapping("/getLstOfVal")
+    @PostMapping("/getLstOfVal")
     public ServiceData getLstOfVal(@RequestBody(required = false) ListOfValueVO listOfValueVO, int currentPage, int pageSize){
         PageQuery<ListOfValueVO> pageQuery = new PageQuery<ListOfValueVO>(listOfValueVO, currentPage, pageSize);
         return  ServiceData.success(listOfValueService.getLstOfVaL(pageQuery), pageQuery.getMapOfPageQuery());
@@ -63,7 +63,7 @@ public class ListOfValueController {
     }
     @ApiOperation(value = "删除值列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType="delete", name="code", value="值列表code", dataType="String")
+            @ApiImplicitParam(paramType="query", name="code", value="值列表code", dataType="String")
     })
     @DeleteMapping("/removeLstOfVal")
     public String removeLstOfVal(@RequestParam("code") String code){

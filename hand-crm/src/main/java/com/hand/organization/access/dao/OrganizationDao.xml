@@ -1,5 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.organization.access.dao.OrganizationDao">
-
+    <select id="queryOrgList" parameterType="com.hand.organization.access.vo.OrganizationVO" resultType="com.hand.organization.access.vo.OrganizationVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_ORG
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryOrgCount" parameterType="com.hand.organization.access.vo.OrganizationVO" resultType="int">
+        SELECT count(*)
+        FROM HC_ORG
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+    <insert id="insertOrg" parameterType="com.hand.organization.access.vo.OrganizationVO">
+        INSERT
+        INTO
+        HC_ORG(CODE,CREATED,CREATED_BY,TYPE,NAME,PAR_ORG_CODE,LEVEL,EXT_FLG,`DESC`,STATUS)
+        VALUES (#{code},sysdate(),#{updatedBy},#{type},#{name},#{parOrgCode},#{level},#{extFlg},#{desc},#{status})
+    </insert>
+    <update id="updateOrg" parameterType="com.hand.organization.access.vo.OrganizationVO">
+        UPDATE
+        HC_ORG
+        SET UPDATED=sysdate(),
+        <include refid="updateAllConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <delete id="deleteOrgByCode" parameterType="String">
+        DELETE
+        FROM
+        HC_ORG
+        WHERE
+        CODE = #{code}
+    </delete>
+    <sql id="queryAllSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        TYPE as type,
+        NAME as name,
+        PAR_ORG_CODE as parOrgCode,
+        LEVEL as level,
+        EXT_FLG as extFlg,
+        `DESC` as `desc`,
+        STATUS as  status
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED=#{entity.created}</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY=#{entity.createdBy}</if>
+            <if test="entity.updated!=null "> AND UPDATED=#{entity.updated}</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY=#{entity.updatedBy}</if>
+            <if test="entity.type!=null and entity.type!=''"> AND TYPE=#{entity.type}</if>
+            <if test="entity.status!=null and entity.status!=''"> AND STATUS=#{entity.status}</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME=#{entity.name}</if>
+            <if test="entity.parOrgCode!=null and entity.parOrgCode!=''">AND PAR_ORG_CODE=#{entity.parOrgCode}</if>
+            <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
+            <if test="entity.extFlg!=null and entity.extFlg!=''"> AND EXT_FLG=#{entity.extFlg}</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC`=#{entity.desc}</if>
+        </if>
+    </sql>
+    <sql id="updateAllConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="type!=null and type!=''">,TYPE=#{type}</if>
+        <if test="name!=null and name!=''">,NAME=#{name}</if>
+        <if test="parOrgCode!=null and parOrgCode!=''">,PAR_ORG_CODE=#{parOrgCode}</if>
+        <if test="level!=null and level!=''">,LEVEL=#{level}</if>
+        <if test="extFlg!=null and actFlg!=''">,EXT_FLG=#{extFlg}</if>
+        <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
+        <if test="status!=null and status!=''">,STATUS=#{status}</if>
+    </sql>
 </mapper>
