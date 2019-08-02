@@ -24,7 +24,7 @@
             <if test="entity.updated!=null "> AND UPDATED=#{entity.updated}</if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY=#{entity.updatedBy}</if>
             <if test="entity.name!=null and entity.name!=''"> AND NAME=#{entity.name}</if>
-            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC`=#{entity.desc}</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc,jdbcType=VARCHAR}"%"</if>
             <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
             <if test="entity.type!=null and entity.type!=''"> AND TYPE=#{entity.type}</if>
             <if test="entity.orgCode!=null and entity.orgCode!=''">AND ORG_CODE=#{entity.orgCode}</if>
