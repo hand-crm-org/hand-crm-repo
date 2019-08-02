@@ -20,12 +20,28 @@ public class OrganizationController {
     @ApiOperation(value="组织列表查询")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int")
+            @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
+            @ApiImplicitParam(paramType="query", name="code", value="组织编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="name", value="名称", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="level", value="层级", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="type", value="类型", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="parOrgCode", value="父组织编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="extFlg", value="内外部组织标识", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String")
     })
-    //@GetMapping("/getOrgList")
-    @PostMapping("/getOrgList")
-    public ServiceData getOrgList(@RequestBody(required = false) OrganizationVO OrganizationVO, int currentPage, int pageSize){
-        PageQuery<OrganizationVO> pageQuery = new PageQuery<OrganizationVO>(OrganizationVO, currentPage, pageSize);
+    @GetMapping("/getOrgList")
+    public ServiceData getOrgList(int currentPage, int pageSize,String code,String name,
+                                  String level,String type,String parOrgCode,String extFlg,
+                                  String desc){
+        OrganizationVO organizationVO = new OrganizationVO();
+        organizationVO.setCode(code);
+        organizationVO.setName(name);
+        organizationVO.setLevel(level);
+        organizationVO.setType(type);
+        organizationVO.setParOrgCode(parOrgCode);
+        organizationVO.setExtFlg(extFlg);
+        organizationVO.setDesc(desc);
+        PageQuery<OrganizationVO> pageQuery = new PageQuery<OrganizationVO>(organizationVO, currentPage, pageSize);
         return  ServiceData.success(organizationService.getOrgList(pageQuery), pageQuery.getMapOfPageQuery());
     }
     @ApiOperation(value="组织信息新建")
