@@ -30,8 +30,9 @@ public class OrganizationController {
             @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String")
     })
     @GetMapping("/getOrgList")
-    public ServiceData getOrgList(int currentPage, int pageSize,String code,String name,
-                                  String level,String type,String parOrgCode,String extFlg,
+    public ServiceData getOrgList(int currentPage, int pageSize,String code,
+                                  String name, String level,String type,
+                                  String parOrgCode,String extFlg,
                                   String desc){
         OrganizationVO organizationVO = new OrganizationVO();
         organizationVO.setCode(code);
