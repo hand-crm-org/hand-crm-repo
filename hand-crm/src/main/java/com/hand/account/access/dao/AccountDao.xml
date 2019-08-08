@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.account.access.dao.AccountDao">
+    <sql id="queryAllAccntInfoSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        NAME as name,
+        NAME_ENU as nameEnu,
+        TYPE as type,
+        TAX_CODE as taxCode,
+        PAR_ACCNT_CODE as parAccntCode,
+        PRI_EMP_CODE as priEmpCode,
+        ORG_CODE as orgCode,
+        DUNS_CODE as dunsCode,
+        STATUS as status,
+        PERIOD_CODE as periodCode,
+        CURRENCY as currency,
+        PRI_CTCT_CODE as priCtctCode,
+        PH_NUM as phNum,
+        FAX_NUM as faxNum,
+        EMAIL as email,
+        HOME_URL as homeUrl,
+        INDUSTRY as industry,
+        SUB_INDUSTRY as subIndustry,
+        REG_FUND as regFund,
+        ADDR_CODE as addrCode
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.nameEnu!=null and entity.nameEnu!=''"> AND NAME_ENU LIKE "%"#{entity.nameEnu,jdbcType=VARCHAR}"%"</if>
+            <if test="entity.taxCode!=null and entity.taxCode!=''"> AND TAX_CODE LIKE "%"#{entity.taxCode}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.parAccntCode!=null and entity.parAccntCode!=''">AND PAR_ACCNT_CODE=#{entity.parAccntCode}</if>
+            <if test="entity.priEmpCode!=null and entity.priEmpCode!=''"> AND PRI_EMP_CODE=#{entity.priEmpCode}</if>
+            <if test="entity.orgCode!=null and entity.orgCode!=''"> AND ORG_CODE=#{entity.orgCode}</if>
+            <if test="entity.dunsCode!=null and entity.dunsCode!=''"> AND DUNS_CODE LIKE "%"#{entity.dunsCode}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.periodCode!=null and entity.periodCode!=''"> AND PERIOD_CODE LIKE "%"#{entity.periodCode}"%"</if>
+            <if test="entity.priCtctCode!=null and entity.priCtctCode!=''"> AND PRI_CTCT_CODE=#{entity.priCtctCode}</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+            <if test="name!=null and name!=''">,NAME=#{name}</if>
+            <if test="nameEnu!=null and nameEnu!=''">,NAME_ENU=#{nameEnu}</if>
+            <if test="taxCode!=null and taxCode!=''">,TAX_CODE=#{taxCode}</if>
+            <if test="type!=null and type!=''">,TYPE=#{type}</if>
+            <if test="parAccntCode!=null and parAccntCode!=''">,PAR_ACCNT_CODE=#{parAccntCode}</if>
+            <if test="priEmpCode!=null and priEmpCode!=''">,PRI_EMP_CODE=#{priEmpCode}</if>
+            <if test="orgCode!=null and orgCode!=''">,ORG_CODE=#{orgCode}</if>
+            <if test="dunsCode!=null and dunsCode!=''">,DUNS_CODE=#{dunsCode}</if>
+            <if test="currency!=null and currency!=''">,CURRENCY=#{currency}</if>
+            <if test="phNum!=null and phNum!=''">,PH_NUM=#{phNum}</if>
+            <if test="priCtctCode!=null and priCtctCode!=''">,PRI_CTCT_CODE=#{priCtctCode}</if>
+            <if test="faxNum!=null and faxNum!=''">,FAX_NUM=#{faxNum}</if>
+            <if test="email!=null and email!=''">,EMAIL=#{email}</if>
+            <if test="homeUrl!=null and homeUrl!=''">,HOME_URL=#{homeUrl}</if>
+            <if test="industry!=null and industry!=''">,INDUSTRY=#{industry}</if>
+            <if test="subIndustry!=null and subIndustry!=''">,SUB_INDUSTRY=#{subIndustry}</if>
+            <if test="regFund!=null and regFund!=''">,REG_FUND=#{regFund}</if>
+            <if test="addrCode!=null and addrCode!=''">,ADDR_CODE=#{addrCode}</if>
+
+        </if>
+    </sql>
+
+    <insert id="insertAccount" parameterType="com.hand.account.access.vo.AccountVO">
+        INSERT INTO HC_ACCNT(CODE,CREATED,CREATED_BY,NAME,NAME_ENU,TYPE,TAX_CODE,PAR_ACCNT_CODE,PRI_EMP_CODE,ORG_CODE,DUNS_CODE,STATUS,PERIOD_CODE,CURRENCY,PRI_CTCT_CODE,PH_NUM,FAX_NUM,EMAIL,HOME_URL,INDUSTRY,SUB_INDUSTRY,REG_FUND,ADDR_CODE)
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{nameEnu},#{type},#{taxCode},#{parAccntCode},#{priEmpCode},#{orgCode},#{dunsCode},#{status},#{periodCode},#{currency},#{priCtctCode},#{phNum},#{faxNum},#{email},#{homeUrl},#{industry},#{subIndustry},#{regFund},#{addrCode})
+    </insert>
+
+    <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.position.access.vo.PositionVO">
+        <include refid="queryAllAccntInfoSql"></include>
+        FROM
+        HC_ACCNT
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryAccountCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_ACCNT
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateAccount" parameterType="com.hand.account.access.vo.AccountVO">
+        UPDATE HC_ACCNT SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+</mapper>
