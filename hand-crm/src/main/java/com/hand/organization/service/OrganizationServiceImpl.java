@@ -26,34 +26,36 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     public boolean addOrg(OrganizationVO organizationVO) {
-        if (!StringUtil.isEmpty(organizationVO.getCode())&&!StringUtil.isEmpty(organizationVO.getUpdatedBy())){
+        if (!StringUtil.isEmpty(organizationVO.getCode())&&!StringUtil.isEmpty(organizationVO.getUpdatedBy())&&
+            !StringUtil.isEmpty(organizationVO.getName())&&!StringUtil.isEmpty(organizationVO.getLevel())&&
+            !StringUtil.isEmpty(organizationVO.getType())&&!StringUtil.isEmpty(organizationVO.getExtFlg())){
             int count = organizationDao.insertOrg(organizationVO);
-            if (count>0){
-                return true;
-            }
+            return count>0;
         }
-        return false;
+        else {
+            throw new RuntimeException("miss param");
+        }
     }
 
     @Override
     public boolean modifyOrg(OrganizationVO organizationVO) {
         if (!StringUtil.isEmpty(organizationVO.getCode())&&!StringUtil.isEmpty(organizationVO.getUpdatedBy())){
             int count = organizationDao.updateOrg(organizationVO);
-            if (count>0){
-                return true;
-            }
+            return count>0;
         }
-        return false;
+        else {
+            throw new RuntimeException("miss param");
+        }
     }
 
     @Override
     public boolean removeOrg(String code) {
         if(!StringUtil.isEmpty(code)){
             int count = organizationDao.deleteOrgByCode(code);
-            if (count>0){
-                return true;
-            }
+            return count>0;
         }
-        return false;
+        else{
+            throw new RuntimeException("miss param");
+        }
     }
 }

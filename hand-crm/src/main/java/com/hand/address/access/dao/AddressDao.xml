@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.address.access.dao.AddressDao">
+    <select id="queryAddrList" parameterType="com.hand.address.access.vo.AddressVO" resultType="com.hand.address.access.vo.AddressVO">
+        <include refid="queryAllSql"></include>
+        WHERE
+        1=1
+        <include refid="queryAllConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryAddrCount" resultType="int" parameterType="com.hand.address.access.vo.AddressVO">
+        SELECT COUNT(*)
+        FROM HC_ADDR
+        WHERE
+        1=1
+        <include refid="queryAllConditionSql"></include>
+    </select>
+    <insert id="insertAddr" parameterType="com.hand.address.access.vo.AddressVO">
+        INSERT
+        INTO
+        HC_ADDR (CODE,CREATED,CREATED_BY,OBJ_CODE,SERVICE_CODE,COUNTRY,STATE,CITY,COUNTY,ADDR1,ADDR2)
+        VALUES (#{code},sysdate(),#{updatedBy},#{objCode},#{serviceCode},#{country},#{state},#{city},#{county},#{addr1},#{addr2})
+    </insert>
+    <update id="updateAddr" parameterType="com.hand.address.access.vo.AddressVO">
+        UPDATE
+        HC_ADDR
+        SET
+        UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+    <sql id="updateConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="objCode!=null and objCode!=''">,OBJ_CODE = #{objCode}</if>
+        <if test="serviceCode!=null and serviceCode!=''">,SERVICE_CODE = #{serviceCode}</if>
+        <if test="country!=null and country!=''">,COUNTRY = #{country}</if>
+        <if test="state!=null and state!=''">,STATE = #{state}</if>
+        <if test="city!=null and city!=''">,CITY = #{city}</if>
+        <if test="county!=null and county!=''">,COUNTY  = #{county}</if>
+        <if test="addr1!=null and addr1!=''">,ADDR1 = #{addr1}</if>
+        <if test="addr2!=null and addr2!=''">,ADDR2 = #{addr2}</if>
+    </sql>
+    <sql id="queryAllSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        OBJ_CODE as objCode,
+        SERVICE_CODE as serviceCode,
+        COUNTRY as country,
+        STATE as state,
+        CITY as city,
+        COUNTY as county,
+        ADDR1 as addr1,
+        ADDR2 as addr2
+        FROM
+        HC_ADDR
+    </sql>
+    <sql id="queryAllConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null"> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.objCode!=null and entity.objCode!=''"> AND OBJ_CODE = #{entity.objCode}</if>
+            <if test="entity.serviceCode!=null and entity.serviceCode!=''"> AND SERVICE_CODE = #{entity.serviceCode}</if>
+            <if test="entity.country!=null and entity.country!=''"> AND COUNTRY LIKE "%"#{entity.country}"%"</if>
+            <if test="entity.state!=null and entity.state!=''"> AND STATE LIKE "%"#{entity.state}"%"</if>
+            <if test="entity.city!=null and entity.city!=''"> AND CITY LIKE "%"#{entity.city}"%"</if>
+            <if test="entity.county!=null and entity.county!=''"> AND COUNTY  LIKE "%"#{entity.county}"%"</if>
+            <if test="entity.addr1!=null and entity.addr1!=''"> AND ADDR1 LIKE "%"#{entity.addr1}"%"</if>
+            <if test="entity.addr2!=null and entity.addr2!=''"> AND ADDR2 LIKE "%"#{entity.addr2}"%"</if>
+        </if>
+    </sql>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.contact.access.dao.ContactDao">
+    <select id="queryContactList" parameterType="com.hand.contact.access.vo.ContactVO" resultType="com.hand.contact.access.vo.ContactVO">
+        <include refid="queryAllSql"></include>
+        WHERE
+        1=1
+        <include refid="queryAllConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryContactCount" parameterType="com.hand.contact.access.vo.ContactVO" resultType="int">
+        SELECT COUNT(*)
+        FROM HC_CTCT
+        WHERE
+        1=1
+        <include refid="queryAllConditionSql"></include>
+    </select>
+    <update id="updateContact" parameterType="com.hand.contact.access.vo.ContactVO">
+        UPDATE
+        HC_CTCT
+        SET
+        UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <insert id="insertContact" parameterType="com.hand.contact.access.vo.ContactVO">
+        INSERT
+        INTO
+        HC_CTCT (CODE,CREATED,CREATED_BY,OBJ_CODE,SERVICE_CODE,NAME,NAME_FOREIGN,PH_NUM,EMAIL,JOB_TITLE,HOBBY,`DESC`,STATUS)
+        VALUES (#{code},sysdate(),#{updatedBy},#{objCode},#{serviceCode},#{name},#{nameForeign},#{phNum},#{email},#{jobTitle},#{hobby},#{desc},#{status})
+    </insert>
+    <sql id="updateConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY = #{updatedBy}</if>
+        <if test="objCode!=null and objCode!=''"> , OBJ_CODE = #{objCode}</if>
+        <if test="serviceCode!=null and serviceCode!=''"> , SERVICE_CODE = #{serviceCode}</if>
+        <if test="name!=null and name!=''"> , NAME = #{name}</if>
+        <if test="nameForeign!=null and nameForeign!=''"> , NAME_FOREIGN = #{nameForeign}</if>
+        <if test="phNum!=null and phNum!=''"> , PH_NUM = #{phNum}</if>
+        <if test="email!=null and email!=''"> , EMAIL  = #{email}</if>
+        <if test="jobTitle!=null and jobTitle!=''"> , JOB_TITLE = #{jobTitle}</if>
+        <if test="hobby!=null and hobby!=''"> , HOBBY = #{hobby}</if>
+        <if test="desc!=null and desc!=''"> , `DESC` = #{desc}</if>
+        <if test="status!=null and hobby!=''"> , STATUS = #{status}</if>
+    </sql>
+    <sql id="queryAllConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null"> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.objCode!=null and entity.objCode!=''"> AND OBJ_CODE = #{entity.objCode}</if>
+            <if test="entity.serviceCode!=null and entity.serviceCode!=''"> AND SERVICE_CODE = #{entity.serviceCode}</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.nameForeign!=null and entity.nameForeign!=''"> AND NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"</if>
+            <if test="entity.phNum!=null and entity.phNum!=''"> AND PH_NUM LIKE "%"#{entity.phNum}"%"</if>
+            <if test="entity.email!=null and entity.email!=''"> AND EMAIL  LIKE "%"#{entity.email}"%"</if>
+            <if test="entity.jobTitle!=null and entity.jobTitle!=''"> AND JOB_TITLE LIKE "%"#{entity.jobTitle}"%"</if>
+            <if test="entity.hobby!=null and entity.hobby!=''"> AND HOBBY LIKE "%"#{entity.hobby}"%"</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.status!=null and entity.hobby!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+        </if>
+    </sql>
+    <sql id="queryAllSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        OBJ_CODE as objCode,
+        SERVICE_CODE as serviceCode,
+        NAME as name,
+        NAME_FOREIGN as nameForeign,
+        PH_NUM as phNum,
+        EMAIL as email,
+        JOB_TITLE as jobTitle,
+        HOBBY as hobby,
+        `DESC` as `desc`,
+        STATUS as status
+        FROM
+        HC_CTCT
+    </sql>
+</mapper>
