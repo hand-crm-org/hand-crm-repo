@@ -70,7 +70,7 @@
             <if test="entity.val!=null and entity.val!=''"> AND VAL LIKE "%"#{entity.val}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.parLstCode!=null and entity.parLstCode!=''">AND PAR_LST_CODE=#{entity.parLstCode}</if>
-            <if test="entity.level!=null and entity.level!=''"> AND LEVEL LIKE "%"#{entity.level}"%"</if>
+            <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
             <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG LIKE "%"#{entity.actFlg}"%"</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
         </if>
