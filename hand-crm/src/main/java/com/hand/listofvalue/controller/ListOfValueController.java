@@ -26,7 +26,7 @@ public class ListOfValueController {
             @ApiImplicitParam(paramType="query", name="code", value="值列表编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="type", value="类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="langId", value="语言", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="value", value="显示值", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="val", value="显示值", dataType="String"),
             @ApiImplicitParam(paramType="query", name="name", value="独立源代码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="parLstCode", value="父值列表编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="level", value="等级", dataType="int"),
@@ -35,13 +35,13 @@ public class ListOfValueController {
     })
     @GetMapping("/getLstOfVal")
     public ServiceData getLstOfVal(int currentPage, int pageSize,String code,String type,
-                                   String langId,String value,String name,String parLstCode,
+                                   String langId,String val,String name,String parLstCode,
                                    Integer level,String actFlg,String desc){
         ListOfValueVO listOfValueVO = new ListOfValueVO();
         listOfValueVO.setCode(code);
         listOfValueVO.setType(type);
         listOfValueVO.setLangId(langId);
-        listOfValueVO.setValue(value);
+        listOfValueVO.setVal(val);
         listOfValueVO.setName(name);
         listOfValueVO.setParLstCode(parLstCode);
         listOfValueVO.setLevel(level);

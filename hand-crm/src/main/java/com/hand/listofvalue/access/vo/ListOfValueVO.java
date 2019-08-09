@@ -10,7 +10,7 @@ public class ListOfValueVO {
     private String updatedBy;//更新人
     private String type;//类型
     private String langId;//语言
-    private String value;//显示值
+    private String val;//显示值
     private String name;//独立语言代码
     private String parLstCode;//父值列表编码
     private Integer level;//层级
@@ -73,12 +73,12 @@ public class ListOfValueVO {
         this.langId = langId;
     }
 
-    public String getValue() {
-        return value;
+    public String getVal() {
+        return val;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setVal(String val) {
+        this.val = val;
     }
 
     public String getName() {
@@ -119,24 +119,5 @@ public class ListOfValueVO {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    @Override
-    public String toString() {
-        return "ListOfValueVO{" +
-                "code='" + code + '\'' +
-                ", created=" + created +
-                ", createdBy='" + createdBy + '\'' +
-                ", updated=" + updated +
-                ", updatedBy='" + updatedBy + '\'' +
-                ", type='" + type + '\'' +
-                ", langId='" + langId + '\'' +
-                ", value='" + value + '\'' +
-                ", name='" + name + '\'' +
-                ", parLstCode='" + parLstCode + '\'' +
-                ", level=" + level +
-                ", actFlg='" + actFlg + '\'' +
-                ", desc='" + desc + '\'' +
-                '}';
     }
 }

@@ -38,7 +38,7 @@ public class ListOfValueServiceImpl implements ListOfValueService{
         boolean status = true;
         Map<String,Object> map = new HashMap<>();
         if(!StringUtil.isEmpty(listOfValueVO.getName())&&!StringUtil.isEmpty(listOfValueVO.getLangId())
-                &&!StringUtil.isEmpty(listOfValueVO.getType())&&!StringUtil.isEmpty(listOfValueVO.getValue())){
+                &&!StringUtil.isEmpty(listOfValueVO.getType())&&!StringUtil.isEmpty(listOfValueVO.getVal())){
             int count = listOfValueDao.toUniqueVerify(listOfValueVO,str);
             if(count>0){
                 //验证失败，不唯一
@@ -69,7 +69,7 @@ public class ListOfValueServiceImpl implements ListOfValueService{
     public String insertLstOfVal(ListOfValueVO listOfValueVO) {
         if(!StringUtil.isEmpty(listOfValueVO.getCode())&&!StringUtil.isEmpty(listOfValueVO.getType())
                 &&!StringUtil.isEmpty(listOfValueVO.getLangId())&&!StringUtil.isEmpty(listOfValueVO.getName())
-                &&!StringUtil.isEmpty(listOfValueVO.getValue())&&listOfValueVO.getLevel()!=null)
+                &&!StringUtil.isEmpty(listOfValueVO.getVal())&&listOfValueVO.getLevel()!=null)
         {
             int count = listOfValueDao.insertLstOfVal(listOfValueVO);
             if(count>0){
