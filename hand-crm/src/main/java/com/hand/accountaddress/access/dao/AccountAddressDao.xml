@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.accountaddress.access.dao.AccountAddressDao">
+    <sql id="queryAllAccntAddrInfoSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        ACCNT_CODE as accntCode,
+        ADDR_CODE as addrCode,
+        `DESC` as `desc`,
+        CTCT as ctct,
+        PH_NUM as phNum,
+        PRI_FLG as priFlg,
+        TYPE as type,
+        STATUS as status
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.addrCode!=null and entity.addrCode!=''"> AND ADDR_CODE = #{entity.addrCode}</if>
+            <if test="entity.priFlg!=null and entity.priFlg!=''"> AND PRI_FLG LIKE "%"#{entity.priFlg}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+            <if test="addrCode!=null and addrCode!=''">,ADDR_CODE=#{addrCode}</if>
+            <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
+            <if test="ctct!=null and ctct!=''">,CTCT=#{ctct}</if>
+            <if test="type!=null and type!=''">,TYPE=#{type}</if>
+            <if test="phNum!=null and phNum!=''">,PH_NUM=#{phNum}</if>
+            <if test="priFlg!=null and priFlg!=''">,PRI_FLG=#{priFlg}</if>
+            <if test="status!=null and status!=''">,STATUS=#{status}</if>
+        </if>
+    </sql>
+
+    <insert id="insertAccountAddr" parameterType="com.hand.accountaddress.access.vo.AccountAddressVO">
+        INSERT INTO HC_ACCNT_ADDR(CODE,CREATED,CREATED_BY,ACCNT_CODE,ADDR_CODE,`DESC`,CTCT,PH_NUM,PRI_FLG,TYPE,STATUS)
+        VALUES (#{code},sysdate(),#{updatedBy},#{accntCode},#{addrCode},#{desc},#{ctct},#{phNum},#{priFlg},#{type},#{status})
+    </insert>
+
+    <select id="queryAccountAddr" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountaddress.access.vo.AccountAddressVO">
+        <include refid="queryAllAccntAddrInfoSql"></include>
+        FROM
+        HC_ACCNT_ADDR
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryAccountAddrCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_ACCNT_ADDR
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateAccountAddr" parameterType="com.hand.accountaddress.access.vo.AccountAddressVO">
+        UPDATE HC_ACCNT_ADDR SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+</mapper>
