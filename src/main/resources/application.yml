@@ -1,7 +1,0 @@
-server:
-  port: 8083
-  context-path: /hand/
-
-demo:
-  ip: localhost
-  host: 8080
