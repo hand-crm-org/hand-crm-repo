@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hand.accountcontact.access.dao.AccntCtctDao">
-    <select id="queryAccntCtctList" parameterType="com.hand.accountcontact.access.vo.AccntCtctVO" resultType="com.hand.accountcontact.access.vo.AccntCtctVO">
+<mapper namespace="com.hand.accountcontact.access.dao.AccountContactDao">
+    <select id="queryAccountContactList" parameterType="com.hand.accountcontact.access.vo.AccountContactVO" resultType="com.hand.accountcontact.access.vo.AccountContactVO">
         <include refid="queryAllSql"></include>
         WHERE
         1=1
         <include refid="queryAllConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
-    <select id="queryAccntCtctCount" parameterType="com.hand.accountcontact.access.vo.AccntCtctVO" resultType="int">
+    <select id="queryAccountContactCount" parameterType="com.hand.accountcontact.access.vo.AccountContactVO" resultType="int">
         SELECT COUNT(*)
         FROM HC_ACCNT_CTCT
         WHERE
         1=1
         <include refid="queryAllConditionSql"></include>
     </select>
-    <insert id="insertAccntCtct" parameterType="com.hand.accountcontact.access.vo.AccntCtctVO">
+    <insert id="insertAccountContact" parameterType="com.hand.accountcontact.access.vo.AccountContactVO">
         INSERT
         INTO
         HC_ACCNT_CTCT (CODE,CREATED,CREATED_BY,ACCNT_CODE,CTCT_CODE,STATUS,`DESC`)
         VALUES (#{code},sysdate(),#{updatedBy},#{accntCode},#{ctctCode},#{status},#{desc})
     </insert>
-    <update id="updateAccntCtct" parameterType="com.hand.accountcontact.access.vo.AccntCtctVO">
+    <update id="updateAccountContact" parameterType="com.hand.accountcontact.access.vo.AccountContactVO">
         UPDATE
         HC_ACCNT_CTCT
         SET

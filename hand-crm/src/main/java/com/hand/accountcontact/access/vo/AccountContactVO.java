@@ -1,6 +1,6 @@
 package com.hand.accountcontact.access.vo;
 
-public class AccntCtctVO {
+public class AccountContactVO {
     private String code;
     private String created;
     private String createdBy;
@@ -81,5 +81,20 @@ public class AccntCtctVO {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountContactVO{" +
+                "code='" + code + '\'' +
+                ", created='" + created + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", updated='" + updated + '\'' +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", accntCode='" + accntCode + '\'' +
+                ", ctctCode='" + ctctCode + '\'' +
+                ", status='" + status + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }
