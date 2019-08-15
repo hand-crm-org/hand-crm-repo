@@ -43,7 +43,7 @@ public class GatewayController {
             JSONObject jsonObject = JSONObject.fromObject(body);
             String api = jsonObject.getString("api");
             String url = "http://" + ip + ":" + host + "/demo/" + api;
-            String method = jsonObject.getString("method");
+            String method = jsonObject.getString("method").toUpperCase();
             JSONObject data = JSONObject.fromObject(jsonObject.getString("data"));
 
             //如果为GET或者DELETE请求，将data封装为map
