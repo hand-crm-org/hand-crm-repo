@@ -37,7 +37,7 @@ public class AccountContactServiceImpl implements AccountContactService {
 
     @Override
     public boolean modifyAccountContact(AccountContactVO accountContactVO) {
-        if (!StringUtil.isEmpty(accountContactVO.getCtctCode())&&!StringUtil.isEmpty(accountContactVO.getCtctCode())&&
+        if (!StringUtil.isEmpty(accountContactVO.getCode())&&!StringUtil.isEmpty(accountContactVO.getCtctCode())&&
             !StringUtil.isEmpty(accountContactVO.getUpdatedBy())){
             int count = accountContactDao.updateAccountContact(accountContactVO);
             return count>0;
