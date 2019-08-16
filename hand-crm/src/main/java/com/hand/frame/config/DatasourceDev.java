@@ -18,7 +18,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
-@MapperScan(basePackages="com.hand.demo.access")
+@MapperScan(basePackages="com.hand.*.access")
 @Profile({"dev","local"})
 @PropertySource("classpath:datasource_dev.properties")
 public class DatasourceDev implements EnvironmentAware{
@@ -66,9 +66,9 @@ public class DatasourceDev implements EnvironmentAware{
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setTypeAliasesPackage("com.hand.demo.access.vo");
+        sessionFactory.setTypeAliasesPackage("com.hand.*.access.vo");
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath:com/hand/**/dao/*.xml"));
+                .getResources("classpath*:com/hand/*/access/dao/*.xml"));
         return sessionFactory.getObject();
     }
 }

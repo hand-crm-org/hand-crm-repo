@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 4040
   context-path: /demo/
   
 spring:
@@ -14,6 +14,6 @@ springfox:
         swagger:
             v2:
                 path: /swagger.json
-mybatis:
-  type-aliases-package: com.hand.*.access.vo
-  mapper-locations: classpath*:com/hand/*/access/dao/*Dao.xml
+#mybatis:
+#  type-aliases-package: com.hand.*.access.vo
+#  mapper-locations: classpath*:com/hand/*/access/dao/*Dao.xml

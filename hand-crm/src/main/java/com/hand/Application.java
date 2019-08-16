@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@MapperScan(basePackages = "com.hand.*.access.dao")
+//@MapperScan(basePackages = "com.hand.*.access.dao")
 @SpringBootApplication
 public class Application {
 	public static void main(String[] args) {
