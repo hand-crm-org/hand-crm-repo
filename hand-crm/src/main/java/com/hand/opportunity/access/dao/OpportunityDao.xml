@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.opportunity.access.dao.OpportunityDao">
+    <sql id="queryAllOppoInfoSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        NAME as name,
+        TYPE as type,
+        STATUS as status,
+        ACCNT_CODE as accntCode,
+        OPTY_SOURCE as optySource,
+        OPTY_FSCT_AMOUNT as optyFsctAmount,
+        EXPECT_SIGN_TIME as expectSignTime,
+        `DESC` as `desc`,
+        OWN_ORG_CODE as ownOrgCode,
+        LOST_REASON as lostReason,
+        FINAL_USE as finalUse
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.accntCode!=null and entity.accntCode!=''"> AND ACCNT_CODE =#{entity.accntCode}</if>
+            <if test="entity.optySource!=null and entity.optySource!=''"> AND OPTY_SOURCE LIKE "%"#{entity.optySource}"%"</if>
+            <if test="entity.optyFsctAmount!=null and entity.optyFsctAmount!=''"> AND OPTY_FSCT_AMOUNT=#{entity.optyFsctAmount}</if>
+            <if test="entity.expectSignTime!=null and entity.expectSignTime!=''"> AND DATE_FORMAT(EXPECT_SIGN_TIME,'%Y-%m-%d') = DATE_FORMAT(#{entity.expectSignTime},'%Y-%m-%d')</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.ownOrgCode!=null and entity.ownOrgCode!=''"> AND OWN_ORG_CODE=#{entity.ownOrgCode}</if>
+            <if test="entity.lostReason!=null and entity.lostReason!=''"> AND LOST_REASON LIKE "%"#{entity.lostReason}"%"</if>
+            <if test="entity.finalUse!=null and entity.finalUse!=''"> AND FINAL_USE LIKE "%"#{entity.finalUse}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+            <if test="name!=null and name!=''">,NAME=#{name}</if>
+            <if test="type!=null and type!=''">,TYPE=#{type}</if>
+            <if test="status!=null and status!=''">,STATUS=#{status}</if>
+            <if test="accntCode!=null and accntCode!=''">,ACCNT_CODE=#{accntCode}</if>
+            <if test="optySource!=null and optySource!=''">,OPTY_SOURCE=#{optySource}</if>
+            <if test="optyFsctAmount!=null and optyFsctAmount!=''">,OPTY_FSCT_AMOUNT=#{optyFsctAmount}</if>
+            <if test="expectSignTime!=null and expectSignTime!=''">,EXPECT_SIGN_TIME=#{expectSignTime}</if>
+            <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
+            <if test="ownOrgCode!=null and ownOrgCode!=''">,OWN_ORG_CODE=#{ownOrgCode}</if>
+            <if test="lostReason!=null and lostReason!=''">,LOST_REASON=#{lostReason}</if>
+            <if test="finalUse!=null and finalUse!=''">,FINAL_USE=#{finalUse}</if>
+
+        </if>
+    </sql>
+
+    <insert id="insertOpportunity" parameterType="com.hand.opportunity.access.vo.OpportunityVO">
+        INSERT INTO HC_OPTY(CODE,CREATED,CREATED_BY,NAME,TYPE,STATUS,ACCNT_CODE,OPTY_SOURCE,OPTY_FSCT_AMOUNT,EXPECT_SIGN_TIME,`DESC`,OWN_ORG_CODE,LOST_REASON,FINAL_USE)
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{status},#{accntCode},#{optySource},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse})
+    </insert>
+
+    <select id="queryOpportunity" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunity.access.vo.OpportunityVO">
+        <include refid="queryAllOppoInfoSql"></include>
+        FROM
+        HC_OPTY
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        order by UPDATED desc
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryOpportunityCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_OPTY
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateOpportunity" parameterType="com.hand.opportunity.access.vo.OpportunityVO">
+        UPDATE HC_OPTY SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+</mapper>

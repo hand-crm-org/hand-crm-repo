@@ -79,7 +79,7 @@
         VALUES (#{code},sysdate(),#{updatedBy},#{name},#{nameEnu},#{type},#{taxCode},#{parAccntCode},#{priEmpCode},#{orgCode},#{dunsCode},#{status},#{periodCode},#{currency},#{priCtctCode},#{phNum},#{faxNum},#{email},#{homeUrl},#{industry},#{subIndustry},#{regFund},#{addrCode})
     </insert>
 
-    <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.position.access.vo.PositionVO">
+    <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.account.access.vo.AccountVO">
         <include refid="queryAllAccntInfoSql"></include>
         FROM
         HC_ACCNT
