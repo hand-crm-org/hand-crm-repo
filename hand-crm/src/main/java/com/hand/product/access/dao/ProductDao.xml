@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.product.access.dao.ProductDao">
+    <sql id="queryAllProdInfoSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        NAME as name,
+        `DESC` as `desc`,
+        PROD_LEVEL as prodLevel,
+        TYPE as type,
+        EXT_CODE as extCode,
+        PAR_CODE as parCode,
+        STATUS as status
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc,jdbcType=VARCHAR}"%"</if>
+            <if test="entity.prodLevel!=null and entity.prodLevel!=''"> AND PROD_LEVEL LIKE "%"#{entity.prodLevel}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.extCode!=null and entity.extCode!=''">AND EXT_CODE=#{entity.extCode}</if>
+            <if test="entity.parCode!=null and entity.parCode!=''"> AND PAR_CODE=#{entity.parCode}</if>
+            <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="name!=null and name!=''">,NAME=#{name}</if>
+        <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
+        <if test="prodLevel!=null and prodLevel!=''">,PROD_LEVEL=#{prodLevel}</if>
+        <if test="type!=null and type!=''">,TYPE=#{type}</if>
+        <if test="extCode!=null and extCode!=''">,EXT_CODE=#{extCode}</if>
+        <if test="parCode!=null and parCode!=''">,PAR_CODE=#{parCode}</if>
+        <if test="status!=null and status!=''">,STATUS=#{status}</if>
+        </if>
+    </sql>
+
+    <insert id="insertProduct" parameterType="com.hand.product.access.vo.ProductVO">
+        INSERT INTO HC_PROD(CODE,CREATED,CREATED_BY,UPDATED,UPDATED_BY,NAME,`DESC`,PROD_LEVEL,TYPE,EXT_CODE,PAR_CODE,STATUS) VALUES (#{code},sysdate(),#{createdBy},sysdate(),#{updatedBy},#{name},#{desc},#{prodLevel},#{type},#{extCode},#{parCode},#{status})
+    </insert>
+
+    <select id="queryProduct" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.product.access.vo.ProductVO">
+        <include refid="queryAllProdInfoSql"></include>
+        FROM
+        HC_PROD
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>       
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryProductCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_PROD
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateProduct" parameterType="com.hand.product.access.vo.ProductVO">
+        UPDATE HC_PROD SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+    <delete id="deleteProduct" parameterType="String">
+        DELETE FROM HC_PROD WHERE CODE=#{code}
+    </delete>
+
+</mapper>
