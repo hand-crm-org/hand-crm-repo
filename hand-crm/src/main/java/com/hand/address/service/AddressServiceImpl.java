@@ -32,7 +32,7 @@ public class AddressServiceImpl implements AddressService{
             int count = addressDao.insertAddr(addressVO);
             return count>0;
         } else{
-            throw new RuntimeException("miss param!");
+            throw new RuntimeException("miss params!");
         }
     }
 
@@ -42,7 +42,7 @@ public class AddressServiceImpl implements AddressService{
             int count = addressDao.updateAddr(addressVO);
             return count>0;
         }else{
-            throw new RuntimeException("miss param");
+            throw new RuntimeException("miss params!");
         }
     }
 }

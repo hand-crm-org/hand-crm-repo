@@ -4,4 +4,4 @@ server:
 
 demo:
   ip: localhost
-  host: 4040
+  host: 7070

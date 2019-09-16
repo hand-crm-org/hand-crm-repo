@@ -2,6 +2,7 @@ package com.hand.accountsalesteam.controller;
 
 import com.hand.accountsalesteam.access.vo.AccountSalesTeamVO;
 import com.hand.accountsalesteam.service.AccountSalesTeamService;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import io.swagger.annotations.Api;
@@ -46,18 +47,18 @@ public class AccountSalesTeamController {
     }
     @ApiOperation(value="客户-销售团队信息新建")
     @PostMapping("/addAccountSalesTeam")
-    public String addAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
+    public ResultDTO addAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
         if (accountSalesTeamService.addAccountSalesTeam(accountSalesTeamVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("客户-销售团队信息新建失败");
     }
     @ApiOperation(value="客户-销售团队信息更新")
     @PutMapping("/modifyAccountSalesTeam")
-    public String modifyAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
+    public ResultDTO modifyAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
         if (accountSalesTeamService.modifyAccountSalesTeam(accountSalesTeamVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("客户-销售团队信息更新失败");
     }
 }

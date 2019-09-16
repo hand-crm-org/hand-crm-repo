@@ -31,7 +31,7 @@ public class AccountContactServiceImpl implements AccountContactService {
             return count>0;
         }
         else{
-            throw new RuntimeException("miss param");
+            throw new RuntimeException("miss params");
         }
     }
 
@@ -42,7 +42,7 @@ public class AccountContactServiceImpl implements AccountContactService {
             int count = accountContactDao.updateAccountContact(accountContactVO);
             return count>0;
         }else {
-            throw new RuntimeException("miss param");
+            throw new RuntimeException("miss params");
         }
     }
 }

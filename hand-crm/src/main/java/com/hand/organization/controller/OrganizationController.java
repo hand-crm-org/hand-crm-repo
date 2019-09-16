@@ -1,5 +1,6 @@
 package com.hand.organization.controller;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import com.hand.organization.access.vo.OrganizationVO;
@@ -47,29 +48,29 @@ public class OrganizationController {
     }
     @ApiOperation(value="组织信息新建")
     @PostMapping("/addOrg")
-    public String addOrg(@RequestBody OrganizationVO organizationVO){
+    public ResultDTO addOrg(@RequestBody OrganizationVO organizationVO){
         if (organizationService.addOrg(organizationVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("组织信息新建失败");
     }
     @ApiOperation(value="组织信息删除")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="code", value="组织code", dataType="String"),
     })
     @DeleteMapping("/removeOrg")
-    public String removeOrg(String code){
+    public ResultDTO removeOrg(String code){
         if (organizationService.removeOrg(code)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("组织信息删除失败");
     }
     @ApiOperation(value="组织信息更新")
     @PutMapping("/modifyOrg")
-    public String modifyOrg(@RequestBody OrganizationVO organizationVO){
+    public ResultDTO modifyOrg(@RequestBody OrganizationVO organizationVO){
         if (organizationService.modifyOrg(organizationVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("组织信息更新失败");
     }
 }

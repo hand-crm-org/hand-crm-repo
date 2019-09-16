@@ -2,6 +2,7 @@ package com.hand.account.controller;
 
 import com.hand.account.access.vo.AccountVO;
 import com.hand.account.service.AccountService;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
@@ -20,8 +21,11 @@ public class AccountController {
 
     @ApiOperation(value="新建客户头")
     @PostMapping("/addAccount")
-    public String addAccount(@RequestBody AccountVO accountVO){
-        return accountService.addAccount(accountVO);
+    public ResultDTO addAccount(@RequestBody AccountVO accountVO){
+        if (accountService.addAccount(accountVO)){
+            return ResultDTO.success();
+        }
+        return ResultDTO.error("新建客户头失败");
     }
 
     @ApiOperation(value="查询客户头")
@@ -79,7 +83,10 @@ public class AccountController {
 
     @ApiOperation(value="修改客户头")
     @PutMapping("/modifyAccount")
-    public String modifyAccount(@RequestBody AccountVO accountVO){
-        return accountService.modifyAccount(accountVO);
+    public ResultDTO modifyAccount(@RequestBody AccountVO accountVO){
+        if (accountService.modifyAccount(accountVO)){
+            return ResultDTO.success();
+        }
+        return ResultDTO.error("修改客户头信息失败");
     }
 }

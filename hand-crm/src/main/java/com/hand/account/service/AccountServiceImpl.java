@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService{
      * @Return int
      */
     @Override
-    public String addAccount(AccountVO accountVO) {
+    public boolean addAccount(AccountVO accountVO) {
         if (!StringUtil.isEmpty(accountVO.getPriEmpCode()) && !StringUtil.isEmpty(accountVO.getType())
                 && !StringUtil.isEmpty(accountVO.getPeriodCode()) && !StringUtil.isEmpty(accountVO.getName())
                 && !StringUtil.isEmpty(accountVO.getOrgCode()) && !StringUtil.isEmpty(accountVO.getUpdatedBy())
@@ -32,9 +32,9 @@ public class AccountServiceImpl implements AccountService{
             {
                 int count = accountDao.insertAccount(accountVO);
                 if (count > 0) {
-                    return "success";
+                    return true;
                 }
-                return "failed";
+                return false;
             }
             else
             {
@@ -43,14 +43,14 @@ public class AccountServiceImpl implements AccountService{
                 {
                     int count = accountDao.insertAccount(accountVO);
                     if (count > 0) {
-                        return "success";
+                        return true;
                     }
-                    return "failed";
+                    return false;
                 }
-                return "miss param";
+                throw new RuntimeException("miss params");
             }
         }
-        return "miss param";
+        throw new RuntimeException("miss params");
     }
 
     /**
@@ -76,14 +76,14 @@ public class AccountServiceImpl implements AccountService{
      * @Return int
      */
     @Override
-    public String modifyAccount(AccountVO accountVO) {
+    public boolean modifyAccount(AccountVO accountVO) {
         if(!StringUtil.isEmpty(accountVO.getCode())&&!StringUtil.isEmpty(accountVO.getUpdatedBy())) {
             int count = accountDao.updateAccount(accountVO);
             if (count > 0) {
-                return "success";
+                return true;
             }
-            return "failed";
+            return false;
         }
-        return "miss param";
+        throw new RuntimeException("miss params");
     }
 }

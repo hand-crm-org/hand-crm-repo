@@ -25,7 +25,7 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
             return count>0;
         }
         else{
-            throw new RuntimeException("miss param");
+            throw new RuntimeException("miss params");
         }
     }
 
@@ -46,7 +46,7 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
             int count = accountSalesTeamDao.updateAccountSalesTeam(accountSalesTeamVO);
             return count>0;
         }else {
-            throw new RuntimeException("miss param");
+            throw new RuntimeException("miss params");
         }
     }
 }

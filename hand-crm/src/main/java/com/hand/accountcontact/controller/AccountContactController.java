@@ -2,6 +2,7 @@ package com.hand.accountcontact.controller;
 
 import com.hand.accountcontact.access.vo.AccountContactVO;
 import com.hand.accountcontact.service.AccountContactService;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import io.swagger.annotations.Api;
@@ -41,18 +42,18 @@ public class AccountContactController {
     }
     @ApiOperation(value="客户-联系人信息新建")
     @PostMapping("/addAccountContact")
-    public String addAccountContact(@RequestBody AccountContactVO accountContactVO){
+    public ResultDTO addAccountContact(@RequestBody AccountContactVO accountContactVO){
         if (accountContactService.addAccountContact(accountContactVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("客户-联系人信息新建失败");
     }
     @ApiOperation(value="客户-联系人信息更新")
     @PutMapping("/modifyAccountContact")
-    public String modifyAccountContact(@RequestBody AccountContactVO accountContactVO){
+    public ResultDTO modifyAccountContact(@RequestBody AccountContactVO accountContactVO){
         if (accountContactService.modifyAccountContact(accountContactVO)){
-            return "success";
+            return ResultDTO.success();
         }
-        return "failed";
+        return ResultDTO.error("客户-联系人信息更新失败");
     }
 }
