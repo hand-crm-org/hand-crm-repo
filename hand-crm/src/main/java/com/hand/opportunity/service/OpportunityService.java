@@ -1,5 +1,6 @@
 package com.hand.opportunity.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.opportunity.access.vo.OpportunityVO;
 
@@ -12,7 +13,7 @@ public interface OpportunityService {
      * @param opportunityVO
      * @Return int
      */
-    String addOpportunity(OpportunityVO opportunityVO);
+    ResultDTO addOpportunity(OpportunityVO opportunityVO);
 
 
     /**
@@ -30,5 +31,5 @@ public interface OpportunityService {
      * @param opportunityVO
      * @Return int
      */
-    String modifyOpportunity(OpportunityVO opportunityVO);
+    ResultDTO modifyOpportunity(OpportunityVO opportunityVO);
 }

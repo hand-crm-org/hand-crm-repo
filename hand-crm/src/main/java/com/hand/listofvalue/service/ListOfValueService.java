@@ -1,5 +1,6 @@
 package com.hand.listofvalue.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.listofvalue.access.vo.ListOfValueVO;
 
@@ -22,21 +23,21 @@ public interface ListOfValueService {
      * @param listOfValueVO
      * @Return boolean
      */
-    public Map<String,Object> toUniqueVerify(ListOfValueVO listOfValueVO, String str);
+    Map<String,Object> toUniqueVerify(ListOfValueVO listOfValueVO, String str);
     /**
      * 新建值列表
      * @UpdateBy lln
      * @param listOfValueVO
      * @Return code
      */
-    public String insertLstOfVal(ListOfValueVO listOfValueVO);
+    ResultDTO insertLstOfVal(ListOfValueVO listOfValueVO);
     /**
      * 修改值列表
      * @UpdateBy lln
      * @param listOfValueVO
      * @Return code
      */
-    public String updateLstOfVal(ListOfValueVO listOfValueVO);
+    ResultDTO updateLstOfVal(ListOfValueVO listOfValueVO);
 
     /**
      * 根据唯一code删除值列表
@@ -44,5 +45,5 @@ public interface ListOfValueService {
      * @param code
      * @Return List<ListOfValueVO>
      */
-    boolean removeLstOfValByCode(String code);
+    ResultDTO removeLstOfValByCode(String code);
 }

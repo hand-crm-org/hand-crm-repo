@@ -1,5 +1,6 @@
 package com.hand.position.controller;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import com.hand.position.access.vo.PositionVO;
@@ -19,7 +20,7 @@ public class PositionController {
 
     @ApiOperation(value="新建职位")
     @PostMapping("/addPosition")
-    public String addPosition(@RequestBody PositionVO positionVO){
+    public ResultDTO addPosition(@RequestBody PositionVO positionVO){
         return positionService.addPosition(positionVO);
     }
 
@@ -57,7 +58,7 @@ public class PositionController {
 
     @ApiOperation(value="修改值列表")
     @PutMapping("/modifyPosition")
-    public String modifyPosition(@RequestBody PositionVO positionVO){
+    public ResultDTO modifyPosition(@RequestBody PositionVO positionVO){
         return positionService.modifyPosition(positionVO);
     }
 
@@ -66,7 +67,7 @@ public class PositionController {
             @ApiImplicitParam(paramType="query", name="code", value="职位code", dataType="String")
     })
     @DeleteMapping("/removePosition")
-    public String removePosition(@RequestParam("code") String code){
+    public ResultDTO removePosition(@RequestParam("code") String code){
         return positionService.removePosition(code);
     }
 }

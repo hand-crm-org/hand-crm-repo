@@ -4,6 +4,7 @@ import com.hand.account.access.vo.AccountVO;
 import com.hand.account.service.AccountService;
 import com.hand.accountaddress.access.vo.AccountAddressVO;
 import com.hand.accountaddress.service.AccountAddressServcice;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
@@ -22,7 +23,7 @@ public class AccountAddressController {
 
     @ApiOperation(value="新建客户-地址")
     @PostMapping("/addAccountAddr")
-    public String addAccount(@RequestBody AccountAddressVO accountAddressVO){
+    public ResultDTO addAccount(@RequestBody AccountAddressVO accountAddressVO){
         return accountAddressServcice.addAccountAddr(accountAddressVO);
     }
 
@@ -51,7 +52,7 @@ public class AccountAddressController {
 
     @ApiOperation(value="修改客户-地址")
     @PutMapping("/modifyAcntAddr")
-    public String modifyAccount(@RequestBody AccountAddressVO accountAddressVO){
+    public ResultDTO modifyAccount(@RequestBody AccountAddressVO accountAddressVO){
         return accountAddressServcice.modifyAccountAddr(accountAddressVO);
     }
 }

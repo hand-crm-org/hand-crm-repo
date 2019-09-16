@@ -1,5 +1,6 @@
 package com.hand.product.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.product.access.vo.ProductVO;
 
@@ -12,7 +13,7 @@ public interface ProductService {
      * @param productVO
      * @Return int
      */
-    String addProduct(ProductVO productVO);
+    ResultDTO addProduct(ProductVO productVO);
 
 
     /**
@@ -30,7 +31,7 @@ public interface ProductService {
      * @param productVO
      * @Return int
      */
-    String modifyProduct(ProductVO productVO);
+    ResultDTO modifyProduct(ProductVO productVO);
 
 
     /**
@@ -39,5 +40,5 @@ public interface ProductService {
      * @param code
      * @Return int
      */
-    String removeProduct(String code);
+    ResultDTO removeProduct(String code);
 }

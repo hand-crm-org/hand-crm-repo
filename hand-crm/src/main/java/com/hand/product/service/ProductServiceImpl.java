@@ -2,6 +2,7 @@ package com.hand.product.service;
 
 import java.util.List;
 
+import com.hand.frame.model.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +23,17 @@ public class ProductServiceImpl implements ProductService{
      * @Return int
      */
 	@Override
-	public String addProduct(ProductVO productVO) {
+	public ResultDTO addProduct(ProductVO productVO) {
 		if(!StringUtil.isEmpty(productVO.getCode())&&!StringUtil.isEmpty(productVO.getType())
                 &&!StringUtil.isEmpty(productVO.getName())&&!StringUtil.isEmpty(productVO.getExtCode())
                 &&!StringUtil.isEmpty(productVO.getUpdatedBy())&&!StringUtil.isEmpty(productVO.getStatus())) {
             int count = productDao.insertProduct(productVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("新建产品失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
 	}
 	/**
      * 根据条件查询产品
@@ -56,15 +57,15 @@ public class ProductServiceImpl implements ProductService{
      * @Return int
      */
 	@Override
-	public String modifyProduct(ProductVO productVO) {
+	public ResultDTO modifyProduct(ProductVO productVO) {
 		if(!StringUtil.isEmpty(productVO.getCode())&&!StringUtil.isEmpty(productVO.getUpdatedBy())) {
             int count = productDao.updateProduct(productVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("修改产品失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
 	}
 	/**
      * 删除产品
@@ -73,15 +74,15 @@ public class ProductServiceImpl implements ProductService{
      * @Return int
      */
 	@Override
-	public String removeProduct(String code) {
+	public ResultDTO removeProduct(String code) {
 		if(!StringUtil.isEmpty(code)) {
             int count = productDao.deleteProduct(code);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("删除产品失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
 	}
 
 }

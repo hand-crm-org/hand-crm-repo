@@ -1,5 +1,6 @@
 package com.hand.listofvalue.controller;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import com.hand.listofvalue.access.vo.ListOfValueVO;
@@ -53,44 +54,42 @@ public class ListOfValueController {
 
     @ApiOperation(value="新建值列表")
     @PostMapping("/addLstOfVal")
-    public String addListOfValue(@RequestBody ListOfValueVO listOfValueVO){
+    public ResultDTO addListOfValue(@RequestBody ListOfValueVO listOfValueVO){
         String str = "insert";
         Map<String,Object> map = listOfValueService.toUniqueVerify(listOfValueVO,str);
         String msg = "";
         boolean flag = (boolean) map.get("status");
         if(flag){
-            msg = listOfValueService.insertLstOfVal(listOfValueVO);
+            return listOfValueService.insertLstOfVal(listOfValueVO);
         }
         else{
             msg= (String) map.get("msg");
+            return ResultDTO.error(msg);
         }
-        return msg;
     }
 
     @ApiOperation(value="修改值列表")
     @PutMapping("/modifyLstOfVal")
-    public String modifyListOfValue(@RequestBody ListOfValueVO listOfValueVO){
+    public ResultDTO modifyListOfValue(@RequestBody ListOfValueVO listOfValueVO){
         String str = "update";
         Map<String,Object> map = listOfValueService.toUniqueVerify(listOfValueVO,str);
         String msg = "";
         boolean flag = (boolean) map.get("status");
         if(flag){
-            msg = listOfValueService.updateLstOfVal(listOfValueVO);
+            return listOfValueService.updateLstOfVal(listOfValueVO);
         }
         else{
             msg= (String) map.get("msg");
+            return ResultDTO.error(msg);
         }
-        return msg;
+
     }
     @ApiOperation(value = "删除值列表")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="code", value="值列表code", dataType="String")
     })
     @DeleteMapping("/removeLstOfVal")
-    public String removeLstOfVal(@RequestParam("code") String code){
-        if (listOfValueService.removeLstOfValByCode(code)){
-            return "success";
-        }
-        return "failed";
+    public ResultDTO removeLstOfVal(@RequestParam("code") String code){
+        return listOfValueService.removeLstOfValByCode(code);
     }
 }

@@ -1,5 +1,6 @@
 package com.hand.opportunity.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import com.hand.opportunity.access.dao.OpportunityDao;
@@ -21,7 +22,7 @@ public class OpportunityServiceImpl implements OpportunityService{
      * @Return int
      */
     @Override
-    public String addOpportunity(OpportunityVO opportunityVO) {
+    public ResultDTO addOpportunity(OpportunityVO opportunityVO) {
         if (!StringUtil.isEmpty(opportunityVO.getCode()) && !StringUtil.isEmpty(opportunityVO.getName())
                 && !StringUtil.isEmpty(opportunityVO.getAccntCode()) && !StringUtil.isEmpty(opportunityVO.getOptySource())
                 && !StringUtil.isEmpty(opportunityVO.getExpectSignTime().toString()) && !StringUtil.isEmpty(opportunityVO.getUpdatedBy())
@@ -30,11 +31,11 @@ public class OpportunityServiceImpl implements OpportunityService{
         {
             int count = opportunityDao.insertOpportunity(opportunityVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("新建商机失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 
     /**
@@ -60,14 +61,14 @@ public class OpportunityServiceImpl implements OpportunityService{
      * @Return int
      */
     @Override
-    public String modifyOpportunity(OpportunityVO opportunityVO) {
+    public ResultDTO modifyOpportunity(OpportunityVO opportunityVO) {
         if(!StringUtil.isEmpty(opportunityVO.getCode())&&!StringUtil.isEmpty(opportunityVO.getUpdatedBy())) {
             int count = opportunityDao.updateOpportunity(opportunityVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("修改商机失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 }

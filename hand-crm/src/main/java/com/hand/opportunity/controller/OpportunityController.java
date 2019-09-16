@@ -1,5 +1,6 @@
 package com.hand.opportunity.controller;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
@@ -21,7 +22,7 @@ public class OpportunityController {
 
     @ApiOperation(value="新建商机")
     @PostMapping("/addOpportunity")
-    public String addOpportunity(@RequestBody OpportunityVO opportunityVO){
+    public ResultDTO addOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.addOpportunity(opportunityVO);
     }
 
@@ -85,7 +86,7 @@ public class OpportunityController {
 
     @ApiOperation(value="修改商机")
     @PutMapping("/modifyOpportunity")
-    public String modifyOpportunity(@RequestBody OpportunityVO opportunityVO){
+    public ResultDTO modifyOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.modifyOpportunity(opportunityVO);
     }
 }

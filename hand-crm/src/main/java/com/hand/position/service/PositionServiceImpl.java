@@ -1,5 +1,6 @@
 package com.hand.position.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import com.hand.position.access.dao.PositionDao;
@@ -20,17 +21,17 @@ public class PositionServiceImpl implements PositionService{
      * @Return int
      */
     @Override
-    public String addPosition(PositionVO positionVO) {
+    public ResultDTO addPosition(PositionVO positionVO) {
         if(!StringUtil.isEmpty(positionVO.getCode())&&!StringUtil.isEmpty(positionVO.getType())
                 &&!StringUtil.isEmpty(positionVO.getName())&&!StringUtil.isEmpty(positionVO.getOrgCode())
                 &&!StringUtil.isEmpty(positionVO.getUpdatedBy())&&!StringUtil.isEmpty(positionVO.getStatus())) {
             int count = positionDao.insertPosition(positionVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("新建职位失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 
     /**
@@ -56,15 +57,15 @@ public class PositionServiceImpl implements PositionService{
      * @Return int
      */
     @Override
-    public String modifyPosition(PositionVO positionVO) {
+    public ResultDTO modifyPosition(PositionVO positionVO) {
         if(!StringUtil.isEmpty(positionVO.getCode())&&!StringUtil.isEmpty(positionVO.getUpdatedBy())) {
             int count = positionDao.updatePosition(positionVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("修改职位失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 
     /**
@@ -74,14 +75,14 @@ public class PositionServiceImpl implements PositionService{
      * @Return int
      */
     @Override
-    public String removePosition(String code) {
+    public ResultDTO removePosition(String code) {
         if(!StringUtil.isEmpty(code)) {
             int count = positionDao.deletePosition(code);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("删除职位失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 }

@@ -2,6 +2,7 @@ package com.hand.accountaddress.service;
 
 import com.hand.accountaddress.access.dao.AccountAddressDao;
 import com.hand.accountaddress.access.vo.AccountAddressVO;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,17 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
      * @Return String
      */
     @Override
-    public String addAccountAddr(AccountAddressVO accountAddressVO) {
+    public ResultDTO addAccountAddr(AccountAddressVO accountAddressVO) {
         if (!StringUtil.isEmpty(accountAddressVO.getCode()) && !StringUtil.isEmpty(accountAddressVO.getAddrCode())
                 && !StringUtil.isEmpty(accountAddressVO.getPriFlg()) && !StringUtil.isEmpty(accountAddressVO.getStatus()))
         {
                 int count = accountAddressDao.insertAccountAddr(accountAddressVO);
                 if (count > 0) {
-                    return "success";
+                    return ResultDTO.success();
                 }
-                return "failed";
+            return ResultDTO.error("新建客户地址失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 
     /**
@@ -57,14 +58,14 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
      * @Return String
      */
     @Override
-    public String modifyAccountAddr(AccountAddressVO accountAddressVO) {
+    public ResultDTO modifyAccountAddr(AccountAddressVO accountAddressVO) {
         if(!StringUtil.isEmpty(accountAddressVO.getCode())&&!StringUtil.isEmpty(accountAddressVO.getUpdatedBy())) {
             int count = accountAddressDao.updateAccountAddr(accountAddressVO);
             if (count > 0) {
-                return "success";
+                return ResultDTO.success();
             }
-            return "failed";
+            return ResultDTO.error("修改客户地址失败");
         }
-        return "miss param";
+        return ResultDTO.error("缺失参数");
     }
 }

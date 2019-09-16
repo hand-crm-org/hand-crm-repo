@@ -1,5 +1,6 @@
 package com.hand.position.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.position.access.vo.PositionVO;
 
@@ -12,7 +13,7 @@ public interface PositionService {
      * @param positionVO
      * @Return int
      */
-    String addPosition(PositionVO positionVO);
+    ResultDTO addPosition(PositionVO positionVO);
 
 
     /**
@@ -30,7 +31,7 @@ public interface PositionService {
      * @param positionVO
      * @Return int
      */
-    String modifyPosition(PositionVO positionVO);
+    ResultDTO modifyPosition(PositionVO positionVO);
 
 
     /**
@@ -39,5 +40,5 @@ public interface PositionService {
      * @param code
      * @Return int
      */
-    String removePosition(String code);
+    ResultDTO removePosition(String code);
 }

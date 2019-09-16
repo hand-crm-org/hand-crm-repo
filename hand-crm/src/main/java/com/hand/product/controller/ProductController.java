@@ -1,5 +1,6 @@
 package com.hand.product.controller;
 
+import com.hand.frame.model.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class ProductController {
 	
 	 @ApiOperation(value="新建产品")
      @PostMapping("/addProduct")
-	 public String addProduct(@RequestBody ProductVO productVO){
+	 public ResultDTO addProduct(@RequestBody ProductVO productVO){
          return productService.addProduct(productVO);
      }
 	
@@ -66,7 +67,7 @@ public class ProductController {
 	
 	@ApiOperation(value="修改产品")
     @PutMapping("/modifyProduct")
-    public String modifyProduct(@RequestBody ProductVO productVO){
+    public ResultDTO modifyProduct(@RequestBody ProductVO productVO){
         return productService.modifyProduct(productVO);
     }
 	
@@ -75,7 +76,7 @@ public class ProductController {
             @ApiImplicitParam(paramType="query", name="code", value="产品code", dataType="String")
     })
     @DeleteMapping("/removeProduct")
-    public String removeProduct(@RequestParam("code") String code){
+    public ResultDTO removeProduct(@RequestParam("code") String code){
         return productService.removeProduct(code);
     }
 	 

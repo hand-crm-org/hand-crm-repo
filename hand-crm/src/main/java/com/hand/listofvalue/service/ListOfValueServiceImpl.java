@@ -1,5 +1,6 @@
 package com.hand.listofvalue.service;
 
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import com.hand.listofvalue.access.dao.ListOfValueDao;
@@ -66,21 +67,21 @@ public class ListOfValueServiceImpl implements ListOfValueService{
      * @Return code
      */
     @Override
-    public String insertLstOfVal(ListOfValueVO listOfValueVO) {
+    public ResultDTO insertLstOfVal(ListOfValueVO listOfValueVO) {
         if(!StringUtil.isEmpty(listOfValueVO.getCode())&&!StringUtil.isEmpty(listOfValueVO.getType())
                 &&!StringUtil.isEmpty(listOfValueVO.getLangId())&&!StringUtil.isEmpty(listOfValueVO.getName())
                 &&!StringUtil.isEmpty(listOfValueVO.getVal())&&listOfValueVO.getLevel()!=null)
         {
             int count = listOfValueDao.insertLstOfVal(listOfValueVO);
             if(count>0){
-                return "success";
+                return ResultDTO.success();
             }
             else{
-                return "failed";
+                return ResultDTO.error("新建值列表失败");
             }
         }
         else {
-            return "miss param";
+            return ResultDTO.error("缺失参数");
         }
 
     }
@@ -91,31 +92,31 @@ public class ListOfValueServiceImpl implements ListOfValueService{
      * @Return string
      */
     @Override
-    public String updateLstOfVal(ListOfValueVO listOfValueVO) {
+    public ResultDTO updateLstOfVal(ListOfValueVO listOfValueVO) {
         if(!StringUtil.isEmpty(listOfValueVO.getCode()))
         {
             int count = listOfValueDao.updateLstOfVal(listOfValueVO);
             if(count>0){
-                return "success";
+                return ResultDTO.success();
             }
             else{
-                return "failed";
+                return ResultDTO.error("修改值列表失败");
             }
         }
         else {
-            return "miss param";
+            return ResultDTO.error("缺失参数");
         }
 
     }
 
     @Override
-    public boolean removeLstOfValByCode(String code) {
+    public ResultDTO removeLstOfValByCode(String code) {
         if(!StringUtil.isEmpty(code)){
             int rows = listOfValueDao.deleteLstOfValByCode(code);
             if (rows>=1) {
-                return true;
+                return ResultDTO.success();
             }
         }
-        return false;
+        return ResultDTO.error("删除值列表失败");
     }
 }

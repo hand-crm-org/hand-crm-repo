@@ -1,6 +1,7 @@
 package com.hand.accountaddress.service;
 
 import com.hand.accountaddress.access.vo.AccountAddressVO;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface AccountAddressServcice {
      * @param accountAddressVO
      * @Return int
      */
-    String addAccountAddr(AccountAddressVO accountAddressVO);
+    ResultDTO addAccountAddr(AccountAddressVO accountAddressVO);
 
 
     /**
@@ -30,5 +31,5 @@ public interface AccountAddressServcice {
      * @param accountAddressVO
      * @Return int
      */
-    String modifyAccountAddr(AccountAddressVO accountAddressVO);
+    ResultDTO modifyAccountAddr(AccountAddressVO accountAddressVO);
 }
