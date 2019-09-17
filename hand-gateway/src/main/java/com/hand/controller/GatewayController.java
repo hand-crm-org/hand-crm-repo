@@ -16,10 +16,12 @@ import java.util.Map;
 
 @RestController
 public class GatewayController {
-    @Value(value = "${demo.ip}")
-    private String ip;
-    @Value(value = "${demo.host}")
+    @Value(value = "${url.host}")
     private String host;
+    @Value(value = "${url.port}")
+    private String port;
+    @Value(value = "${url.name}")
+    private String name;
 
     private static String METHOD_GET = "GET";
     private static String METHOD_POST = "POST";
@@ -42,7 +44,7 @@ public class GatewayController {
             }
             JSONObject jsonObject = JSONObject.fromObject(body);
             String api = jsonObject.getString("api");
-            String url = "http://" + ip + ":" + host + "/demo/" + api;
+            String url = "http://" + host + ":" + port + "/"+name+"/" + api;
             String method = jsonObject.getString("method").toUpperCase();
             JSONObject data = JSONObject.fromObject(jsonObject.getString("data"));
 

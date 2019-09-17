@@ -2,6 +2,7 @@ server:
   port: 8080
   context-path: /hand/
 
-demo:
-  ip: localhost
-  host: 7070
+url:
+  host: localhost
+  port: 4040
+  name: hand-crm

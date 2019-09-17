@@ -1,5 +1,5 @@
 server:
-  port: 4040
+  port: 7070
   context-path: /demo/
   
 spring:
