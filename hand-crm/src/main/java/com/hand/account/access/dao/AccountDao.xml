@@ -29,6 +29,35 @@
         REG_FUND as regFund,
         ADDR_CODE as addrCode
     </sql>
+    <!--<resultMap id="accountResult" type="com.hand.account.access.vo.AccountVO">
+        <id property="code" column="code" />
+        <result property="nameEnu" column="nameEnu" />
+        <result property="type" column="type" />
+        <result property="taxCode" column="taxCode" />
+        <result property="parAccntCode" column="parAccntCode" />
+        <result property="priEmpCode" column="priEmpCode" />
+        <result property="orgCode" column="orgCode" />
+        <result property="dunsCode" column="dunsCode" />
+        <result property="periodCode" column="periodCode" />
+        <result property="currency" column="currency" />
+        <result property="priCtctCode" column="priCtctCode" />
+        <result property="phNum" column="phNum" />
+        <result property="faxNum" column="faxNum" />
+        <result property="homeUrl" column="homeUrl" />
+        <result property="industry" column="industry" />
+        <result property="subIndustry" column="subIndustry" />
+        <result property="regFund" column="regFund" />
+
+        <collection property="address" ofType="com.hand.address.access.vo.AddressVO">
+            <id property="code" column="code" />
+            <result property="country" column="country" />
+            <result property="state" column="state" />
+            <result property="city" column="city" />
+            <result property="county" column="county" />
+            <result property="addr1" column="addr1" />
+            <result property="addr2" column="addr2" />
+        </collection>
+    </resultMap>-->
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
@@ -80,9 +109,26 @@
     </insert>
 
     <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.account.access.vo.AccountVO">
-        <include refid="queryAllAccntInfoSql"></include>
+        <include refid="queryAllAccntInfoSql"></include>,
+        T.COUNTRY as country,
+        T.STATE as state,
+        T.CITY as city,
+        T.COUNTY as county,
+        T.ADDR1 as addr1,
+        T.ADDR2 as addr2
         FROM
-        HC_ACCNT
+        HC_ACCNT,
+        (SELECT
+        T3.COUNTRY,
+        T3.STATE,
+        T3.CITY,
+        T3.COUNTY,
+        T3.ADDR2,
+        T3.ADDR1
+        FROM HC_ACCNT T1,HC_ACCNT_ADDR T2,HC_ADDR T3
+        WHERE T1.CODE = T2.ACCNT_CODE(+)
+        AND   T2.PRI_FLG = 'Y'
+        AND   T3.CODE(+) = T2.ADDR_CODE) T
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>

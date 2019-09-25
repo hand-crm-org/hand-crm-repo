@@ -29,6 +29,31 @@ public class AccountVO {
     private String regFund;//注册资金
     private String addrCode;//地址code
 
+    /**
+     * 国家
+     */
+    private String country;
+    /**
+     * 省份
+     */
+    private String state;
+    /**
+     * 城市
+     */
+    private String city;
+    /**
+     * 县
+     */
+    private String county;
+    /**
+     * 地址1
+     */
+    private String address1;
+    /**
+     * 地址2
+     */
+    private String address2;
+
     public String getCode() {
         return code;
     }
@@ -229,6 +254,54 @@ public class AccountVO {
         this.addrCode = addrCode;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -257,6 +330,12 @@ public class AccountVO {
                 ", subIndustry='" + subIndustry + '\'' +
                 ", regFund='" + regFund + '\'' +
                 ", addrCode='" + addrCode + '\'' +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", county='" + county + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
                 '}';
     }
 }
