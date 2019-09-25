@@ -11,11 +11,15 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api("客户头相关api")
 public class AccountController {
+    @Value(value = "${lang.language}")
+    private String langId;
+
     @Autowired
     AccountService accountService;
 
@@ -77,6 +81,7 @@ public class AccountController {
         accountVO.setCreated(DateFormatUtil.strToDate(created));
         accountVO.setUpdatedBy(updatedBy);
         accountVO.setUpdated(DateFormatUtil.strToDate(updated));
+        accountVO.setLangId(langId);
         PageQuery<AccountVO> pageQuery = new PageQuery<AccountVO>(accountVO, currentPage, pageSize);
         return  ServiceData.success(accountService.getAccount(pageQuery), pageQuery.getMapOfPageQuery());
     }

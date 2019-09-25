@@ -28,6 +28,7 @@ public class AccountVO {
     private String subIndustry;//子行业
     private String regFund;//注册资金
     private String addrCode;//地址code
+    private String langId;
 
     /**
      * 国家
@@ -302,6 +303,14 @@ public class AccountVO {
         this.address2 = address2;
     }
 
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -330,6 +339,7 @@ public class AccountVO {
                 ", subIndustry='" + subIndustry + '\'' +
                 ", regFund='" + regFund + '\'' +
                 ", addrCode='" + addrCode + '\'' +
+                ", langId='" + langId + '\'' +
                 ", country='" + country + '\'' +
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +

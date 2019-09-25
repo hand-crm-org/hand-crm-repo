@@ -17,3 +17,5 @@ springfox:
 #mybatis:
 #  type-aliases-package: com.hand.*.access.vo
 #  mapper-locations: classpath*:com/hand/*/access/dao/*Dao.xml
+lang:
+  language: CHS
