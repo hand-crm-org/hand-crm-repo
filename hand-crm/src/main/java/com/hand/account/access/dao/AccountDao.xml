@@ -89,7 +89,7 @@
         T4.ADDR1 as addr1,
         T4.ADDR2 as addr2
         FROM
-        (HC_ACCNT T1 LEFT JOIN
+        HC_ACCNT T1 LEFT JOIN
         (
         SELECT
         T1.CODE,
@@ -108,7 +108,7 @@
         AND T2.ADDR_CODE = T3.CODE
         AND T2.PRI_FLG = 'Y'
         AND T2.STATUS = 'Active'
-        ) T4 ON T1.CODE = T4.CODE)
+        ) T4 ON T1.CODE = T4.CODE
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>
@@ -118,8 +118,7 @@
     <select id="queryAccountCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
-        HC_ACCNT
-
+        HC_ACCNT T1
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>
