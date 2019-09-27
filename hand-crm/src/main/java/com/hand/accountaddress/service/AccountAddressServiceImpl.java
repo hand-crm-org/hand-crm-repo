@@ -2,6 +2,7 @@ package com.hand.accountaddress.service;
 
 import com.hand.accountaddress.access.dao.AccountAddressDao;
 import com.hand.accountaddress.access.vo.AccountAddressVO;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
@@ -23,13 +24,14 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
      */
     @Override
     public ResultDTO addAccountAddr(AccountAddressVO accountAddressVO) {
-        if (!StringUtil.isEmpty(accountAddressVO.getCode()) && !StringUtil.isEmpty(accountAddressVO.getAddrCode())
+        if (!StringUtil.isEmpty(accountAddressVO.getAddrCode())
                 && !StringUtil.isEmpty(accountAddressVO.getPriFlg()) && !StringUtil.isEmpty(accountAddressVO.getStatus()))
         {
-                int count = accountAddressDao.insertAccountAddr(accountAddressVO);
-                if (count > 0) {
-                    return ResultDTO.success();
-                }
+            accountAddressVO.setCode(StringUtil.getCode());
+            int count = accountAddressDao.insertAccountAddr(accountAddressVO);
+            if (count > 0) {
+                return ResultDTO.success();
+            }
             return ResultDTO.error("新建客户地址失败");
         }
         return ResultDTO.error("缺失参数");
@@ -42,7 +44,7 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
      * @Return List<AccountAddressVO>
      */
     @Override
-    public List<AccountAddressVO> getAccountAddr(PageQuery<AccountAddressVO> pageQuery) {
+    public List<AddressVO> getAccountAddr(PageQuery<AddressVO> pageQuery) {
         int count = accountAddressDao.queryAccountAddrCount(pageQuery);
         pageQuery.setCount(count);
         if(count > 0) {

@@ -23,12 +23,13 @@ public class OpportunityServiceImpl implements OpportunityService{
      */
     @Override
     public ResultDTO addOpportunity(OpportunityVO opportunityVO) {
-        if (!StringUtil.isEmpty(opportunityVO.getCode()) && !StringUtil.isEmpty(opportunityVO.getName())
+        if (!StringUtil.isEmpty(opportunityVO.getName())
                 && !StringUtil.isEmpty(opportunityVO.getAccntCode()) && !StringUtil.isEmpty(opportunityVO.getOptySource())
                 && !StringUtil.isEmpty(opportunityVO.getExpectSignTime().toString()) && !StringUtil.isEmpty(opportunityVO.getUpdatedBy())
                 && !StringUtil.isEmpty(opportunityVO.getStatus()) && !StringUtil.isEmpty(opportunityVO.getOptyFsctAmount().toString())
                 && !StringUtil.isEmpty(opportunityVO.getOwnOrgCode()))
         {
+            opportunityVO.setCode(StringUtil.getCode());
             int count = opportunityDao.insertOpportunity(opportunityVO);
             if (count > 0) {
                 return ResultDTO.success();

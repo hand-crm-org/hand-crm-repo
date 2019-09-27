@@ -1,6 +1,7 @@
 package com.hand.accountcontact.service;
 
 import com.hand.accountcontact.access.vo.AccountContactVO;
+import com.hand.contact.access.vo.ContactVO;
 import com.hand.frame.util.PageQuery;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface AccountContactService {
      * @param pageQuery
      * @return
      */
-    List<AccountContactVO> getAccountContactList(PageQuery<AccountContactVO> pageQuery);
+    List<ContactVO> getAccountContactList(PageQuery<ContactVO> pageQuery);
 
     /**
      * 增加客户联系人

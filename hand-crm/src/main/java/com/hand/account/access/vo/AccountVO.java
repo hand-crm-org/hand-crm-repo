@@ -3,7 +3,8 @@ package com.hand.account.access.vo;
 import java.util.Date;
 
 public class AccountVO {
-    private String code;//客户编码
+    private String code;//客户code
+    private String accntNum;//客户编码
     private Date created;//创建日期
     private String createdBy;//创建人
     private Date updated;//更新日期
@@ -20,6 +21,10 @@ public class AccountVO {
     private String periodCode;//客户周期
     private String currency;//币种
     private String priCtctCode;//客户法人code(主要联系人)
+    /**
+     * 主要联系人姓名
+     */
+    private String priCtct;
     private String phNum;//客户电话
     private String faxNum;//客户传真
     private String email;//客户邮箱
@@ -49,11 +54,11 @@ public class AccountVO {
     /**
      * 地址1
      */
-    private String address1;
+    private String addr1;
     /**
      * 地址2
      */
-    private String address2;
+    private String addr2;
 
     public String getCode() {
         return code;
@@ -183,6 +188,14 @@ public class AccountVO {
         this.currency = currency;
     }
 
+    public String getPriCtct() {
+        return priCtct;
+    }
+
+    public void setPriCtct(String priCtct) {
+        this.priCtct = priCtct;
+    }
+
     public String getPriCtctCode() {
         return priCtctCode;
     }
@@ -287,20 +300,20 @@ public class AccountVO {
         this.county = county;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getAddr1() {
+        return addr1;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
     }
 
-    public String getAddress2() {
-        return address2;
+    public String getAddr2() {
+        return addr2;
     }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setAddr2(String addr2) {
+        this.addr2 = addr2;
     }
 
     public String getLangId() {
@@ -311,10 +324,19 @@ public class AccountVO {
         this.langId = langId;
     }
 
+    public String getAccntNum() {
+        return accntNum;
+    }
+
+    public void setAccntNum(String accntNum) {
+        this.accntNum = accntNum;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
                 "code='" + code + '\'' +
+                ", accntNum='" + accntNum + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
                 ", updated=" + updated +
@@ -331,6 +353,7 @@ public class AccountVO {
                 ", periodCode='" + periodCode + '\'' +
                 ", currency='" + currency + '\'' +
                 ", priCtctCode='" + priCtctCode + '\'' +
+                ", priCtct='" + priCtct + '\'' +
                 ", phNum='" + phNum + '\'' +
                 ", faxNum='" + faxNum + '\'' +
                 ", email='" + email + '\'' +
@@ -344,8 +367,8 @@ public class AccountVO {
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +
                 ", county='" + county + '\'' +
-                ", address1='" + address1 + '\'' +
-                ", address2='" + address2 + '\'' +
+                ", addr1='" + addr1 + '\'' +
+                ", addr2='" + addr2 + '\'' +
                 '}';
     }
 }

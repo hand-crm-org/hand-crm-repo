@@ -1,6 +1,7 @@
 package com.hand.accountcontact.access.dao;
 
 import com.hand.accountcontact.access.vo.AccountContactVO;
+import com.hand.contact.access.vo.ContactVO;
 import com.hand.frame.util.PageQuery;
 import org.springframework.stereotype.Repository;
 
@@ -13,14 +14,14 @@ public interface AccountContactDao {
      * @param pageQuery
      * @return
      */
-    List<AccountContactVO> queryAccountContactList(PageQuery<AccountContactVO> pageQuery);
+    List<ContactVO> queryAccountContactList(PageQuery<ContactVO> pageQuery);
 
     /**
      * 对所有客户联系人计数
      * @param pageQuery
      * @return
      */
-    int queryAccountContactCount(PageQuery<AccountContactVO> pageQuery);
+    int queryAccountContactCount(PageQuery<ContactVO> pageQuery);
 
     /**
      * 新建客户联系人信息

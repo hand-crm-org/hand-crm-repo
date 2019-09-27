@@ -1,6 +1,7 @@
 package com.hand.account.access.dao;
 
 import com.hand.account.access.vo.AccountVO;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.util.PageQuery;
 import org.springframework.stereotype.Repository;
 

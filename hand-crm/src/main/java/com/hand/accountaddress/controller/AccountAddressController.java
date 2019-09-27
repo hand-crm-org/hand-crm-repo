@@ -4,6 +4,7 @@ import com.hand.account.access.vo.AccountVO;
 import com.hand.account.service.AccountService;
 import com.hand.accountaddress.access.vo.AccountAddressVO;
 import com.hand.accountaddress.service.AccountAddressServcice;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.DateFormatUtil;
@@ -31,22 +32,14 @@ public class AccountAddressController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="code", value="客户-地址编码", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="addrCode", value="地址code", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="priFlg", value="是否主要", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String")
+            @ApiImplicitParam(paramType="query", name="accntCode", value="客户编码", dataType="String")
     })
     @GetMapping("/getAcntAddrInfo")
     public ServiceData getAccInfo(int currentPage, int pageSize,
-                                  @RequestParam(value = "code",required = false) String code,@RequestParam(value = "addrCode",required = false) String addrCode,
-                                  @RequestParam(value = "priFlg",required = false) String priFlg,@RequestParam(value = "status",required = false) String status){
-        AccountAddressVO accountAddressVO = new AccountAddressVO();
-        accountAddressVO.setCode(code);
-        accountAddressVO.setAddrCode(addrCode);
-        accountAddressVO.setPriFlg(priFlg);
-        accountAddressVO.setStatus(status);
-
-        PageQuery<AccountAddressVO> pageQuery = new PageQuery<AccountAddressVO>(accountAddressVO, currentPage, pageSize);
+                                  String accntCode){
+        AddressVO addressVO = new AddressVO();
+        addressVO.setAccntCode(accntCode);
+        PageQuery<AddressVO> pageQuery = new PageQuery<AddressVO>(addressVO, currentPage, pageSize);
         return  ServiceData.success(accountAddressServcice.getAccountAddr(pageQuery), pageQuery.getMapOfPageQuery());
     }
 

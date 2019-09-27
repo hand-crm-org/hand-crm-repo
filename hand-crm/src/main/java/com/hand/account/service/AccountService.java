@@ -1,6 +1,7 @@
 package com.hand.account.service;
 
 import com.hand.account.access.vo.AccountVO;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.util.PageQuery;
 
 import java.util.List;

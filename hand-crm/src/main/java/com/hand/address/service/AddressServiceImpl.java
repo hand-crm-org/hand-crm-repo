@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author nan.yao@hand-china.com 2019/08/07
+ */
 @Service
 public class AddressServiceImpl implements AddressService{
     @Autowired
@@ -26,9 +29,9 @@ public class AddressServiceImpl implements AddressService{
 
     @Override
     public boolean addAddr(AddressVO addressVO) {
-        if (!StringUtil.isEmpty(addressVO.getCode())&&!StringUtil.isEmpty(addressVO.getUpdatedBy())&&
-            !StringUtil.isEmpty(addressVO.getObjCode())&&!StringUtil.isEmpty(addressVO.getServiceCode())&&
+        if (!StringUtil.isEmpty(addressVO.getUpdatedBy())&&!StringUtil.isEmpty(addressVO.getObjCode())&&!StringUtil.isEmpty(addressVO.getServiceCode())&&
             !StringUtil.isEmpty(addressVO.getCountry())&&!StringUtil.isEmpty(addressVO.getAddr1())){
+            addressVO.setCode(StringUtil.getCode());
             int count = addressDao.insertAddr(addressVO);
             return count>0;
         } else{

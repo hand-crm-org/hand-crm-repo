@@ -3,74 +3,46 @@
 <mapper namespace="com.hand.account.access.dao.AccountDao">
     <sql id="queryAllAccntInfoSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        NAME as name,
-        NAME_ENU as nameEnu,
-        TAX_CODE as taxCode,
-        PAR_ACCNT_CODE as parAccntCode,
-        PRI_EMP_CODE as priEmpCode,
-        ORG_CODE as orgCode,
-        DUNS_CODE as dunsCode,
-        CURRENCY as currency,
-        PRI_CTCT_CODE as priCtctCode,
-        PH_NUM as phNum,
-        FAX_NUM as faxNum,
-        EMAIL as email,
-        HOME_URL as homeUrl,
-        REG_FUND as regFund,
-        ADDR_CODE as addrCode
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.NAME as name,
+        T1.NAME_ENU as nameEnu,
+        T1.TAX_CODE as taxCode,
+        T1.PAR_ACCNT_CODE as parAccntCode,
+        T1.PRI_EMP_CODE as priEmpCode,
+        T1.ORG_CODE as orgCode,
+        T1.DUNS_CODE as dunsCode,
+        T1.CURRENCY as currency,
+        T1.PRI_CTCT_CODE as priCtctCode,
+        (SELECT NAME FROM HC_CTCT WHERE CODE = T1.PRI_CTCT_CODE AND STATUS = 'Active') as priCtct,
+        T1.PH_NUM as phNum,
+        T1.FAX_NUM as faxNum,
+        T1.EMAIL as email,
+        T1.HOME_URL as homeUrl,
+        T1.REG_FUND as regFund,
+        T1.ADDR_CODE as addrCode
     </sql>
-    <!--<resultMap id="accountResult" type="com.hand.account.access.vo.AccountVO">
-        <id property="code" column="code" />
-        <result property="nameEnu" column="nameEnu" />
-        <result property="type" column="type" />
-        <result property="taxCode" column="taxCode" />
-        <result property="parAccntCode" column="parAccntCode" />
-        <result property="priEmpCode" column="priEmpCode" />
-        <result property="orgCode" column="orgCode" />
-        <result property="dunsCode" column="dunsCode" />
-        <result property="periodCode" column="periodCode" />
-        <result property="currency" column="currency" />
-        <result property="priCtctCode" column="priCtctCode" />
-        <result property="phNum" column="phNum" />
-        <result property="faxNum" column="faxNum" />
-        <result property="homeUrl" column="homeUrl" />
-        <result property="industry" column="industry" />
-        <result property="subIndustry" column="subIndustry" />
-        <result property="regFund" column="regFund" />
-
-        <collection property="address" ofType="com.hand.address.access.vo.AddressVO">
-            <id property="code" column="code" />
-            <result property="country" column="country" />
-            <result property="state" column="state" />
-            <result property="city" column="city" />
-            <result property="county" column="county" />
-            <result property="addr1" column="addr1" />
-            <result property="addr2" column="addr2" />
-        </collection>
-    </resultMap>-->
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
-            <if test="entity.updated!=null "> AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
-            <if test="entity.nameEnu!=null and entity.nameEnu!=''"> AND NAME_ENU LIKE "%"#{entity.nameEnu,jdbcType=VARCHAR}"%"</if>
-            <if test="entity.taxCode!=null and entity.taxCode!=''"> AND TAX_CODE LIKE "%"#{entity.taxCode}"%"</if>
-            <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
-            <if test="entity.parAccntCode!=null and entity.parAccntCode!=''">AND PAR_ACCNT_CODE=#{entity.parAccntCode}</if>
-            <if test="entity.priEmpCode!=null and entity.priEmpCode!=''"> AND PRI_EMP_CODE=#{entity.priEmpCode}</if>
-            <if test="entity.orgCode!=null and entity.orgCode!=''"> AND ORG_CODE=#{entity.orgCode}</if>
-            <if test="entity.dunsCode!=null and entity.dunsCode!=''"> AND DUNS_CODE LIKE "%"#{entity.dunsCode}"%"</if>
-            <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
-            <if test="entity.periodCode!=null and entity.periodCode!=''"> AND PERIOD_CODE LIKE "%"#{entity.periodCode}"%"</if>
-            <if test="entity.priCtctCode!=null and entity.priCtctCode!=''"> AND PRI_CTCT_CODE=#{entity.priCtctCode}</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND T1.CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.nameEnu!=null and entity.nameEnu!=''"> AND T1.NAME_ENU LIKE "%"#{entity.nameEnu,jdbcType=VARCHAR}"%"</if>
+            <if test="entity.taxCode!=null and entity.taxCode!=''"> AND T1.TAX_CODE LIKE "%"#{entity.taxCode}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND T1.TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.parAccntCode!=null and entity.parAccntCode!=''">AND T1.PAR_ACCNT_CODE=#{entity.parAccntCode}</if>
+            <if test="entity.priEmpCode!=null and entity.priEmpCode!=''"> AND T1.PRI_EMP_CODE=#{entity.priEmpCode}</if>
+            <if test="entity.orgCode!=null and entity.orgCode!=''"> AND T1.ORG_CODE=#{entity.orgCode}</if>
+            <if test="entity.dunsCode!=null and entity.dunsCode!=''"> AND T1.DUNS_CODE LIKE "%"#{entity.dunsCode}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND T1.STATUS LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.periodCode!=null and entity.periodCode!=''"> AND T1.PERIOD_CODE LIKE "%"#{entity.periodCode}"%"</if>
+            <if test="entity.priCtctCode!=null and entity.priCtctCode!=''"> AND T1.PRI_CTCT_CODE=#{entity.priCtctCode}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -105,30 +77,38 @@
 
     <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.account.access.vo.AccountVO">
         <include refid="queryAllAccntInfoSql"></include>,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE NAME = T1.TYPE AND LANG_ID = #{entity.langId} AND TYPE = 'ACCNT_TYPE') as type,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE NAME = T1.STATUS AND LANG_ID = #{entity.langId} AND TYPE = 'ACCNT_STATUS') as status,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE NAME = T1.PERIOD_CODE AND LANG_ID = #{entity.langId} AND TYPE = 'ACCNT_PERIOD') as periodCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE NAME = T1.INDUSTRY AND LANG_ID = #{entity.langId} AND TYPE = 'INDUSTRY_TYPE') as industry,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE NAME = T1.SUB_INDUSTRY AND LANG_ID = #{entity.langId} AND TYPE = 'SUB_INDUSTRY_TYPE') as subIndustry,
-        T.COUNTRY as country,
-        T.STATE as state,
-        T.CITY as city,
-        T.COUNTY as county,
-        T.ADDR1 as addr1,
-        T.ADDR2 as addr2
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'ACCOUNT_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) AS type,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.PERIOD_CODE = `NAME` AND TYPE = 'ACCOUNT_PERIOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS periodCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTRY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS industry,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTRY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS subIndustry,
+        T4.COUNTRY as country,
+        T4.STATE as state,
+        T4.CITY as city,
+        T4.COUNTY as county,
+        T4.ADDR1 as addr1,
+        T4.ADDR2 as addr2
         FROM
-        HC_ACCNT,
-        (SELECT
+        (HC_ACCNT T1 LEFT JOIN
+        (
+        SELECT
+        T1.CODE,
         T3.COUNTRY,
         T3.STATE,
         T3.CITY,
         T3.COUNTY,
-        T3.ADDR2,
-        T3.ADDR1
-        FROM HC_ACCNT T1,HC_ACCNT_ADDR T2,HC_ADDR T3
-        WHERE T1.CODE = T2.ACCNT_CODE(+)
-        AND   T2.PRI_FLG = 'Y'
-        AND   T3.CODE(+) = T2.ADDR_CODE) T
+        T3.ADDR1,
+        T3.ADDR2
+        FROM
+        HC_ACCNT T1,
+        HC_ACCNT_ADDR T2,
+        HC_ADDR T3
+        WHERE
+        T1.`CODE` = T2.ACCNT_CODE
+        AND T2.ADDR_CODE = T3.CODE
+        AND T2.PRI_FLG = 'Y'
+        AND T2.STATUS = 'Active'
+        ) T4 ON T1.CODE = T4.CODE)
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>
@@ -139,6 +119,7 @@
         SELECT COUNT(*)
         FROM
         HC_ACCNT
+
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>
@@ -149,5 +130,4 @@
         <include refid="updateConditionSql"></include>
         WHERE CODE=#{code}
     </update>
-
 </mapper>

@@ -1,6 +1,7 @@
 package com.hand.accountaddress.service;
 
 import com.hand.accountaddress.access.vo.AccountAddressVO;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 
@@ -22,7 +23,7 @@ public interface AccountAddressServcice {
      * @param pageQuery
      * @Return List<AccountAddressVO>
      */
-    List<AccountAddressVO> getAccountAddr(PageQuery<AccountAddressVO> pageQuery);
+    List<AddressVO> getAccountAddr(PageQuery<AddressVO> pageQuery);
 
 
     /**

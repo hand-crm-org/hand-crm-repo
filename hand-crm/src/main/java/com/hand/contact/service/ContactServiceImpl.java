@@ -25,8 +25,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public boolean addContact(ContactVO contactVO) {
-        if (!StringUtil.isEmpty(contactVO.getCode())&&!StringUtil.isEmpty(contactVO.getUpdatedBy())&&
+        if (!StringUtil.isEmpty(contactVO.getUpdatedBy())&&
             !StringUtil.isEmpty(contactVO.getName())){
+            contactVO.setCode(StringUtil.getCode());
             int count = contactDao.insertContact(contactVO);
             return count>0;
         }

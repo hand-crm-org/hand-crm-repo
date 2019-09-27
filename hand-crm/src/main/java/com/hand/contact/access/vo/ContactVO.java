@@ -19,6 +19,10 @@ public class ContactVO {
     private String desc;
     private String status;
 
+    /**
+     * 客户code
+     */
+    private String accntCode;
     public String getCode() {
         return code;
     }
@@ -137,5 +141,13 @@ public class ContactVO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAccntCode() {
+        return accntCode;
+    }
+
+    public void setAccntCode(String accntCode) {
+        this.accntCode = accntCode;
     }
 }

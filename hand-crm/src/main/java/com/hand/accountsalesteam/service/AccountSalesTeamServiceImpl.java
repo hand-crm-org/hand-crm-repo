@@ -18,9 +18,10 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
     AccountSalesTeamDao accountSalesTeamDao;
     @Override
     public boolean addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
-        if (!StringUtil.isEmpty(accountSalesTeamVO.getCode())&&!StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())&&
+        if (!StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getAccntCode())&&!StringUtil.isEmpty(accountSalesTeamVO.getPriFlg())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getEmpCode())){
+            accountSalesTeamVO.setCode(StringUtil.getCode());
             int count = accountSalesTeamDao.insertAccountSalesTeam(accountSalesTeamVO);
             return count>0;
         }

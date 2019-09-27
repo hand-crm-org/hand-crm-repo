@@ -2,6 +2,7 @@ package com.hand.accountcontact.service;
 
 import com.hand.accountcontact.access.dao.AccountContactDao;
 import com.hand.accountcontact.access.vo.AccountContactVO;
+import com.hand.contact.access.vo.ContactVO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class AccountContactServiceImpl implements AccountContactService {
     @Autowired
     AccountContactDao accountContactDao;
     @Override
-    public List<AccountContactVO> getAccountContactList(PageQuery<AccountContactVO> pageQuery) {
+    public List<ContactVO> getAccountContactList(PageQuery<ContactVO> pageQuery) {
         int count = accountContactDao.queryAccountContactCount(pageQuery);
         if (count>0){
             pageQuery.setCount(count);
@@ -25,8 +26,9 @@ public class AccountContactServiceImpl implements AccountContactService {
 
     @Override
     public boolean addAccountContact(AccountContactVO accountContactVO) {
-        if (!StringUtil.isEmpty(accountContactVO.getCode())&&!StringUtil.isEmpty(accountContactVO.getUpdatedBy())&&
+        if (!StringUtil.isEmpty(accountContactVO.getUpdatedBy())&&
             !StringUtil.isEmpty(accountContactVO.getAccntCode())&&!StringUtil.isEmpty(accountContactVO.getCtctCode())){
+            accountContactVO.setCode(StringUtil.getCode());
             int count = accountContactDao.insertAccountContact(accountContactVO);
             return count>0;
         }

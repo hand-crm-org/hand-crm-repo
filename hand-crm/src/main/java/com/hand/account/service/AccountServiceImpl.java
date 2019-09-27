@@ -2,6 +2,7 @@ package com.hand.account.service;
 
 import com.hand.account.access.dao.AccountDao;
 import com.hand.account.access.vo.AccountVO;
+import com.hand.address.access.vo.AddressVO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,10 @@ public class AccountServiceImpl implements AccountService{
             }
             else
             {
-                if (!StringUtil.isEmpty(accountVO.getCode())&& !StringUtil.isEmpty(accountVO.getTaxCode())
+                if (!StringUtil.isEmpty(accountVO.getAccntNum())&& !StringUtil.isEmpty(accountVO.getTaxCode())
                         && !StringUtil.isEmpty(accountVO.getAddrCode()))
                 {
+                    accountVO.setCode(StringUtil.getCode());
                     int count = accountDao.insertAccount(accountVO);
                     if (count > 0) {
                         return true;

@@ -3,19 +3,9 @@
 <mapper namespace="com.hand.accountaddress.access.dao.AccountAddressDao">
     <sql id="queryAllAccntAddrInfoSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        ACCNT_CODE as accntCode,
-        ADDR_CODE as addrCode,
-        `DESC` as `desc`,
-        CTCT as ctct,
-        PH_NUM as phNum,
-        PRI_FLG as priFlg,
-        TYPE as type,
-        STATUS as status
+        T2.*
+        FROM
+        HC_ACCNT_ADDR T1, HC_ADDR T2
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -47,23 +37,29 @@
         VALUES (#{code},sysdate(),#{updatedBy},#{accntCode},#{addrCode},#{desc},#{ctct},#{phNum},#{priFlg},#{type},#{status})
     </insert>
 
-    <select id="queryAccountAddr" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountaddress.access.vo.AccountAddressVO">
+    <select id="queryAccountAddr" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.address.access.vo.AddressVO">
         <include refid="queryAllAccntAddrInfoSql"></include>
-        FROM
-        HC_ACCNT_ADDR
         WHERE
-        1=1
+        T1.ACCNT_CODE = #{entity.accntCode}
+        AND T1.ADDR_CODE = T2.CODE
+        AND T1.STATUS = 'Active'
+<!--
         <include refid="queryALLConditionSql"></include>
+-->
         limit #{start},#{pageSize}
     </select>
 
     <select id="queryAccountAddrCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
-        HC_ACCNT_ADDR
+        HC_ACCNT_ADDR T1, HC_ADDR T2
         WHERE
-        1=1
+        T1.ACCNT_CODE = #{entity.accntCode}
+        AND T1.ADDR_CODE = T2.CODE
+        AND T1.STATUS = 'Active'
+<!--
         <include refid="queryALLConditionSql"></include>
+-->
     </select>
 
     <update id="updateAccountAddr" parameterType="com.hand.accountaddress.access.vo.AccountAddressVO">

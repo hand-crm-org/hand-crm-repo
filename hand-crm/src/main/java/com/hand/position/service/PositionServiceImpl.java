@@ -22,9 +22,10 @@ public class PositionServiceImpl implements PositionService{
      */
     @Override
     public ResultDTO addPosition(PositionVO positionVO) {
-        if(!StringUtil.isEmpty(positionVO.getCode())&&!StringUtil.isEmpty(positionVO.getType())
+        if(!StringUtil.isEmpty(positionVO.getType())
                 &&!StringUtil.isEmpty(positionVO.getName())&&!StringUtil.isEmpty(positionVO.getOrgCode())
                 &&!StringUtil.isEmpty(positionVO.getUpdatedBy())&&!StringUtil.isEmpty(positionVO.getStatus())) {
+            positionVO.setCode(StringUtil.getCode());
             int count = positionDao.insertPosition(positionVO);
             if (count > 0) {
                 return ResultDTO.success();

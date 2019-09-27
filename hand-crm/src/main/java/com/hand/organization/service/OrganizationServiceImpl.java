@@ -26,9 +26,10 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     public boolean addOrg(OrganizationVO organizationVO) {
-        if (!StringUtil.isEmpty(organizationVO.getCode())&&!StringUtil.isEmpty(organizationVO.getUpdatedBy())&&
+        if (!StringUtil.isEmpty(organizationVO.getUpdatedBy())&&
             !StringUtil.isEmpty(organizationVO.getName())&&!StringUtil.isEmpty(organizationVO.getLevel())&&
             !StringUtil.isEmpty(organizationVO.getType())&&!StringUtil.isEmpty(organizationVO.getExtFlg())){
+            organizationVO.setCode(StringUtil.getCode());
             int count = organizationDao.insertOrg(organizationVO);
             return count>0;
         }

@@ -17,6 +17,12 @@ public class AddressVO {
     private String addr1;
     private String addr2;
 
+    /**
+     * 客户code
+     * @return
+     */
+    private String accntCode;
+
     public String getCode() {
         return code;
     }
@@ -119,5 +125,13 @@ public class AddressVO {
 
     public void setAddr2(String addr2) {
         this.addr2 = addr2;
+    }
+
+    public String getAccntCode() {
+        return accntCode;
+    }
+
+    public void setAccntCode(String accntCode) {
+        this.accntCode = accntCode;
     }
 }

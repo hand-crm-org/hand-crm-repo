@@ -24,10 +24,11 @@ public class ProductServiceImpl implements ProductService{
      */
 	@Override
 	public ResultDTO addProduct(ProductVO productVO) {
-		if(!StringUtil.isEmpty(productVO.getCode())&&!StringUtil.isEmpty(productVO.getType())
+		if(!StringUtil.isEmpty(productVO.getType())
                 &&!StringUtil.isEmpty(productVO.getName())&&!StringUtil.isEmpty(productVO.getExtCode())
                 &&!StringUtil.isEmpty(productVO.getUpdatedBy())&&!StringUtil.isEmpty(productVO.getStatus())) {
-            int count = productDao.insertProduct(productVO);
+            productVO.setCode(StringUtil.getCode());
+		    int count = productDao.insertProduct(productVO);
             if (count > 0) {
                 return ResultDTO.success();
             }

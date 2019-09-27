@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.accountcontact.access.dao.AccountContactDao">
-    <select id="queryAccountContactList" parameterType="com.hand.accountcontact.access.vo.AccountContactVO" resultType="com.hand.accountcontact.access.vo.AccountContactVO">
+    <select id="queryAccountContactList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.contact.access.vo.ContactVO">
         <include refid="queryAllSql"></include>
         WHERE
-        1=1
+        T1.CODE = T2.CTCT_CODE
+        AND
+        T2.ACCNT_CODE = #{entity.accntCode}
+        AND T2.STATUS = 'Active'
+<!--
         <include refid="queryAllConditionSql"></include>
+-->
         limit #{start},#{pageSize}
     </select>
-    <select id="queryAccountContactCount" parameterType="com.hand.accountcontact.access.vo.AccountContactVO" resultType="int">
+    <select id="queryAccountContactCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
-        FROM HC_ACCNT_CTCT
+        FROM
+        HC_CTCT T1, HC_ACCNT_CTCT T2
         WHERE
-        1=1
+        T1.CODE = T2.CTCT_CODE
+        AND
+        T2.ACCNT_CODE = #{entity.accntCode}
+        AND T2.STATUS = 'Active'
+<!--
         <include refid="queryAllConditionSql"></include>
+-->
     </select>
     <insert id="insertAccountContact" parameterType="com.hand.accountcontact.access.vo.AccountContactVO">
         INSERT
@@ -31,17 +42,22 @@
     </update>
     <sql id="queryAllSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        ACCNT_CODE as accntCode,
-        CTCT_CODE as ctctCode,
-        STATUS as status,
-        `DESC` as `desc`
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.OBJ_CODE as objCode,
+        T1.SERVICE_CODE as serviceCode,
+        T1.NAME as name,
+        T1.NAME_FOREIGN as nameForeign,
+        T1.PH_NUM as phNum,
+        T1.EMAIL as email,
+        T1.JOB_TITLE as jobTitle,
+        T1.HOBBY as `desc`,
+        T1.STATUS as status
         FROM
-        HC_ACCNT_CTCT
+        HC_CTCT T1, HC_ACCNT_CTCT T2
     </sql>
     <sql id="updateConditionSql">
         <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
