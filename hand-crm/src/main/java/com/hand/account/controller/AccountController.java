@@ -31,7 +31,7 @@ public class AccountController {
         if (code!=null){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject.toJSONString());
+            return ResultDTO.success(jsonObject);
         }
         return ResultDTO.error("新建客户头失败");
     }

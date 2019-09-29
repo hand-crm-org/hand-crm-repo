@@ -61,7 +61,7 @@ public class ContactController {
         if (code!=null){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject.toJSONString());
+            return ResultDTO.success(jsonObject);
         }
         return ResultDTO.error("联系人信息新建失败");
     }

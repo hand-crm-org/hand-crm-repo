@@ -56,7 +56,7 @@ public class AddressController {
         if (code!=null){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject.toJSONString());
+            return ResultDTO.success(jsonObject);
         }
         return ResultDTO.error("地址信息新建失败");
     }

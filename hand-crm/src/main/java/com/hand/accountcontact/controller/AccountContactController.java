@@ -40,7 +40,7 @@ public class AccountContactController {
         if (code!=null){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject.toJSONString());
+            return ResultDTO.success(jsonObject);
         }
         return ResultDTO.error("客户-联系人信息新建失败");
     }

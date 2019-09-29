@@ -32,7 +32,7 @@ public class PositionServiceImpl implements PositionService{
             if (count > 0) {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("code",code);
-                return ResultDTO.success(jsonObject.toJSONString());
+                return ResultDTO.success(jsonObject);
             }
             return ResultDTO.error("新建职位失败");
         }

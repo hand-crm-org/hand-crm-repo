@@ -79,7 +79,7 @@ public class ListOfValueServiceImpl implements ListOfValueService{
             if(count>0){
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("code",code);
-                return ResultDTO.success(jsonObject.toJSONString());
+                return ResultDTO.success(jsonObject);
             }
             else{
                 return ResultDTO.error("新建值列表失败");
