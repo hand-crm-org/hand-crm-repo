@@ -19,7 +19,7 @@ public interface ContactService {
      * @param contactVO
      * @Return boolean
      */
-    boolean addContact(ContactVO contactVO);
+    String addContact(ContactVO contactVO);
 
     /**
      * 修改联系人信息

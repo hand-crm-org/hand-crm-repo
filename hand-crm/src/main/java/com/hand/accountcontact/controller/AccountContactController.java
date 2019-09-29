@@ -1,5 +1,6 @@
 package com.hand.accountcontact.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.accountcontact.access.vo.AccountContactVO;
 import com.hand.accountcontact.service.AccountContactService;
 import com.hand.contact.access.vo.ContactVO;
@@ -35,8 +36,11 @@ public class AccountContactController {
     @ApiOperation(value="客户-联系人信息新建")
     @PostMapping("/addAccountContact")
     public ResultDTO addAccountContact(@RequestBody AccountContactVO accountContactVO){
-        if (accountContactService.addAccountContact(accountContactVO)){
-            return ResultDTO.success();
+        String code = accountContactService.addAccountContact(accountContactVO);
+        if (code!=null){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code",code);
+            return ResultDTO.success(jsonObject.toJSONString());
         }
         return ResultDTO.error("客户-联系人信息新建失败");
     }

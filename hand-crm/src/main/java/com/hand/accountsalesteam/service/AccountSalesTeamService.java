@@ -14,7 +14,7 @@ public interface AccountSalesTeamService {
      * @param accountSalesTeamVO
      * @return
      */
-    boolean addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
+    String addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
 
     /**
      * 查询客户销售团队列表

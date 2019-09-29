@@ -17,13 +17,17 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
     @Autowired
     AccountSalesTeamDao accountSalesTeamDao;
     @Override
-    public boolean addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
+    public String addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
         if (!StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getAccntCode())&&!StringUtil.isEmpty(accountSalesTeamVO.getPriFlg())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getEmpCode())){
-            accountSalesTeamVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            accountSalesTeamVO.setCode(code);
             int count = accountSalesTeamDao.insertAccountSalesTeam(accountSalesTeamVO);
-            return count>0;
+            if (count>0){
+                return code;
+            }
+            return null;
         }
         else{
             throw new RuntimeException("miss params");

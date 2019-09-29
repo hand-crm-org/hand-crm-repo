@@ -9,7 +9,7 @@ public class ResultDTO {
     private final static int ERROR = 500;
     private Integer code;
     private String msg;
-    private boolean success;
+    private Boolean success;
 
     public Integer getCode() {
         return code;
@@ -27,14 +27,21 @@ public class ResultDTO {
         this.msg = msg;
     }
 
-    public boolean isSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
     }
 
+    public static ResultDTO success(String msg){
+        ResultDTO dto = new ResultDTO();
+        dto.setCode(SUCCESS);
+        dto.setSuccess(true);
+        dto.setMsg(msg);
+        return dto;
+    }
     public static ResultDTO success(){
         ResultDTO dto = new ResultDTO();
         dto.setCode(SUCCESS);

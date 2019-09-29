@@ -24,12 +24,16 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public boolean addContact(ContactVO contactVO) {
+    public String addContact(ContactVO contactVO) {
         if (!StringUtil.isEmpty(contactVO.getUpdatedBy())&&
             !StringUtil.isEmpty(contactVO.getName())){
-            contactVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            contactVO.setCode(code);
             int count = contactDao.insertContact(contactVO);
-            return count>0;
+            if (count>0){
+                return code;
+            }
+            return null;
         }
         else {
             throw new RuntimeException("miss param!");

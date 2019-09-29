@@ -1,5 +1,6 @@
 package com.hand.listofvalue.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
@@ -72,10 +73,13 @@ public class ListOfValueServiceImpl implements ListOfValueService{
                 &&!StringUtil.isEmpty(listOfValueVO.getLangId())&&!StringUtil.isEmpty(listOfValueVO.getName())
                 &&!StringUtil.isEmpty(listOfValueVO.getVal())&&listOfValueVO.getLevel()!=null)
         {
-            listOfValueVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            listOfValueVO.setCode(code);
             int count = listOfValueDao.insertLstOfVal(listOfValueVO);
             if(count>0){
-                return ResultDTO.success();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code",code);
+                return ResultDTO.success(jsonObject.toJSONString());
             }
             else{
                 return ResultDTO.error("新建值列表失败");

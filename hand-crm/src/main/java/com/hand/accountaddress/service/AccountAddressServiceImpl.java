@@ -1,5 +1,6 @@
 package com.hand.accountaddress.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.accountaddress.access.dao.AccountAddressDao;
 import com.hand.accountaddress.access.vo.AccountAddressVO;
 import com.hand.address.access.vo.AddressVO;
@@ -27,10 +28,13 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
         if (!StringUtil.isEmpty(accountAddressVO.getAddrCode())
                 && !StringUtil.isEmpty(accountAddressVO.getPriFlg()) && !StringUtil.isEmpty(accountAddressVO.getStatus()))
         {
-            accountAddressVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            accountAddressVO.setCode(code);
             int count = accountAddressDao.insertAccountAddr(accountAddressVO);
             if (count > 0) {
-                return ResultDTO.success();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code",code);
+                return ResultDTO.success(jsonObject.toJSONString());
             }
             return ResultDTO.error("新建客户地址失败");
         }

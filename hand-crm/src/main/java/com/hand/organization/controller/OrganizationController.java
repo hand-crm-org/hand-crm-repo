@@ -1,5 +1,6 @@
 package com.hand.organization.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
@@ -49,8 +50,11 @@ public class OrganizationController {
     @ApiOperation(value="组织信息新建")
     @PostMapping("/addOrg")
     public ResultDTO addOrg(@RequestBody OrganizationVO organizationVO){
-        if (organizationService.addOrg(organizationVO)){
-            return ResultDTO.success();
+        String code = organizationService.addOrg(organizationVO);
+        if (code!=null){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code",code);
+            return ResultDTO.success(jsonObject.toJSONString());
         }
         return ResultDTO.error("组织信息新建失败");
     }

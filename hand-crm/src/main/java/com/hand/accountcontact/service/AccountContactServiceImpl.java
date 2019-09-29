@@ -25,12 +25,16 @@ public class AccountContactServiceImpl implements AccountContactService {
     }
 
     @Override
-    public boolean addAccountContact(AccountContactVO accountContactVO) {
+    public String addAccountContact(AccountContactVO accountContactVO) {
         if (!StringUtil.isEmpty(accountContactVO.getUpdatedBy())&&
             !StringUtil.isEmpty(accountContactVO.getAccntCode())&&!StringUtil.isEmpty(accountContactVO.getCtctCode())){
-            accountContactVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            accountContactVO.setCode(code);
             int count = accountContactDao.insertAccountContact(accountContactVO);
-            return count>0;
+            if (count>0){
+                return code;
+            }
+            return null;
         }
         else{
             throw new RuntimeException("miss params");

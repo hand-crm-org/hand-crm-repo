@@ -22,32 +22,34 @@ public class AccountServiceImpl implements AccountService{
      * @Return int
      */
     @Override
-    public boolean addAccount(AccountVO accountVO) {
+    public String addAccount(AccountVO accountVO) {
         if (!StringUtil.isEmpty(accountVO.getPriEmpCode()) && !StringUtil.isEmpty(accountVO.getType())
                 && !StringUtil.isEmpty(accountVO.getPeriodCode()) && !StringUtil.isEmpty(accountVO.getName())
                 && !StringUtil.isEmpty(accountVO.getOrgCode()) && !StringUtil.isEmpty(accountVO.getUpdatedBy())
                 && !StringUtil.isEmpty(accountVO.getStatus()) && !StringUtil.isEmpty(accountVO.getPeriodCode())
                 && !StringUtil.isEmpty(accountVO.getPriCtctCode()) && !StringUtil.isEmpty(accountVO.getPhNum()))
         {
+            String code = StringUtil.getCode();
             if ("潜在客户".equals(accountVO.getPeriodCode()))
             {
+                accountVO.setCode(code);
                 int count = accountDao.insertAccount(accountVO);
                 if (count > 0) {
-                    return true;
+                    return code;
                 }
-                return false;
+                return null;
             }
             else
             {
                 if (!StringUtil.isEmpty(accountVO.getAccntNum())&& !StringUtil.isEmpty(accountVO.getTaxCode())
                         && !StringUtil.isEmpty(accountVO.getAddrCode()))
                 {
-                    accountVO.setCode(StringUtil.getCode());
+                    accountVO.setCode(code);
                     int count = accountDao.insertAccount(accountVO);
                     if (count > 0) {
-                        return true;
+                        return code;
                     }
-                    return false;
+                    return null;
                 }
                 throw new RuntimeException("miss params");
             }

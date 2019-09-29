@@ -1,5 +1,6 @@
 package com.hand.opportunity.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
@@ -29,10 +30,13 @@ public class OpportunityServiceImpl implements OpportunityService{
                 && !StringUtil.isEmpty(opportunityVO.getStatus()) && !StringUtil.isEmpty(opportunityVO.getOptyFsctAmount().toString())
                 && !StringUtil.isEmpty(opportunityVO.getOwnOrgCode()))
         {
-            opportunityVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            opportunityVO.setCode(code);
             int count = opportunityDao.insertOpportunity(opportunityVO);
             if (count > 0) {
-                return ResultDTO.success();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code",code);
+                return ResultDTO.success(jsonObject.toJSONString());
             }
             return ResultDTO.error("新建商机失败");
         }

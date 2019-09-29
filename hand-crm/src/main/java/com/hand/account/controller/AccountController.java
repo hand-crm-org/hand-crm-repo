@@ -1,5 +1,6 @@
 package com.hand.account.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.account.access.vo.AccountVO;
 import com.hand.account.service.AccountService;
 import com.hand.frame.model.ResultDTO;
@@ -26,8 +27,11 @@ public class AccountController {
     @ApiOperation(value="新建客户头")
     @PostMapping("/addAccount")
     public ResultDTO addAccount(@RequestBody AccountVO accountVO){
-        if (accountService.addAccount(accountVO)){
-            return ResultDTO.success();
+        String code = accountService.addAccount(accountVO);
+        if (code!=null){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code",code);
+            return ResultDTO.success(jsonObject.toJSONString());
         }
         return ResultDTO.error("新建客户头失败");
     }

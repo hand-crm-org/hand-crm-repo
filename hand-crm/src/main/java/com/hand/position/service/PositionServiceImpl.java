@@ -1,5 +1,6 @@
 package com.hand.position.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
@@ -25,10 +26,13 @@ public class PositionServiceImpl implements PositionService{
         if(!StringUtil.isEmpty(positionVO.getType())
                 &&!StringUtil.isEmpty(positionVO.getName())&&!StringUtil.isEmpty(positionVO.getOrgCode())
                 &&!StringUtil.isEmpty(positionVO.getUpdatedBy())&&!StringUtil.isEmpty(positionVO.getStatus())) {
-            positionVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            positionVO.setCode(code);
             int count = positionDao.insertPosition(positionVO);
             if (count > 0) {
-                return ResultDTO.success();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code",code);
+                return ResultDTO.success(jsonObject.toJSONString());
             }
             return ResultDTO.error("新建职位失败");
         }

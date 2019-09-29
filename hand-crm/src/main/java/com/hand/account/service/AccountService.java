@@ -13,7 +13,7 @@ public interface AccountService {
      * @param accountVO
      * @Return int
      */
-    boolean addAccount(AccountVO accountVO);
+    String addAccount(AccountVO accountVO);
 
 
     /**

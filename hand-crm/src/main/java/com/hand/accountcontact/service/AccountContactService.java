@@ -19,7 +19,7 @@ public interface AccountContactService {
      * @param accountContactVO
      * @return
      */
-    boolean addAccountContact(AccountContactVO accountContactVO);
+    String addAccountContact(AccountContactVO accountContactVO);
 
     /**
      * 更新客户联系人

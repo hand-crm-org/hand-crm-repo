@@ -25,13 +25,17 @@ public class OrganizationServiceImpl implements OrganizationService{
     }
 
     @Override
-    public boolean addOrg(OrganizationVO organizationVO) {
+    public String addOrg(OrganizationVO organizationVO) {
         if (!StringUtil.isEmpty(organizationVO.getUpdatedBy())&&
             !StringUtil.isEmpty(organizationVO.getName())&&!StringUtil.isEmpty(organizationVO.getLevel())&&
             !StringUtil.isEmpty(organizationVO.getType())&&!StringUtil.isEmpty(organizationVO.getExtFlg())){
-            organizationVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            organizationVO.setCode(code);
             int count = organizationDao.insertOrg(organizationVO);
-            return count>0;
+            if (count>0){
+                return code;
+            }
+            return null;
         }
         else {
             throw new RuntimeException("miss param");

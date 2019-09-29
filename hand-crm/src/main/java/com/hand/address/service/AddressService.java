@@ -19,7 +19,7 @@ public interface AddressService {
      * @param addressVO
      * @Return boolean
      */
-    boolean addAddr(AddressVO addressVO);
+    String addAddr(AddressVO addressVO);
 
     /**
      * 修改地址信息

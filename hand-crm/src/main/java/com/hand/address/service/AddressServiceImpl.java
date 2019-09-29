@@ -28,12 +28,16 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
-    public boolean addAddr(AddressVO addressVO) {
+    public String addAddr(AddressVO addressVO) {
         if (!StringUtil.isEmpty(addressVO.getUpdatedBy())&&!StringUtil.isEmpty(addressVO.getObjCode())&&!StringUtil.isEmpty(addressVO.getServiceCode())&&
             !StringUtil.isEmpty(addressVO.getCountry())&&!StringUtil.isEmpty(addressVO.getAddr1())){
-            addressVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            addressVO.setCode(code);
             int count = addressDao.insertAddr(addressVO);
-            return count>0;
+            if (count>0){
+                return code;
+            }
+            return null;
         } else{
             throw new RuntimeException("miss params!");
         }

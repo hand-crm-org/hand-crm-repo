@@ -2,6 +2,7 @@ package com.hand.product.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.frame.model.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,13 @@ public class ProductServiceImpl implements ProductService{
 		if(!StringUtil.isEmpty(productVO.getType())
                 &&!StringUtil.isEmpty(productVO.getName())&&!StringUtil.isEmpty(productVO.getExtCode())
                 &&!StringUtil.isEmpty(productVO.getUpdatedBy())&&!StringUtil.isEmpty(productVO.getStatus())) {
-            productVO.setCode(StringUtil.getCode());
+            String code = StringUtil.getCode();
+            productVO.setCode(code);
 		    int count = productDao.insertProduct(productVO);
             if (count > 0) {
-                return ResultDTO.success();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code",code);
+                return ResultDTO.success(jsonObject.toJSONString());
             }
             return ResultDTO.error("新建产品失败");
         }

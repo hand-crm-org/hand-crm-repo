@@ -19,7 +19,7 @@ public interface OrganizationService {
      * @param organizationVO
      * @Return boolean
      */
-    boolean addOrg(OrganizationVO organizationVO);
+    String addOrg(OrganizationVO organizationVO);
     /**
      * 修改组织信息
      * @UpdateBy yne

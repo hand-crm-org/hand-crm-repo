@@ -1,5 +1,6 @@
 package com.hand.address.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.address.access.vo.AddressVO;
 import com.hand.address.service.AddressService;
 import com.hand.frame.model.ResultDTO;
@@ -51,8 +52,11 @@ public class AddressController {
     @ApiOperation(value="地址信息新建")
     @PostMapping("/addAddr")
     public ResultDTO addAddr(@RequestBody AddressVO addressVO){
-        if (addressService.addAddr(addressVO)){
-            return ResultDTO.success();
+        String code = addressService.addAddr(addressVO);
+        if (code!=null){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code",code);
+            return ResultDTO.success(jsonObject.toJSONString());
         }
         return ResultDTO.error("地址信息新建失败");
     }
