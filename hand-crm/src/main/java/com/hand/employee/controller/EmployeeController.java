@@ -92,7 +92,7 @@ public class EmployeeController {
     }
 
     @ApiOperation("更新员工")
-    @PostMapping("modify-employee")
+    @PutMapping("modify-employee")
     public ResultDTO modifyEmployee(@RequestBody EmployeeVO employeeVO){
         if (employeeService.modifyEmployee(employeeVO)){
             return ResultDTO.success();
