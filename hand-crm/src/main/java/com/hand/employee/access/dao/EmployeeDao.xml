@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.employee.access.dao.EmployeeDao">
+    <insert id="insertEmployee" parameterType="com.hand.employee.access.vo.EmployeeVO">
+    INSERT
+    INTO
+    HC_EMP
+    (CODE,CREATED,CREATED_BY,USER_FLG,LOGIN,PASSWORD,NAME,NAME_FOREIGN,NAME_SHORT,WORK_NUM,PERSONAL_NUM,
+    WECHAT_NUM,QQ_NUM,OPEN_ID,EMAIL,JOB_LEVEL,PRI_POSTN_CODE,ADDR_CODE,STATUS)
+    VALUES
+    (#{code},sysdate(),#{updatedBy},#{userFlg},#{login},#{password},#{name},#{nameForeign},#{nameShort},#{wordNum},
+    #{personalNum},#{wechatNum},#{qqNum},#{openId},#{email},#{jobLevel},#{priPostnCode},#{addrCode},#{status})
+    </insert>
+
+    <select id="queryEmployee" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.employee.access.vo.EmployeeVO">
+        SELECT
+        CODE code,
+        CREATED created,
+        CREATEDBY createdBy,
+        UPDATED updated,
+        UPDATEDBY updatedBy,
+        USER_FLG userFlg,
+        LOGIN login,
+        PASSWORD password,
+        NAME name,
+        NAME_FOREIGN nameForeign,
+        NAME_SHORT nameShort,
+        WORK_NUM wordNum,
+        PERSONAL_NUM personalNum,
+        WECHAT_NUM wechatNum,
+        QQ_NUM qqNum,
+        OPEN_ID openId,
+        EMAIL email,
+        JOB_LEVEL jobLevel,
+        PRI_POSTN_CODE priPostnCode,
+        ADDR_CODE addrCode,
+        STATUS status
+        FROM
+        HC_EMP
+        WHERE
+        1=1
+        <include refid="queryCondition"></include>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="countEmployee" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        HC_EMP
+        WHERE
+        1=1
+        <include refid="queryCondition"></include>
+    </select>
+
+    <update id="updateEmployee" parameterType="com.hand.employee.access.vo.EmployeeVO">
+        UPDATE
+        HC_EMP
+        SET
+        UPDATED=sysdate(),
+        <include refid="updateCondition"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+
+    <delete id="deleteEmployee" parameterType="String">
+        DELETE
+        FROM
+        HC_EMP
+        WHERE
+        CODE = #{empCode}
+    </delete>
+
+    <sql id="queryCondition">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''">
+                AND CODE = #{entity.code}
+            </if>
+            <if test="entity.created!=null and entity.created!=''">
+                AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')
+            </if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''">
+                AND CREATEDBY = #{entity.createdBy}
+            </if>
+            <if test="entity.updated!=null and entity.updated!=''">
+                AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')
+            </if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''">
+                AND UPDATEDBY = #{entity.updatedBy}
+            </if>
+            <if test="entity.userFlg!=null and entity.userFlg!=''">
+                AND USER_FLG = #{entity.userFlg}
+            </if>
+            <if test="entity.login!=null and entity.login!=''">
+                AND LOGIN LIKE #{entity.login}"%"
+            </if>
+            <if test="entity.password!=null and entity.password!=''">
+                AND PASSWORD = #{entity.password}
+            </if>
+            <if test="entity.name!=null and entity.name!=''">
+                AND NAME = "%"#{entity.name}"%"
+            </if>
+            <if test="entity.nameForeign!=null and entity.nameForeign!=''">
+                AND NAME_FOREIGN = "%"#{entity.nameForeign}"%"
+            </if>
+            <if test="entity.nameShort!=null and entity.nameShort!=''">
+                AND NAME_SHORT = "%"#{entity.nameShort}"%"
+            </if>
+            <if test="entity.workNum!=null and entity.workNum!=''">
+                AND WORK_NUM = "%"#{entity.workNum}"%"
+            </if>
+            <if test="entity.personalNum!=null and entity.personalNum!=''">
+                AND PERSONAL_NUM = "%"#{entity.personalNum}"%"
+            </if>
+            <if test="entity.wechatNum!=null and entity.wechatNum!=''">
+                AND WECHAT_NUM = "%"#{entity.wechatNum}"%"
+            </if>
+            <if test="entity.qqNum!=null and entity.qqNum!=''">
+                AND QQ_NUM = "%"#{entity.qqNum}"%"
+            </if>
+            <if test="entity.openId!=null and entity.openId!=''">
+                AND OPEN_ID = #{entity.openId}
+            </if>
+            <if test="entity.email!=null and entity.email!=''">
+                AND EMAIL = "%"#{entity.email}"%"
+            </if>
+            <if test="entity.jobLevel!=null and entity.jobLevel!=''">
+                AND JOB_LEVEL = "%"#{entity.jobLevel}"%"
+            </if>
+            <if test="entity.priPostnCode!=null and entity.priPostnCode!=''">
+                AND PRI_POSTN_CODE = #{entity.priPostnCode}
+            </if>
+            <if test="entity.addrCode!=null and entity.addrCode!=''">
+                AND ADDR_CODE = #{entity.addrCode}
+            </if>
+            <if test="entity.status!=null and entity.status!=''">
+                AND STATUS = "%"#{entity.status}"%"
+            </if>
+        </if>
+    </sql>
+    <sql id="updateCondition">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">
+                 UPDATEDBY = #{updatedBy}
+            </if>
+            <if test="userFlg!=null and userFlg!=''">
+                , USER_FLG = #{userFlg}
+            </if>
+            <if test="entity.login!=null and entity.login!=''">
+                , LOGIN = #{login}
+            </if>
+            <if test="entity.password!=null and entity.password!=''">
+                , PASSWORD = #{password}
+            </if>
+            <if test="entity.name!=null and entity.name!=''">
+                , NAME = #{name}
+            </if>
+            <if test="entity.nameForeign!=null and entity.nameForeign!=''">
+                , NAME_FOREIGN = #{nameForeign}
+            </if>
+            <if test="entity.nameShort!=null and entity.nameShort!=''">
+                , NAME_SHORT = #{nameShort}
+            </if>
+            <if test="entity.workNum!=null and entity.workNum!=''">
+                , WORK_NUM = #{workNum}
+            </if>
+            <if test="entity.personalNum!=null and entity.personalNum!=''">
+                , PERSONAL_NUM = #{personalNum}
+            </if>
+            <if test="entity.wechatNum!=null and entity.wechatNum!=''">
+                , WECHAT_NUM = #{wechatNum}
+            </if>
+            <if test="entity.qqNum!=null and entity.qqNum!=''">
+                , QQ_NUM = #{qqNum}
+            </if>
+            <if test="entity.openId!=null and entity.openId!=''">
+                , OPEN_ID = #{openId}
+            </if>
+            <if test="entity.email!=null and entity.email!=''">
+                , EMAIL = #{email}
+            </if>
+            <if test="entity.jobLevel!=null and entity.jobLevel!=''">
+                , JOB_LEVEL = #{jobLevel}
+            </if>
+            <if test="entity.priPostnCode!=null and entity.priPostnCode!=''">
+                , PRI_POSTN_CODE = #{priPostnCode}
+            </if>
+            <if test="entity.addrCode!=null and entity.addrCode!=''">
+                , ADDR_CODE = #{addrCode}
+            </if>
+            <if test="entity.status!=null and entity.status!=''">
+                , STATUS = #{status}
+            </if>
+        </if>
+    </sql>
+</mapper>
