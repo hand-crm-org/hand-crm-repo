@@ -46,6 +46,18 @@ public class AccountSalesTeamVO {
      * 状态
      */
     private String status;
+    /**
+     * 员工姓名
+     */
+    private String empName;
+    /**
+     * 员工电话
+     */
+    private String empPhoneNum;
+    /**
+     * 员工职位
+     */
+    private String empPosition;
 
     public String getCode() {
         return code;
@@ -127,6 +139,30 @@ public class AccountSalesTeamVO {
         this.status = status;
     }
 
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getEmpPhoneNum() {
+        return empPhoneNum;
+    }
+
+    public void setEmpPhoneNum(String empPhoneNum) {
+        this.empPhoneNum = empPhoneNum;
+    }
+
+    public String getEmpPosition() {
+        return empPosition;
+    }
+
+    public void setEmpPosition(String empPosition) {
+        this.empPosition = empPosition;
+    }
+
     @Override
     public String toString() {
         return "AccountSalesTeamVO{" +
@@ -140,6 +176,9 @@ public class AccountSalesTeamVO {
                 ", priFlg='" + priFlg + '\'' +
                 ", desc='" + desc + '\'' +
                 ", status='" + status + '\'' +
+                ", empName='" + empName + '\'' +
+                ", empPhoneNum='" + empPhoneNum + '\'' +
+                ", empPosition='" + empPosition + '\'' +
                 '}';
     }
 }
