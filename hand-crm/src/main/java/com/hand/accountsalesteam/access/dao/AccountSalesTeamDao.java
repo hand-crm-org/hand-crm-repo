@@ -39,4 +39,11 @@ public interface AccountSalesTeamDao {
      * @return
      */
     int updateAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
+
+    /**
+     * 删除客户销售团队
+     * @param code
+     * @return
+     */
+    int deleteAccountSalesTeam(String code);
 }

@@ -58,6 +58,20 @@ public class AccountSalesTeamVO {
      * 员工职位
      */
     private String empPosition;
+    /**
+     * 团队角色
+     */
+    private String teamRole;
+
+    /**
+     * 团队角色独立源代码
+     */
+    private String teamRoleCode;
+
+    /**
+     * 语言
+     */
+    private String langId;
 
     public String getCode() {
         return code;
@@ -163,6 +177,30 @@ public class AccountSalesTeamVO {
         this.empPosition = empPosition;
     }
 
+    public String getTeamRole() {
+        return teamRole;
+    }
+
+    public void setTeamRole(String teamRole) {
+        this.teamRole = teamRole;
+    }
+
+    public String getTeamRoleCode() {
+        return teamRoleCode;
+    }
+
+    public void setTeamRoleCode(String teamRoleCode) {
+        this.teamRoleCode = teamRoleCode;
+    }
+
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
+    }
+
     @Override
     public String toString() {
         return "AccountSalesTeamVO{" +
@@ -179,6 +217,9 @@ public class AccountSalesTeamVO {
                 ", empName='" + empName + '\'' +
                 ", empPhoneNum='" + empPhoneNum + '\'' +
                 ", empPosition='" + empPosition + '\'' +
+                ", teamRole='" + teamRole + '\'' +
+                ", teamRoleCode='" + teamRoleCode + '\'' +
+                ", langId='" + langId + '\'' +
                 '}';
     }
 }

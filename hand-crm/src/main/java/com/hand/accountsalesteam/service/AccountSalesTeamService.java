@@ -29,4 +29,11 @@ public interface AccountSalesTeamService {
      * @return
      */
     boolean modifyAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
+
+    /**
+     * 删除销售团队信息
+     * @param code
+     * @return
+     */
+    boolean removeAccountSalesTeam(String code);
 }
