@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.hand.employee.access.vo.EmployeeVO;
 import com.hand.frame.util.PageQuery;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author nan.yao@hand-china.com 2019/9/30 16:37
  */
+@Repository
 public interface EmployeeDao {
 
     /**
