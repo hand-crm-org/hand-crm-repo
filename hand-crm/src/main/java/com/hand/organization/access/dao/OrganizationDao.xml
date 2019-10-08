@@ -75,7 +75,7 @@
         <if test="name!=null and name!=''">,NAME=#{name}</if>
         <if test="parOrgCode!=null and parOrgCode!=''">,PAR_ORG_CODE=#{parOrgCode}</if>
         <if test="level!=null and level!=''">,LEVEL=#{level}</if>
-        <if test="extFlg!=null and actFlg!=''">,EXT_FLG=#{extFlg}</if>
+        <if test="extFlg!=null and extFlg!=''">,EXT_FLG=#{extFlg}</if>
         <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
         <if test="status!=null and status!=''">,STATUS=#{status}</if>
     </sql>
