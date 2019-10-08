@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.accountrating.access.dao.AccountRatingDao">
+    <select id="queryAccountRatingList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountrating.access.vo.AccountRatingVO">
+        <include refid="queryAllSql"></include>
+        WHERE
+        T1.ACCNT_CODE = #{entity.accountCode}
+        <!--
+                <include refid="queryAllConditionSql"></include>
+        -->
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryAccountRatingCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_ACCNT_RAT T1
+        WHERE
+        T1.ACCNT_CODE = #{entity.accountCode}
+        <!--
+                <include refid="queryAllConditionSql"></include>
+        -->
+    </select>
+    <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
+        INSERT INTO HC_ACCNT_RAT(CODE,CREATED,CREATED_BY,ACCNT_CODE,RAT_LEVEL,QX_LEVEL,START_DATE,END_DATE,STATUS,CREDIT_ALL,CREDIT_USED,ATT_CODE,VERSION,CURRENCY)
+        VALUES (#{code},sysdate(),#{updatedBy},#{accountCode},#{ratingLevel},#{qixinLevel},#{startDate},#{endDate},#{status},#{creditAll},#{creditUsed},#{attachmentCode},#{version},#{currency})
+    </insert>
+    <sql id="queryAllSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ACCNT_CODE as accountCode,
+        T1.RAT_LEVEL as ratingLevel,
+        T1.QX_LEVEL as qixinLevel,
+        T1.START_DATE as startDate,
+        T1.END_DATE as endDate,
+        T1.STATUS as status,
+        T1.CREDIT_ALL as creditAll,
+        T1.CREDIT_USED as creditUsed,
+        T1.ATT_CODE as attachmentCode,
+        T1.VERSION as version,
+        T1.CURRENCY as currency
+        FROM
+        HC_ACCNT_RAT T1
+    </sql>
+    <sql id="updateAccountRatingSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="accountCode!=null and accountCode!=''">,ACCNT_CODE = #{accountCode}</if>
+        <if test="status!=null and status!=''">,STATUS = #{status}</if>
+    </sql>
+    <sql id="queryAllAccountRatingSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''">
+                AND CODE=#{entity.code}
+            </if>
+            <if test="entity.created!=null">
+                AND CREATED LIKE "%"#{entity.created}"%"
+            </if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''">
+                AND CREATED_BY LIKE "%"#{entity.createdBy}"%"
+            </if>
+            <if test="entity.updated!=null">
+                AND UPDATED LIKE "%"#{entity.updated}"%"
+            </if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''">
+                AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"
+            </if>
+            <if test="entity.accountCode!=null and entity.accountCode!=''">
+                AND ACCNT_CODE = #{entity.accountCode}
+            </if>
+            <if test="entity.status!=null and entity.status!=''">
+                AND STATUS  LIKE "%"#{entity.status}"%"
+            </if>
+        </if>
+    </sql>
+</mapper>
