@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class AccountRatingVO {
+
     private String code;
     private Date created;
     private String createdBy;
@@ -23,6 +24,7 @@ public class AccountRatingVO {
     private String attachmentCode;
     private String version;
     private String currency;
+    private String comment;
 
     public String getCode() {
         return code;
@@ -150,6 +152,14 @@ public class AccountRatingVO {
 
     public void setAttachmentCode(String attachmentCode) {
         this.attachmentCode = attachmentCode;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class AccountRatingServiceImpl implements AccountRatingService {
     }
 
     @Override
-    public String addAccountRatingList(AccountRatingVO accountRatingVO) {
+    public String addAccountRating(AccountRatingVO accountRatingVO) {
         if (!StringUtil.isEmpty(accountRatingVO.getAccountCode()) && !StringUtil.isEmpty(accountRatingVO.getRatingLevel())
                 && (accountRatingVO.getStartDate()!=null) && (accountRatingVO.getEndDate()!=null)
                 && !StringUtil.isEmpty(accountRatingVO.getStatus()) && (accountRatingVO.getCreditAll()!=0)
@@ -42,5 +42,16 @@ public class AccountRatingServiceImpl implements AccountRatingService {
                 return null;
         }
         throw new RuntimeException("miss params");
+    }
+
+    @Override
+    public boolean modifyAccountRating(AccountRatingVO accountRatingVO) {
+        if (!StringUtil.isEmpty(accountRatingVO.getCode())&&!StringUtil.isEmpty(accountRatingVO.getUpdatedBy())){
+            int count = accountRatingDao.updateAccountRating(accountRatingVO);
+            return count>0;
+        }
+        else {
+            throw new RuntimeException("miss param!");
+        }
     }
 }

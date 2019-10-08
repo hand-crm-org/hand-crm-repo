@@ -19,5 +19,12 @@ public interface AccountRatingService {
      * @param accountRatingVO
      * @return
      */
-    String addAccountRatingList(AccountRatingVO accountRatingVO);
+    String addAccountRating(AccountRatingVO accountRatingVO);
+
+    /**
+     * 修改客户评级信息
+     * @param accountRatingVO
+     * @return
+     */
+    boolean modifyAccountRating(AccountRatingVO accountRatingVO);
 }

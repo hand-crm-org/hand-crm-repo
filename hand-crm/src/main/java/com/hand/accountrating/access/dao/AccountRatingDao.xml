@@ -21,9 +21,19 @@
         -->
     </select>
     <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
-        INSERT INTO HC_ACCNT_RAT(CODE,CREATED,CREATED_BY,ACCNT_CODE,RAT_LEVEL,QX_LEVEL,START_DATE,END_DATE,STATUS,CREDIT_ALL,CREDIT_USED,ATT_CODE,VERSION,CURRENCY)
-        VALUES (#{code},sysdate(),#{updatedBy},#{accountCode},#{ratingLevel},#{qixinLevel},#{startDate},#{endDate},#{status},#{creditAll},#{creditUsed},#{attachmentCode},#{version},#{currency})
+        INSERT INTO HC_ACCNT_RAT(CODE,CREATED,CREATED_BY,ACCNT_CODE,RAT_LEVEL,QX_LEVEL,START_DATE,END_DATE,STATUS,CREDIT_ALL,CREDIT_USED,ATT_CODE,VERSION,CURRENCY,COMMENT)
+        VALUES (#{code},sysdate(),#{updatedBy},#{accountCode},#{ratingLevel},#{qixinLevel},#{startDate},#{endDate},#{status},#{creditAll},#{creditUsed},#{attachmentCode},#{version},#{currency},#{comment})
     </insert>
+
+    <update id="updateAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
+        UPDATE
+        HC_ACCNT_RAT
+        SET
+        UPDATED=sysdate(),
+        <include refid="updateAccountRatingSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
     <sql id="queryAllSql">
         SELECT
         T1.CODE as code,
@@ -41,14 +51,44 @@
         T1.CREDIT_USED as creditUsed,
         T1.ATT_CODE as attachmentCode,
         T1.VERSION as version,
-        T1.CURRENCY as currency
+        T1.CURRENCY as currency,
+        T1.COMMENT as comment
         FROM
         HC_ACCNT_RAT T1
     </sql>
     <sql id="updateAccountRatingSql">
-        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
-        <if test="accountCode!=null and accountCode!=''">,ACCNT_CODE = #{accountCode}</if>
-        <if test="status!=null and status!=''">,STATUS = #{status}</if>
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">
+                UPDATED_BY = #{updatedBy}
+            </if>
+            <if test="ratingLevel!=null and ratingLevel!=''">
+                , RAT_LEVEL = #{ratingLevel}
+            </if>
+            <if test="qixinLevel!=null and qixinLevel!=''">
+                , QX_LEVEL = #{qixinLevel}
+            </if>
+            <if test="startDate!=null">
+                , START_DATE = #{startDate}
+            </if>
+            <if test="endDate!=null">
+                , END_DATE = #{endDate}
+            </if>
+            <if test="creditAll!=null and creditAll!=''">
+                , CREDIT_ALL = #{creditAll}
+            </if>
+            <if test="creditUsed!=null and creditUsed!=''">
+                , CREDIT_USED = #{creditUsed}
+            </if>
+            <if test="attachmentCode!=null and attachmentCode!=''">
+                , ATT_CODE = #{attachmentCode}
+            </if>
+            <if test="currency!=null and currency!=''">
+                , CURRENCY = #{currency}
+            </if>
+            <if test="comment!=null and comment!=''">
+                , COMMENT = #{comment}
+            </if>
+        </if>
     </sql>
     <sql id="queryAllAccountRatingSql">
         <if test="entity!=null">

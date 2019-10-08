@@ -3,6 +3,7 @@ package com.hand.accountrating.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hand.accountrating.access.vo.AccountRatingVO;
 import com.hand.accountrating.service.AccountRatingService;
+import com.hand.employee.access.vo.EmployeeVO;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
@@ -35,12 +36,20 @@ public class AccountRationController {
     @ApiOperation("新建客户评级")
     @PostMapping("add-accountRating")
     public ResultDTO addAccountRating(@RequestBody AccountRatingVO accountRatingVO){
-        String code = accountRatingService.addAccountRatingList(accountRatingVO);
+        String code = accountRatingService.addAccountRating(accountRatingVO);
         if (!StringUtil.isEmpty(code)){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",code);
             return ResultDTO.success(jsonObject);
         }
         return ResultDTO.error("新建员工失败");
+    }
+    @ApiOperation("更新客户评级")
+    @PutMapping("modify-accountRating")
+    public ResultDTO modifyAccountRating(@RequestBody AccountRatingVO accountRatingVO){
+        if (accountRatingService.modifyAccountRating(accountRatingVO)){
+            return ResultDTO.success();
+        }
+        return ResultDTO.error("更新员工失败");
     }
 }

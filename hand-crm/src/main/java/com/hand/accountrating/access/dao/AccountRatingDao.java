@@ -27,4 +27,11 @@ public interface AccountRatingDao {
      * @return
      */
     int insertAccountRating(AccountRatingVO accountRatingVO);
+
+    /**
+     * 修改客户评级信息
+     * @param accountRatingVO
+     * @return
+     */
+    int updateAccountRating(AccountRatingVO accountRatingVO);
 }
