@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.accountsalesteam.access.dao.AccountSalesTeamDao">
-    <select id="queryAccountSalesTeamList" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO" resultType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
-        <include refid="queryAllSql"></include>
+    <select id="queryAccountSalesTeamList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
+        SELECT
+        T1.*,
+        T2.NAME empName,
+        T2.WORK_NUM workNum,
+        (SELECT NAME FROM HC_POSTN WHERE CODE = T2.PRI_POSTN_CODE) empPosition
+        FROM
+        HC_ACCNT_POSTN T1, HC_EMP T2
         WHERE
-        1=1
+        T1.ACCNT_CODE = #{entity.accntCode}
+        AND T1.EMP_CODE = T2.CODE
+        AND T1.STATUS = 'Active'
+<!--
         <include refid="queryAllConditionSql"></include>
+-->
         limit #{start},#{pageSize}
     </select>
-    <select id="queryAccountSalesTeamCount" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO" resultType="int">
+    <select id="queryAccountSalesTeamCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
-        FROM HC_ACCNT_POSTN
+        FROM
+        HC_ACCNT_POSTN T1, HC_EMP T2
         WHERE
-        1=1
+        T1.ACCNT_CODE = #{entity.accntCode}
+        AND T1.EMP_CODE = T2.CODE
+        AND T1.STATUS = 'Active'
+<!--
         <include refid="queryAllConditionSql"></include>
+-->
     </select>
     <insert id="insertAccountSalesTeam" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
         INSERT

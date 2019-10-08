@@ -27,10 +27,10 @@ public class EmployeeController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="created", value="创建时间", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="createdBy", value="创建人Id", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="updatedBy", value="更新人Id", dataType="int"),
+            @ApiImplicitParam(paramType="query", name="created", value="创建时间", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="createdBy", value="创建人Id", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="updatedBy", value="更新人Id", dataType="String"),
             @ApiImplicitParam(paramType="query", name="code", value="员工编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="userFlag", value="用户标识", dataType="String"),
             @ApiImplicitParam(paramType="query", name="login", value="账号", dataType="String"),
@@ -48,7 +48,7 @@ public class EmployeeController {
             @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String")
 
     })
-    @GetMapping("/getEmployee")
+    @GetMapping("/get-employee")
     public ServiceData getEmployee(int currentPage, int pageSize, String created, String createdBy,
                                    String updated, String updatedBy, String code, String userFlag,
                                    String login, String password, String name, String nameForeign,
@@ -101,6 +101,7 @@ public class EmployeeController {
     }
 
     @ApiOperation("删除员工")
+    @ApiImplicitParam(paramType="query", name="empCode", value="员工code", dataType="String")
     @DeleteMapping("delete-employee")
     public ResultDTO deleteEmployee(String empCode){
         if (employeeService.deleteEmployee(empCode)){

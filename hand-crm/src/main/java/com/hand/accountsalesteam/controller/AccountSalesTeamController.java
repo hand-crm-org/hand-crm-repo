@@ -26,23 +26,12 @@ public class AccountSalesTeamController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType = "query",name = "code",value = "客户-销售团队编码",dataType = "String"),
-            @ApiImplicitParam(paramType = "query",name = "accntCode",value = "客户编码",dataType = "String"),
-            @ApiImplicitParam(paramType = "query",name = "empCode",value = "员工编码",dataType = "String"),
-            @ApiImplicitParam(paramType = "query",name = "priFlg",value = "主要标识",dataType = "String"),
-            @ApiImplicitParam(paramType = "query",name = "status",value = "状态",dataType = "String"),
-            @ApiImplicitParam(paramType = "query",name = "desc",value = "描述",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "accntCode",value = "客户编码",dataType = "String")
     })
     @GetMapping("/getAccountSalesTeamList")
-    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String code, String accntCode,
-                                             String empCode, String priFlg, String status, String desc){
+    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode){
         AccountSalesTeamVO accountSalesTeamVO = new AccountSalesTeamVO();
-        accountSalesTeamVO.setCode(code);
         accountSalesTeamVO.setAccntCode(accntCode);
-        accountSalesTeamVO.setEmpCode(empCode);
-        accountSalesTeamVO.setPriFlg(priFlg);
-        accountSalesTeamVO.setStatus(status);
-        accountSalesTeamVO.setDesc(desc);
         PageQuery<AccountSalesTeamVO> pageQuery = new PageQuery<AccountSalesTeamVO>(accountSalesTeamVO,currentPage,pageSize);
         return ServiceData.success(accountSalesTeamService.getAccountSalesTeamList(pageQuery), pageQuery.getMapOfPageQuery());
     }
