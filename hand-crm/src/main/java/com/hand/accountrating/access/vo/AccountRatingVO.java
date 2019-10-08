@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class AccountRatingVO {
-
     private String code;
     private Date created;
     private String createdBy;

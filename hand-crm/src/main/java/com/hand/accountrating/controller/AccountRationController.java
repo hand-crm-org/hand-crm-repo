@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class AccountRationController {
     @Autowired
     AccountRatingService accountRatingService;
-
     @ApiOperation("查询客户评级列表")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
