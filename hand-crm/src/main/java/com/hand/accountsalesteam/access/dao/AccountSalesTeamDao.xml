@@ -44,8 +44,8 @@
     <insert id="insertAccountSalesTeam" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
         INSERT
         INTO
-        HC_ACCNT_POSTN (CODE,CREATED,CREATED_BY,ACCNT_CODE,EMP_CODE,PRI_FLG,STATUS,`DESC`)
-        VALUES (#{code},sysdate(),#{updatedBy},#{accntCode},#{empCode},#{priFlg},#{status},#{desc})
+        HC_ACCNT_POSTN (CODE,CREATED,CREATED_BY,ACCNT_CODE,EMP_CODE,PRI_FLG,STATUS,`DESC`,TEAM_ROLE)
+        VALUES (#{code},sysdate(),#{updatedBy},#{accntCode},#{empCode},#{priFlg},#{status},#{desc},#{teamRoleCode})
     </insert>
     <update id="updateAccountSalesTeam" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
         UPDATE
@@ -98,5 +98,6 @@
         <if test="empCode!=null and empCode!=''">,EMP_CODE = #{empCode}</if>
         <if test="status!=null and status!=''">,STATUS = #{status}</if>
         <if test="desc!=null and desc!=''">,`DESC` = #{desc}</if>
+        <if test="teamRoleCode!=null and teamRoleCode!=''">,TEAM_ROLE = #{teamRoleCode}</if>
     </sql>
 </mapper>
