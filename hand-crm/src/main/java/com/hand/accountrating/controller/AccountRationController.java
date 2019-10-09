@@ -3,7 +3,6 @@ package com.hand.accountrating.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hand.accountrating.access.vo.AccountRatingVO;
 import com.hand.accountrating.service.AccountRatingService;
-import com.hand.employee.access.vo.EmployeeVO;
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
@@ -18,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("客户-客户评级api")
 public class AccountRationController {
+
     @Autowired
     AccountRatingService accountRatingService;
+
     @ApiOperation("查询客户评级列表")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),

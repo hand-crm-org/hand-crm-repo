@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class AccountRatingServiceImpl implements AccountRatingService {
+
     @Autowired
     AccountRatingDao accountRatingDao;
 

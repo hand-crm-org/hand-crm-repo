@@ -111,7 +111,7 @@
                 AND ACCNT_CODE = #{entity.accountCode}
             </if>
             <if test="entity.status!=null and entity.status!=''">
-                AND STATUS  LIKE "%"#{entity.status}"%"
+                AND STATUS LIKE "%"#{entity.status}"%"
             </if>
         </if>
     </sql>

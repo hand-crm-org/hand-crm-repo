@@ -7,6 +7,7 @@ import com.hand.frame.util.PageQuery;
 import java.util.List;
 
 public interface AccountRatingService {
+
     /**
      * 查询客户评级列表
      * @param pageQuery
