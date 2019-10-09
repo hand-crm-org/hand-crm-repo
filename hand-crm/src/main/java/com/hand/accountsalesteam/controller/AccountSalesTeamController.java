@@ -34,12 +34,20 @@ public class AccountSalesTeamController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType = "query",name = "accntCode",value = "客户编码",dataType = "String")
+            @ApiImplicitParam(paramType = "query",name = "accntCode",value = "客户编码",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "teamRole",value = "团队角色",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "empName",value = "员工姓名",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "empPhoneNum",value = "员工电话",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "desc",value = "备注",dataType = "String")
     })
     @GetMapping("/getAccountSalesTeamList")
-    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode){
+    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode, String teamRole, String empName, String empPhoneNum, String desc){
         AccountSalesTeamVO accountSalesTeamVO = new AccountSalesTeamVO();
         accountSalesTeamVO.setAccntCode(accntCode);
+        accountSalesTeamVO.setTeamRole(teamRole);
+        accountSalesTeamVO.setEmpName(empName);
+        accountSalesTeamVO.setEmpPhoneNum(empPhoneNum);
+        accountSalesTeamVO.setDesc(desc);
         accountSalesTeamVO.setLangId(langId);
         PageQuery<AccountSalesTeamVO> pageQuery = new PageQuery<AccountSalesTeamVO>(accountSalesTeamVO,currentPage,pageSize);
         return ServiceData.success(accountSalesTeamService.getAccountSalesTeamList(pageQuery), pageQuery.getMapOfPageQuery());

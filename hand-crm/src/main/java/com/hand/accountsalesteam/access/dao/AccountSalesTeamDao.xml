@@ -16,7 +16,7 @@
         T1.TEAM_ROLE teamRoleCode,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TEAM_ROLE AND TYPE = 'TEAM_ROLE_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) teamRole,
         T2.NAME empName,
-        T2.WORK_NUM workNum,
+        T2.WORK_NUM empPhoneNum,
         (SELECT NAME FROM HC_POSTN WHERE CODE = T2.PRI_POSTN_CODE) empPosition
         FROM
         HC_ACCNT_POSTN T1, HC_EMP T2
@@ -24,9 +24,9 @@
         T1.ACCNT_CODE = #{entity.accntCode}
         AND T1.EMP_CODE = T2.CODE
         AND T1.STATUS = 'Active'
-<!--
+
         <include refid="queryAllConditionSql"></include>
--->
+
         limit #{start},#{pageSize}
     </select>
     <select id="queryAccountSalesTeamCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
@@ -37,9 +37,9 @@
         T1.ACCNT_CODE = #{entity.accntCode}
         AND T1.EMP_CODE = T2.CODE
         AND T1.STATUS = 'Active'
-<!--
+
         <include refid="queryAllConditionSql"></include>
--->
+
     </select>
     <insert id="insertAccountSalesTeam" parameterType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
         INSERT
@@ -90,6 +90,9 @@
             <if test="entity.empCode!=null and entity.empCode!=''"> AND EMP_CODE = #{entity.empCode}</if>
             <if test="entity.status!=null and entity.status!=''"> AND STATUS  LIKE "%"#{entity.status}"%"</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.empName!=null and entity.empName!=''"> AND T2.NAME LIKE "%"#{entity.empName}"%"</if>
+            <if test="entity.empPhoneNum!=null and entity.empPhoneNum!=''"> AND WORK_NUM LIKE "%"#{entity.empPhoneNum}"%"</if>
+            <if test="entity.teamRole!=null and entity.teamRole!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TEAM_ROLE AND TYPE = 'TEAM_ROLE_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.teamRole}"%"</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
