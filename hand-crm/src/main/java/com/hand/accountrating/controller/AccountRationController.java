@@ -28,9 +28,10 @@ public class AccountRationController {
             @ApiImplicitParam(paramType = "query",name = "accountCode",value = "客户编码",dataType = "String")
     })
     @GetMapping("/get-accountRating-list")
-    public ServiceData getAccountRatingList(int currentPage, int pageSize, String accountCode){
+    public ServiceData getAccountRatingList(int currentPage, int pageSize, String accountCode, String status){
         AccountRatingVO accountRatingVO = new AccountRatingVO();
         accountRatingVO.setAccountCode(accountCode);
+        accountRatingVO.setStatus(status);
         PageQuery<AccountRatingVO> pageQuery = new PageQuery<AccountRatingVO>(accountRatingVO,currentPage,pageSize);
         return ServiceData.success(accountRatingService.getAccountRatingList(pageQuery), pageQuery.getMapOfPageQuery());
     }

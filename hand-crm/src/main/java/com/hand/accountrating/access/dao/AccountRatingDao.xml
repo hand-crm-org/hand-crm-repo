@@ -5,9 +5,7 @@
         <include refid="queryAllSql"></include>
         WHERE
         T1.ACCNT_CODE = #{entity.accountCode}
-        <!--
-                <include refid="queryAllConditionSql"></include>
-        -->
+        <include refid="queryAllAccountRatingSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryAccountRatingCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
@@ -16,9 +14,7 @@
         HC_ACCNT_RAT T1
         WHERE
         T1.ACCNT_CODE = #{entity.accountCode}
-        <!--
-                <include refid="queryAllConditionSql"></include>
-        -->
+        <include refid="queryAllAccountRatingSql"></include>
     </select>
     <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
         INSERT INTO HC_ACCNT_RAT(CODE,CREATED,CREATED_BY,ACCNT_CODE,RAT_LEVEL,QX_LEVEL,START_DATE,END_DATE,STATUS,CREDIT_ALL,CREDIT_USED,ATT_CODE,VERSION,CURRENCY,COMMENT)
