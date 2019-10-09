@@ -84,6 +84,9 @@
             <if test="comment!=null and comment!=''">
                 , COMMENT = #{comment}
             </if>
+            <if test="status!=null and status!=''">
+                , STATUS = #{status}
+            </if>
         </if>
     </sql>
     <sql id="queryAllAccountRatingSql">

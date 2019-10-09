@@ -25,7 +25,8 @@ public class AccountRationController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType = "query",name = "accountCode",value = "客户编码",dataType = "String")
+            @ApiImplicitParam(paramType = "query",name = "accountCode",value = "客户编码",dataType = "String"),
+            @ApiImplicitParam(paramType = "query",name = "status",value = "状态",dataType = "String")
     })
     @GetMapping("/get-accountRating-list")
     public ServiceData getAccountRatingList(int currentPage, int pageSize, String accountCode, String status){
