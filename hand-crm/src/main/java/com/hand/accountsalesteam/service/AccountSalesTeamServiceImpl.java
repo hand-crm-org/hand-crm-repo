@@ -29,9 +29,7 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
             }
             return null;
         }
-        else{
-            throw new RuntimeException("miss params");
-        }
+        throw new RuntimeException("miss params");
     }
 
     @Override
@@ -50,8 +48,16 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
             !StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())){
             int count = accountSalesTeamDao.updateAccountSalesTeam(accountSalesTeamVO);
             return count>0;
-        }else {
-            throw new RuntimeException("miss params");
         }
+        throw new RuntimeException("miss param");
+    }
+
+    @Override
+    public boolean removeAccountSalesTeam(String code) {
+        if (!StringUtil.isEmpty(code)){
+            int count = accountSalesTeamDao.deleteAccountSalesTeam(code);
+            return count>0;
+        }
+        throw new RuntimeException("miss param");
     }
 }

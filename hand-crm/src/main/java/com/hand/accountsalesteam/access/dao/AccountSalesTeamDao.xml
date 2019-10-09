@@ -3,7 +3,18 @@
 <mapper namespace="com.hand.accountsalesteam.access.dao.AccountSalesTeamDao">
     <select id="queryAccountSalesTeamList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
         SELECT
-        T1.*,
+        T1.CODE code,
+        T1.CREATED created,
+        T1.CREATED_BY createdBy,
+        T1.UPDATED updated,
+        T1.UPDATED_BY updatedBy,
+        T1.ACCNT_CODE accntCode,
+        T1.EMP_CODE empCode,
+        T1.PRI_FLG priFlg,
+        T1.DESC `desc`,
+        T1.STATUS status,
+        T1.TEAM_ROLE teamRoleCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TEAM_ROLE AND TYPE = 'TEAM_ROLE_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) teamRole,
         T2.NAME empName,
         T2.WORK_NUM workNum,
         (SELECT NAME FROM HC_POSTN WHERE CODE = T2.PRI_POSTN_CODE) empPosition
@@ -44,6 +55,14 @@
         <include refid="updateConditionSql"></include>
         WHERE CODE=#{code}
     </update>
+
+    <delete id="deleteAccountSalesTeam" parameterType="String">
+        DELETE
+        FROM
+        HC_ACCNT_POSTN
+        WHERE
+        CODE = #{code}
+    </delete>
     <sql id="queryAllSql">
         SELECT
         CODE as code,

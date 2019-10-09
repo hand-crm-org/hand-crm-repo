@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +20,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("客户-销售团队相关api")
 public class AccountSalesTeamController {
+
+    /**
+     * 语言环境
+     */
+    @Value(value = "${lang.language}")
+    private String langId;
+
     @Autowired
     AccountSalesTeamService accountSalesTeamService;
 
@@ -32,6 +40,7 @@ public class AccountSalesTeamController {
     public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode){
         AccountSalesTeamVO accountSalesTeamVO = new AccountSalesTeamVO();
         accountSalesTeamVO.setAccntCode(accntCode);
+        accountSalesTeamVO.setLangId(langId);
         PageQuery<AccountSalesTeamVO> pageQuery = new PageQuery<AccountSalesTeamVO>(accountSalesTeamVO,currentPage,pageSize);
         return ServiceData.success(accountSalesTeamService.getAccountSalesTeamList(pageQuery), pageQuery.getMapOfPageQuery());
     }
@@ -53,5 +62,15 @@ public class AccountSalesTeamController {
             return ResultDTO.success();
         }
         return ResultDTO.error("客户-销售团队信息更新失败");
+    }
+
+    @ApiOperation(value="客户-销售团队信息删除")
+    @ApiImplicitParam(paramType="query", name="code", value="客户联系人code", dataType="String")
+    @DeleteMapping("/remove-account-salesteam")
+    public ResultDTO removeAccountSalesTeam(String code){
+        if (accountSalesTeamService.removeAccountSalesTeam(code)){
+            return ResultDTO.success();
+        }
+        return ResultDTO.error("客户-销售团队信息删除失败");
     }
 }
