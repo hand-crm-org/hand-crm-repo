@@ -30,12 +30,13 @@ public class AddressController {
             @ApiImplicitParam(paramType="query", name="state", value="省", dataType="String"),
             @ApiImplicitParam(paramType="query", name="city", value="市", dataType="String"),
             @ApiImplicitParam(paramType="query", name="county", value="县", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="street", value="镇", dataType="String"),
             @ApiImplicitParam(paramType="query", name="addr1", value="地址1", dataType="String"),
             @ApiImplicitParam(paramType="query", name="addr2", value="地址2", dataType="String")
     })
     @GetMapping("/getAddrList")
     public ServiceData getAddrList(int currentPage,int pageSize,String code,String objCode,String serviceCode,
-                                   String country,String state,String city,String county,String addr1,String addr2){
+                                   String country,String state,String city,String county,String street, String addr1,String addr2){
         AddressVO addressVO = new AddressVO();
         addressVO.setCode(code);
         addressVO.setObjCode(objCode);
@@ -44,6 +45,7 @@ public class AddressController {
         addressVO.setState(state);
         addressVO.setCity(city);
         addressVO.setCounty(county);
+        addressVO.setCounty(street);
         addressVO.setAddr1(addr1);
         addressVO.setAddr2(addr2);
         PageQuery<AddressVO> pageQuery = new PageQuery<AddressVO>(addressVO, currentPage, pageSize);

@@ -39,6 +39,7 @@ public class AccountVO {
      * 销售团队
      */
     private String salesTeam;
+    private String salesTeamCode;
     /**
      * 国家
      */
@@ -356,6 +357,14 @@ public class AccountVO {
         this.street = street;
     }
 
+    public String getSalesTeamCode() {
+        return salesTeamCode;
+    }
+
+    public void setSalesTeamCode(String salesTeamCode) {
+        this.salesTeamCode = salesTeamCode;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -388,6 +397,7 @@ public class AccountVO {
                 ", addrCode='" + addrCode + '\'' +
                 ", langId='" + langId + '\'' +
                 ", salesTeam='" + salesTeam + '\'' +
+                ", salesTeamCode='" + salesTeamCode + '\'' +
                 ", country='" + country + '\'' +
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +

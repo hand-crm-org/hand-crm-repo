@@ -83,6 +83,7 @@
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTRY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS industry,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTRY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS subIndustry,
         ( SELECT S1.NAME FROM HC_EMP S1,HC_ACCNT_POSTN S2 WHERE T1.CODE = S2.ACCNT_CODE AND S2.TEAM_ROLE = 'Leader' AND S1.CODE = S2.EMP_CODE <if test="entity.code!=null and entity.code!=''"> AND T1.CODE = #{entity.code} </if> ) AS salesTeam,
+        ( SELECT S1.CODE FROM HC_EMP S1,HC_ACCNT_POSTN S2 WHERE T1.CODE = S2.ACCNT_CODE AND S2.TEAM_ROLE = 'Leader' AND S1.CODE = S2.EMP_CODE <if test="entity.code!=null and entity.code!=''"> AND T1.CODE = #{entity.code} </if> ) AS salesTeamCode,
         T4.COUNTRY as country,
         T4.STATE as state,
         T4.CITY as city,
@@ -91,10 +92,11 @@
         T4.ADDR1 as addr1,
         T4.ADDR2 as addr2
         FROM
-        HC_ACCNT T1,HC_ADDR T4
+        HC_ACCNT T1
+        LEFT JOIN HC_ADDR T4
+        ON T1.ADDR_CODE = T4.CODE
         WHERE
         1=1
-        AND T1.ADDR_CODE = T4.CODE
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
