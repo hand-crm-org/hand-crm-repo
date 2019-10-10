@@ -36,6 +36,10 @@ public class AccountVO {
     private String langId;
 
     /**
+     * 销售团队
+     */
+    private String salesTeam;
+    /**
      * 国家
      */
     private String country;
@@ -332,6 +336,14 @@ public class AccountVO {
         this.accntNum = accntNum;
     }
 
+    public String getSalesTeam() {
+        return salesTeam;
+    }
+
+    public void setSalesTeam(String salesTeam) {
+        this.salesTeam = salesTeam;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -363,6 +375,7 @@ public class AccountVO {
                 ", regFund='" + regFund + '\'' +
                 ", addrCode='" + addrCode + '\'' +
                 ", langId='" + langId + '\'' +
+                ", salesTeam='" + salesTeam + '\'' +
                 ", country='" + country + '\'' +
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +
