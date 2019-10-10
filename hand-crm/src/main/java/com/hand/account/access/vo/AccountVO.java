@@ -56,6 +56,10 @@ public class AccountVO {
      */
     private String county;
     /**
+     * 镇
+     */
+    private String street;
+    /**
      * 地址1
      */
     private String addr1;
@@ -344,6 +348,14 @@ public class AccountVO {
         this.salesTeam = salesTeam;
     }
 
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -380,6 +392,7 @@ public class AccountVO {
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +
                 ", county='" + county + '\'' +
+                ", street='" + street + '\'' +
                 ", addr1='" + addr1 + '\'' +
                 ", addr2='" + addr2 + '\'' +
                 '}';

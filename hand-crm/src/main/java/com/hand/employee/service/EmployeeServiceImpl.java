@@ -19,7 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String addEmployee(EmployeeVO employeeVO) {
-        if (!StringUtil.isEmpty(employeeVO.getLogin())&&!StringUtil.isEmpty(employeeVO.getPassword())&&
+        if (!StringUtil.isEmpty(employeeVO.getLogin())&&
             !StringUtil.isEmpty(employeeVO.getName())&&!StringUtil.isEmpty(employeeVO.getPriPostnCode())&&
             !StringUtil.isEmpty(employeeVO.getUpdatedBy())){
             String code = StringUtil.getCode();

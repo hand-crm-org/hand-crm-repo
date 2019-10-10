@@ -32,14 +32,33 @@ public class AccountAddressController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="accntCode", value="客户编码", dataType="String")
+            @ApiImplicitParam(paramType="query", name="accntCode", value="客户编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="country", value="国家", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="state", value="省份", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="city", value="城市", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="county", value="区县", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="street", value="镇", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="addr1", value="详细地址", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="desc", value="备注", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="type", value="地址类型", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String")
     })
     @GetMapping("/getAcntAddrInfo")
     public ServiceData getAccInfo(int currentPage, int pageSize,
-                                  String accntCode){
-        AddressVO addressVO = new AddressVO();
+                                  String accntCode,String country,String state,String city,String county,
+                                  String street,String addr1,String desc,String type,String status){
+        AccountAddressVO addressVO = new AccountAddressVO();
         addressVO.setAccntCode(accntCode);
-        PageQuery<AddressVO> pageQuery = new PageQuery<AddressVO>(addressVO, currentPage, pageSize);
+        addressVO.setCountry(country);
+        addressVO.setState(state);
+        addressVO.setCity(city);
+        addressVO.setCounty(county);
+        addressVO.setStreet(street);
+        addressVO.setAddr1(addr1);
+        addressVO.setDesc(desc);
+        addressVO.setType(type);
+        addressVO.setStatus(status);
+        PageQuery<AccountAddressVO> pageQuery = new PageQuery<AccountAddressVO>(addressVO, currentPage, pageSize);
         return  ServiceData.success(accountAddressServcice.getAccountAddr(pageQuery), pageQuery.getMapOfPageQuery());
     }
 

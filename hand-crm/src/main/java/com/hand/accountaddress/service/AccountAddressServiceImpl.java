@@ -48,7 +48,7 @@ public class AccountAddressServiceImpl implements AccountAddressServcice{
      * @Return List<AccountAddressVO>
      */
     @Override
-    public List<AddressVO> getAccountAddr(PageQuery<AddressVO> pageQuery) {
+    public List<AccountAddressVO> getAccountAddr(PageQuery<AccountAddressVO> pageQuery) {
         int count = accountAddressDao.queryAccountAddrCount(pageQuery);
         pageQuery.setCount(count);
         if(count > 0) {

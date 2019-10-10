@@ -22,14 +22,14 @@ public interface AccountAddressDao {
      * @param pageQuery
      * @Return List<AccountAddressVO>
      */
-    List<AddressVO> queryAccountAddr(PageQuery<AddressVO> pageQuery);
+    List<AccountAddressVO> queryAccountAddr(PageQuery<AccountAddressVO> pageQuery);
     /**
      * 根据条件查询客户-地址得到的数量
      * @UpdateBy lln
      * @param pageQuery
      * @Return List<AccountAddressVO>
      */
-    int queryAccountAddrCount(PageQuery<AddressVO> pageQuery);
+    int queryAccountAddrCount(PageQuery<AccountAddressVO> pageQuery);
     /**
      * 修改客户-地址信息
      * @UpdateBy lln

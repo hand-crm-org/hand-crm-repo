@@ -23,7 +23,7 @@ public interface AccountAddressServcice {
      * @param pageQuery
      * @Return List<AccountAddressVO>
      */
-    List<AddressVO> getAccountAddr(PageQuery<AddressVO> pageQuery);
+    List<AccountAddressVO> getAccountAddr(PageQuery<AccountAddressVO> pageQuery);
 
 
     /**

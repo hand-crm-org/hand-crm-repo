@@ -18,8 +18,8 @@
     <insert id="insertAddr" parameterType="com.hand.address.access.vo.AddressVO">
         INSERT
         INTO
-        HC_ADDR (CODE,CREATED,CREATED_BY,OBJ_CODE,SERVICE_CODE,COUNTRY,STATE,CITY,COUNTY,ADDR1,ADDR2)
-        VALUES (#{code},sysdate(),#{updatedBy},#{objCode},#{serviceCode},#{country},#{state},#{city},#{county},#{addr1},#{addr2})
+        HC_ADDR (CODE,CREATED,CREATED_BY,OBJ_CODE,SERVICE_CODE,COUNTRY,STATE,CITY,COUNTY,STREET,ADDR1,ADDR2)
+        VALUES (#{code},sysdate(),#{updatedBy},#{objCode},#{serviceCode},#{country},#{state},#{city},#{county},#{street},#{addr1},#{addr2})
     </insert>
     <update id="updateAddr" parameterType="com.hand.address.access.vo.AddressVO">
         UPDATE
@@ -37,6 +37,7 @@
         <if test="state!=null and state!=''">,STATE = #{state}</if>
         <if test="city!=null and city!=''">,CITY = #{city}</if>
         <if test="county!=null and county!=''">,COUNTY  = #{county}</if>
+        <if test="street!=null and street!=''">,STREET  = #{street}</if>
         <if test="addr1!=null and addr1!=''">,ADDR1 = #{addr1}</if>
         <if test="addr2!=null and addr2!=''">,ADDR2 = #{addr2}</if>
     </sql>
@@ -53,6 +54,7 @@
         STATE as state,
         CITY as city,
         COUNTY as county,
+        STREET as street,
         ADDR1 as addr1,
         ADDR2 as addr2
         FROM
@@ -71,6 +73,7 @@
             <if test="entity.state!=null and entity.state!=''"> AND STATE LIKE "%"#{entity.state}"%"</if>
             <if test="entity.city!=null and entity.city!=''"> AND CITY LIKE "%"#{entity.city}"%"</if>
             <if test="entity.county!=null and entity.county!=''"> AND COUNTY  LIKE "%"#{entity.county}"%"</if>
+            <if test="entity.street!=null and entity.street!=''"> AND STREET  LIKE "%"#{entity.street}"%"</if>
             <if test="entity.addr1!=null and entity.addr1!=''"> AND ADDR1 LIKE "%"#{entity.addr1}"%"</if>
             <if test="entity.addr2!=null and entity.addr2!=''"> AND ADDR2 LIKE "%"#{entity.addr2}"%"</if>
         </if>

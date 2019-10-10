@@ -17,6 +17,17 @@ public class AccountAddressVO {
     private String type;//地址类型
     private String status;//状态
 
+    /**
+     * 地址信息
+     */
+    private String country;
+    private String state;
+    private String city;
+    private String county;
+    private String street;
+    private String addr1;
+    private String addr2;
+
     public String getCode() {
         return code;
     }
@@ -121,6 +132,62 @@ public class AccountAddressVO {
         this.status = status;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAddr1() {
+        return addr1;
+    }
+
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
+    }
+
+    public String getAddr2() {
+        return addr2;
+    }
+
+    public void setAddr2(String addr2) {
+        this.addr2 = addr2;
+    }
+
     @Override
     public String toString() {
         return "AccountAddressVO{" +
@@ -137,6 +204,13 @@ public class AccountAddressVO {
                 ", priFlg='" + priFlg + '\'' +
                 ", type='" + type + '\'' +
                 ", status='" + status + '\'' +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", county='" + county + '\'' +
+                ", street='" + street + '\'' +
+                ", addr1='" + addr1 + '\'' +
+                ", addr2='" + addr2 + '\'' +
                 '}';
     }
 }

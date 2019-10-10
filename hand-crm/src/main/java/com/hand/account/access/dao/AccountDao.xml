@@ -87,31 +87,14 @@
         T4.STATE as state,
         T4.CITY as city,
         T4.COUNTY as county,
+        T4.STREET as street,
         T4.ADDR1 as addr1,
         T4.ADDR2 as addr2
         FROM
-        HC_ACCNT T1 LEFT JOIN
-        (
-        SELECT
-        T1.CODE,
-        T3.COUNTRY,
-        T3.STATE,
-        T3.CITY,
-        T3.COUNTY,
-        T3.ADDR1,
-        T3.ADDR2
-        FROM
-        HC_ACCNT T1,
-        HC_ACCNT_ADDR T2,
-        HC_ADDR T3
-        WHERE
-        T1.`CODE` = T2.ACCNT_CODE
-        AND T2.ADDR_CODE = T3.CODE
-        AND T2.PRI_FLG = 'Y'
-        AND T2.STATUS = 'Active'
-        ) T4 ON T1.CODE = T4.CODE
+        HC_ACCNT T1,HC_ADDR T4
         WHERE
         1=1
+        AND T1.ADDR_CODE = T4.CODE
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>

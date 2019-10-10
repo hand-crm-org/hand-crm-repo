@@ -14,6 +14,7 @@ public class AddressVO {
     private String state;
     private String city;
     private String county;
+    private String street;
     private String addr1;
     private String addr2;
 
@@ -133,5 +134,13 @@ public class AddressVO {
 
     public void setAccntCode(String accntCode) {
         this.accntCode = accntCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
