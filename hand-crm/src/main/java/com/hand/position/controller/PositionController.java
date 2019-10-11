@@ -56,13 +56,13 @@ public class PositionController {
         return  ServiceData.success(positionService.getPosition(pageQuery), pageQuery.getMapOfPageQuery());
     }
 
-    @ApiOperation(value="修改值列表")
+    @ApiOperation(value="修改职位")
     @PutMapping("/modifyPosition")
     public ResultDTO modifyPosition(@RequestBody PositionVO positionVO){
         return positionService.modifyPosition(positionVO);
     }
 
-    @ApiOperation(value = "删除值列表")
+    @ApiOperation(value = "删除职位")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="code", value="职位code", dataType="String")
     })

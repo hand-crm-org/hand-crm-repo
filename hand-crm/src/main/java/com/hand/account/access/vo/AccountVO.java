@@ -12,12 +12,15 @@ public class AccountVO {
     private String name;//客户名称
     private String nameEnu;//客户英文名
     private String type;//客户类型
+    private String typeCode;//客户类型code
     private String taxCode;//统一信用编码
     private String parAccntCode;//父客户code
     private String priEmpCode;//跟进人code
     private String orgCode;//组织code
     private String dunsCode;//邓白氏编码
     private String status;//状态
+    private String statusCode;//状态
+    private String period;//客户周期
     private String periodCode;//客户周期
     private String currency;//币种
     private String priCtctCode;//客户法人code(主要联系人)
@@ -30,7 +33,9 @@ public class AccountVO {
     private String email;//客户邮箱
     private String homeUrl;//客户网址
     private String industry;//行业
+    private String industryCode;//行业
     private String subIndustry;//子行业
+    private String subIndustryCode;//子行业
     private String regFund;//注册资金
     private String addrCode;//地址code
     private String langId;
@@ -365,6 +370,46 @@ public class AccountVO {
         this.salesTeamCode = salesTeamCode;
     }
 
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getIndustryCode() {
+        return industryCode;
+    }
+
+    public void setIndustryCode(String industryCode) {
+        this.industryCode = industryCode;
+    }
+
+    public String getSubIndustryCode() {
+        return subIndustryCode;
+    }
+
+    public void setSubIndustryCode(String subIndustryCode) {
+        this.subIndustryCode = subIndustryCode;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -377,12 +422,15 @@ public class AccountVO {
                 ", name='" + name + '\'' +
                 ", nameEnu='" + nameEnu + '\'' +
                 ", type='" + type + '\'' +
+                ", typeCode='" + typeCode + '\'' +
                 ", taxCode='" + taxCode + '\'' +
                 ", parAccntCode='" + parAccntCode + '\'' +
                 ", priEmpCode='" + priEmpCode + '\'' +
                 ", orgCode='" + orgCode + '\'' +
                 ", dunsCode='" + dunsCode + '\'' +
                 ", status='" + status + '\'' +
+                ", statusCode='" + statusCode + '\'' +
+                ", period='" + period + '\'' +
                 ", periodCode='" + periodCode + '\'' +
                 ", currency='" + currency + '\'' +
                 ", priCtctCode='" + priCtctCode + '\'' +
@@ -392,7 +440,9 @@ public class AccountVO {
                 ", email='" + email + '\'' +
                 ", homeUrl='" + homeUrl + '\'' +
                 ", industry='" + industry + '\'' +
+                ", industryCode='" + industryCode + '\'' +
                 ", subIndustry='" + subIndustry + '\'' +
+                ", subIndustryCode='" + subIndustryCode + '\'' +
                 ", regFund='" + regFund + '\'' +
                 ", addrCode='" + addrCode + '\'' +
                 ", langId='" + langId + '\'' +

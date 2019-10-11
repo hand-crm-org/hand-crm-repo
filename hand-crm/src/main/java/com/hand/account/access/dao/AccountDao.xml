@@ -77,10 +77,15 @@
 
     <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.account.access.vo.AccountVO">
         <include refid="queryAllAccntInfoSql"></include>,
+        T1.TYPE as typeCode,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'ACCOUNT_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) AS type,
+        T1.`STATUS` as statusCode,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.PERIOD_CODE = `NAME` AND TYPE = 'ACCOUNT_PERIOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS periodCode,
+        T1.PERIOD_CODE as periodCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.PERIOD_CODE = `NAME` AND TYPE = 'ACCOUNT_PERIOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `period`,
+        T1.INDUSTRY as industryCode,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTRY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS industry,
+        T1.SUB_INDUSTRY as subIndustryCode,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTRY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS subIndustry,
         ( SELECT S1.NAME FROM HC_EMP S1,HC_ACCNT_POSTN S2 WHERE T1.CODE = S2.ACCNT_CODE AND S2.TEAM_ROLE = 'Leader' AND S1.CODE = S2.EMP_CODE <if test="entity.code!=null and entity.code!=''"> AND T1.CODE = #{entity.code} </if> ) AS salesTeam,
         ( SELECT S1.CODE FROM HC_EMP S1,HC_ACCNT_POSTN S2 WHERE T1.CODE = S2.ACCNT_CODE AND S2.TEAM_ROLE = 'Leader' AND S1.CODE = S2.EMP_CODE <if test="entity.code!=null and entity.code!=''"> AND T1.CODE = #{entity.code} </if> ) AS salesTeamCode,

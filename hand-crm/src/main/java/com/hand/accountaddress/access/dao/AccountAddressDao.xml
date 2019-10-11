@@ -3,7 +3,19 @@
 <mapper namespace="com.hand.accountaddress.access.dao.AccountAddressDao">
     <sql id="queryAllAccntAddrInfoSql">
         SELECT
-        T1.*,
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ACCNT_CODE as accntCode,
+        T1.ADDR_CODE as addrCode,
+        T1.DESC as 'desc',
+        T1.CTCT as ctct,
+        T1.PH_NUM as phNum,
+        T1.PRI_FLG as priFlg,
+        T1.TYPE as 'type',
+        T1.STATUS as status,
         T2.COUNTRY as country,
         T2.STATE as state,
         T2.CITY as city,
