@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService{
                 && !StringUtil.isEmpty(accountVO.getPriCtctCode()) && !StringUtil.isEmpty(accountVO.getPhNum()))
         {
             String code = StringUtil.getCode();
-            if ("潜在客户".equals(accountVO.getPeriodCode()))
+            if ("Potential Customers".equals(accountVO.getPeriodCode()))
             {
                 accountVO.setCode(code);
                 int count = accountDao.insertAccount(accountVO);
