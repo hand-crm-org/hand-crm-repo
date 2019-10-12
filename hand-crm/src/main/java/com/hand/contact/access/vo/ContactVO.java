@@ -18,7 +18,8 @@ public class ContactVO {
     private String hobby;
     private String desc;
     private String status;
-
+    private String statusCode;
+    private String langId;
     /**
      * 客户code
      */
@@ -149,5 +150,21 @@ public class ContactVO {
 
     public void setAccntCode(String accntCode) {
         this.accntCode = accntCode;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
     }
 }

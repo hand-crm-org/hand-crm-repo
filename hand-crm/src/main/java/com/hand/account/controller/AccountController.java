@@ -46,8 +46,8 @@ public class AccountController {
             @ApiImplicitParam(paramType="query", name="type", value="客户类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="taxCode", value="统一信用编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="parAccntCode", value="父客户code", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="priEmpCode", value="跟进人code", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="orgCode", value="组织code", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="priEmpName", value="跟进人", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="orgName", value="组织", dataType="String"),
             @ApiImplicitParam(paramType="query", name="dunsCode", value="邓白氏编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String"),
             @ApiImplicitParam(paramType="query", name="periodCode", value="客户周期", dataType="String"),
@@ -56,6 +56,13 @@ public class AccountController {
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updatedBy", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="industry", value="行业", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="subIndustry", value="子行业", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="country", value="国家", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="state", value="省份", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="city", value="城市", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="county", value="区县", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="street", value="镇", dataType="String"),
 
     })
     @GetMapping("/getAccInfo")
@@ -63,11 +70,15 @@ public class AccountController {
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "nameEnu",required = false) String nameEnu, @RequestParam(value = "taxCode",required = false) String taxCode,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "parAccntCode",required = false) String parAccntCode,
-                                  @RequestParam(value = "priEmpCode",required = false) String priEmpCode, @RequestParam(value = "orgCode",required = false) String orgCode,
+                                  @RequestParam(value = "priEmpName",required = false) String priEmpName, @RequestParam(value = "orgName",required = false) String orgName,
                                   @RequestParam(value = "dunsCode",required = false) String dunsCode,@RequestParam(value = "status",required = false) String status,
                                   @RequestParam(value = "periodCode",required = false) String periodCode,@RequestParam(value = "priCtctCode",required = false) String priCtctCode,
                                   @RequestParam(value = "createdBy",required = false) String createdBy,@RequestParam(value = "created",required = false) String created,
-                                  @RequestParam(value = "updatedBy",required = false) String updatedBy,@RequestParam(value = "updated",required = false) String updated){
+                                  @RequestParam(value = "updatedBy",required = false) String updatedBy,@RequestParam(value = "updated",required = false) String updated,
+                                  @RequestParam(value = "industry",required = false) String industry,@RequestParam(value = "subIndustry",required = false) String subIndustry,
+                                  @RequestParam(value = "country",required = false) String country,@RequestParam(value = "state",required = false) String state,
+                                  @RequestParam(value = "city",required = false) String city,@RequestParam(value = "county",required = false) String county,
+                                  @RequestParam(value = "street",required = false) String street){
         AccountVO accountVO = new AccountVO();
         accountVO.setCode(code);
         accountVO.setName(name);
@@ -75,8 +86,8 @@ public class AccountController {
         accountVO.setTaxCode(taxCode);
         accountVO.setType(type);
         accountVO.setParAccntCode(parAccntCode);
-        accountVO.setPriEmpCode(priEmpCode);
-        accountVO.setOrgCode(orgCode);
+        accountVO.setPriEmpName(priEmpName);
+        accountVO.setOrgName(orgName);
         accountVO.setDunsCode(dunsCode);
         accountVO.setStatus(status);
         accountVO.setPeriodCode(periodCode);
@@ -86,6 +97,13 @@ public class AccountController {
         accountVO.setUpdatedBy(updatedBy);
         accountVO.setUpdated(DateFormatUtil.strToDate(updated));
         accountVO.setLangId(langId);
+        accountVO.setIndustry(industry);
+        accountVO.setSubIndustry(subIndustry);
+        accountVO.setCounty(county);
+        accountVO.setCountry(country);
+        accountVO.setState(state);
+        accountVO.setCity(city);
+        accountVO.setStreet(street);
         PageQuery<AccountVO> pageQuery = new PageQuery<AccountVO>(accountVO, currentPage, pageSize);
         return  ServiceData.success(accountService.getAccount(pageQuery), pageQuery.getMapOfPageQuery());
     }

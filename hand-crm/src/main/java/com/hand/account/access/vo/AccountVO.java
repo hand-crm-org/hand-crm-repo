@@ -16,7 +16,9 @@ public class AccountVO {
     private String taxCode;//统一信用编码
     private String parAccntCode;//父客户code
     private String priEmpCode;//跟进人code
+    private String priEmpName;//跟进人
     private String orgCode;//组织code
+    private String orgName;//组织名称
     private String dunsCode;//邓白氏编码
     private String status;//状态
     private String statusCode;//状态
@@ -410,6 +412,22 @@ public class AccountVO {
         this.subIndustryCode = subIndustryCode;
     }
 
+    public String getPriEmpName() {
+        return priEmpName;
+    }
+
+    public void setPriEmpName(String priEmpName) {
+        this.priEmpName = priEmpName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -426,7 +444,9 @@ public class AccountVO {
                 ", taxCode='" + taxCode + '\'' +
                 ", parAccntCode='" + parAccntCode + '\'' +
                 ", priEmpCode='" + priEmpCode + '\'' +
+                ", priEmpName='" + priEmpName + '\'' +
                 ", orgCode='" + orgCode + '\'' +
+                ", orgName='" + orgName + '\'' +
                 ", dunsCode='" + dunsCode + '\'' +
                 ", status='" + status + '\'' +
                 ", statusCode='" + statusCode + '\'' +

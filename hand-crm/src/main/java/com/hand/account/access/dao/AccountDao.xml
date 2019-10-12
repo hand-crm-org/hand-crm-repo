@@ -13,7 +13,9 @@
         T1.TAX_CODE as taxCode,
         T1.PAR_ACCNT_CODE as parAccntCode,
         T1.PRI_EMP_CODE as priEmpCode,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.PRI_EMP_CODE AND STATUS = 'Active') as priEmpName,
         T1.ORG_CODE as orgCode,
+        (SELECT NAME FROM HC_ORG WHERE CODE = T1.ORG_CODE AND STATUS = 'true') as orgName,
         T1.DUNS_CODE as dunsCode,
         T1.CURRENCY as currency,
         T1.PRI_CTCT_CODE as priCtctCode,
@@ -35,14 +37,21 @@
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.nameEnu!=null and entity.nameEnu!=''"> AND T1.NAME_ENU LIKE "%"#{entity.nameEnu,jdbcType=VARCHAR}"%"</if>
             <if test="entity.taxCode!=null and entity.taxCode!=''"> AND T1.TAX_CODE LIKE "%"#{entity.taxCode}"%"</if>
-            <if test="entity.type!=null and entity.type!=''"> AND T1.TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'ACCOUNT_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.type}"%"</if>
             <if test="entity.parAccntCode!=null and entity.parAccntCode!=''">AND T1.PAR_ACCNT_CODE=#{entity.parAccntCode}</if>
-            <if test="entity.priEmpCode!=null and entity.priEmpCode!=''"> AND T1.PRI_EMP_CODE=#{entity.priEmpCode}</if>
-            <if test="entity.orgCode!=null and entity.orgCode!=''"> AND T1.ORG_CODE=#{entity.orgCode}</if>
+            <if test="entity.priEmpName!=null and entity.priEmpName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.PRI_EMP_CODE AND STATUS = 'Active') LIKE "%"#{entity.priEmpName}"%"</if>
+            <if test="entity.orgName!=null and entity.orgName!=''"> AND (SELECT NAME FROM HC_ORG WHERE CODE = T1.ORG_CODE AND STATUS = 'true') LIKE "%"#{entity.orgName}"%"</if>
             <if test="entity.dunsCode!=null and entity.dunsCode!=''"> AND T1.DUNS_CODE LIKE "%"#{entity.dunsCode}"%"</if>
-            <if test="entity.status!=null and entity.status!=''"> AND T1.STATUS LIKE "%"#{entity.status}"%"</if>
-            <if test="entity.periodCode!=null and entity.periodCode!=''"> AND T1.PERIOD_CODE LIKE "%"#{entity.periodCode}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.periodCode!=null and entity.periodCode!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.PERIOD_CODE = `NAME` AND TYPE = 'ACCOUNT_PERIOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.periodCode}"%"</if>
             <if test="entity.priCtctCode!=null and entity.priCtctCode!=''"> AND T1.PRI_CTCT_CODE=#{entity.priCtctCode}</if>
+            <if test="entity.industry!=null and entity.industry!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTRY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.industry}"%"</if>
+            <if test="entity.subIndustry!=null and entity.subIndustry!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTRY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.subIndustry}"%"</if>
+            <if test="entity.country!=null and entity.country!=''"> AND T1.ADDR_CODE IN (SELECT T1.CODE FROM HC_ADDR T1 WHERE T1.COUNTYR LIKE "%"#{entity.country}"%")</if>
+            <if test="entity.state!=null and entity.state!=''"> AND T1.ADDR_CODE IN (SELECT T1.CODE FROM HC_ADDR T1 WHERE T1.STATE LIKE "%"#{entity.state}"%")</if>
+            <if test="entity.city!=null and entity.city!=''"> AND T1.ADDR_CODE IN (SELECT T1.CODE FROM HC_ADDR T1 WHERE T1.CITY LIKE "%"#{entity.city}"%")</if>
+            <if test="entity.county!=null and entity.county!=''"> AND T1.ADDR_CODE IN (SELECT T1.CODE FROM HC_ADDR T1 WHERE T1.COUNTY LIKE "%"#{entity.county}"%")</if>
+            <if test="entity.street!=null and entity.street!=''"> AND T1.ADDR_CODE IN (SELECT T1.CODE FROM HC_ADDR T1 WHERE T1.STREET LIKE "%"#{entity.street}"%")</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -72,7 +81,7 @@
 
     <insert id="insertAccount" parameterType="com.hand.account.access.vo.AccountVO">
         INSERT INTO HC_ACCNT(CODE,CREATED,CREATED_BY,NAME,NAME_ENU,TYPE,TAX_CODE,PAR_ACCNT_CODE,PRI_EMP_CODE,ORG_CODE,DUNS_CODE,STATUS,PERIOD_CODE,CURRENCY,PRI_CTCT_CODE,PH_NUM,FAX_NUM,EMAIL,HOME_URL,INDUSTRY,SUB_INDUSTRY,REG_FUND,ADDR_CODE)
-        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{nameEnu},#{type},#{taxCode},#{parAccntCode},#{priEmpCode},#{orgCode},#{dunsCode},#{status},#{periodCode},#{currency},#{priCtctCode},#{phNum},#{faxNum},#{email},#{homeUrl},#{industry},#{subIndustry},#{regFund},#{addrCode})
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{nameEnu},#{typeCode},#{taxCode},#{parAccntCode},#{priEmpCode},#{orgCode},#{dunsCode},#{statusCode},#{periodCode},#{currency},#{priCtctCode},#{phNum},#{faxNum},#{email},#{homeUrl},#{industryCode},#{subIndustryCode},#{regFund},#{addrCode})
     </insert>
 
     <select id="queryAccount" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.account.access.vo.AccountVO">

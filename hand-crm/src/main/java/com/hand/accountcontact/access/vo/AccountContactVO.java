@@ -9,6 +9,7 @@ public class AccountContactVO {
     private String accntCode;
     private String ctctCode;
     private String status;
+    private String statusCode;
     private String desc;
 
     public String getCode() {
@@ -83,6 +84,14 @@ public class AccountContactVO {
         this.desc = desc;
     }
 
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
     @Override
     public String toString() {
         return "AccountContactVO{" +
@@ -94,6 +103,7 @@ public class AccountContactVO {
                 ", accntCode='" + accntCode + '\'' +
                 ", ctctCode='" + ctctCode + '\'' +
                 ", status='" + status + '\'' +
+                ", statusCode='" + statusCode + '\'' +
                 ", desc='" + desc + '\'' +
                 '}';
     }
