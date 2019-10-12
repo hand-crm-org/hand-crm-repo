@@ -61,7 +61,7 @@
         <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
         <if test="accntCode!=null and accntCode!=''">,ACCNT_CODE = #{accntCode}</if>
         <if test="ctctCode!=null and ctctCode!=''">,CTCT_CODE = #{ctctCode}</if>
-        <if test="status!=null and status!=''">,STATUS = #{status}</if>
+        <if test="status!=null and statusCode!=''">,STATUS = #{statusCode}</if>
         <if test="desc!=null and desc!=''">,`DESC` = #{desc}</if>
     </sql>
     <sql id="queryAllConditionSql">

@@ -60,7 +60,7 @@
             <if test="name!=null and name!=''">,NAME=#{name}</if>
             <if test="nameEnu!=null and nameEnu!=''">,NAME_ENU=#{nameEnu}</if>
             <if test="taxCode!=null and taxCode!=''">,TAX_CODE=#{taxCode}</if>
-            <if test="type!=null and type!=''">,TYPE=#{type}</if>
+            <if test="typeCode!=null and typeCode!=''">,TYPE=#{typeCode}</if>
             <if test="parAccntCode!=null and parAccntCode!=''">,PAR_ACCNT_CODE=#{parAccntCode}</if>
             <if test="priEmpCode!=null and priEmpCode!=''">,PRI_EMP_CODE=#{priEmpCode}</if>
             <if test="orgCode!=null and orgCode!=''">,ORG_CODE=#{orgCode}</if>
@@ -71,11 +71,11 @@
             <if test="faxNum!=null and faxNum!=''">,FAX_NUM=#{faxNum}</if>
             <if test="email!=null and email!=''">,EMAIL=#{email}</if>
             <if test="homeUrl!=null and homeUrl!=''">,HOME_URL=#{homeUrl}</if>
-            <if test="industry!=null and industry!=''">,INDUSTRY=#{industry}</if>
-            <if test="subIndustry!=null and subIndustry!=''">,SUB_INDUSTRY=#{subIndustry}</if>
+            <if test="industryCode!=null and industryCode!=''">,INDUSTRY=#{industryCode}</if>
+            <if test="subIndustryCode!=null and subIndustryCode!=''">,SUB_INDUSTRY=#{subIndustryCode}</if>
             <if test="regFund!=null and regFund!=''">,REG_FUND=#{regFund}</if>
             <if test="addrCode!=null and addrCode!=''">,ADDR_CODE=#{addrCode}</if>
-
+            <if test="statusCode!=null and statusCode!=''">,STATUS=#{statusCode}</if>
         </if>
     </sql>
 
