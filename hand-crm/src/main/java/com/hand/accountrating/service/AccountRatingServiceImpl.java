@@ -29,12 +29,10 @@ public class AccountRatingServiceImpl implements AccountRatingService {
     @Override
     public String addAccountRating(AccountRatingVO accountRatingVO) {
         if (!StringUtil.isEmpty(accountRatingVO.getAccountCode()) && !StringUtil.isEmpty(accountRatingVO.getRatingLevel())
-                && (accountRatingVO.getStartDate()!=null) && (accountRatingVO.getEndDate()!=null)
-                && !StringUtil.isEmpty(accountRatingVO.getStatus()) && (accountRatingVO.getCreditAll()!=0)
-                && (accountRatingVO.getCreditUsed()!=0))
+                && (accountRatingVO.getStartDate()!=null) && !StringUtil.isEmpty(accountRatingVO.getStatusCode())
+                && (accountRatingVO.getCreditAll()!=0) && (accountRatingVO.getCreditUsed()!=0))
         {
             String code = StringUtil.getCode();
-
                 accountRatingVO.setCode(code);
                 int count = accountRatingDao.insertAccountRating(accountRatingVO);
                 if (count > 0) {
@@ -54,5 +52,10 @@ public class AccountRatingServiceImpl implements AccountRatingService {
         else {
             throw new RuntimeException("miss param!");
         }
+    }
+
+    @Override
+    public int queryAccountRatingVersion(AccountRatingVO accountRatingVO) {
+        return accountRatingDao.queryAccountRatingVersion(accountRatingVO);
     }
 }

@@ -5,25 +5,27 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class AccountRatingVO {
-    private String code;
-    private Date created;
-    private String createdBy;
-    private Date updated;
-    private String updatedBy;
-    private String accountCode;
-    private String ratingLevel;
-    private String qixinLevel;
+    private String code;  //客户-评级编码
+    private Date created;  //创建日期
+    private String createdBy;  //创建人
+    private Date updated;  //更新日期
+    private String updatedBy;  //更新人
+    private String accountCode;  //客户Code
+    private String ratingLevel;  //评级等级
+    private String qixinLevel;  //启信宝资信等级
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
-    private Date startDate;
+    private Date startDate;  //生效时间
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
-    private Date endDate;
-    private String status;
-    private double creditAll;
-    private double creditUsed;
-    private String attachmentCode;
-    private String version;
-    private String currency;
-    private String comment;
+    private Date endDate;  //失效时间
+    private String status;  //状态
+    private Double creditAll;  //可用信用额度
+    private Double creditUsed;  //已用信用额度
+    private String attachmentCode;  //评级附件Code
+    private Integer version;  //版本
+    private String currency;  //币种
+    private String comment;  //备注
+    private String statusCode;  //状态Code
+    private String langId;
 
     public String getCode() {
         return code;
@@ -113,19 +115,19 @@ public class AccountRatingVO {
         this.status = status;
     }
 
-    public double getCreditAll() {
+    public Double getCreditAll() {
         return creditAll;
     }
 
-    public void setCreditAll(double creditAll) {
+    public void setCreditAll(Double creditAll) {
         this.creditAll = creditAll;
     }
 
-    public double getCreditUsed() {
+    public Double getCreditUsed() {
         return creditUsed;
     }
 
-    public void setCreditUsed(double creditUsed) {
+    public void setCreditUsed(Double creditUsed) {
         this.creditUsed = creditUsed;
     }
 
@@ -133,11 +135,11 @@ public class AccountRatingVO {
         return attachmentCode;
     }
 
-    public String getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
@@ -161,23 +163,43 @@ public class AccountRatingVO {
         this.comment = comment;
     }
 
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
+    }
+
     @Override
     public String toString() {
         return "AccountRatingVO{" +
                 "code='" + code + '\'' +
-                ", created='" + created + '\'' +
+                ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
-                ", updated='" + updated + '\'' +
+                ", updated=" + updated +
                 ", updatedBy='" + updatedBy + '\'' +
                 ", accountCode='" + accountCode + '\'' +
                 ", ratingLevel='" + ratingLevel + '\'' +
                 ", qixinLevel='" + qixinLevel + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", status='" + status + '\'' +
-                ", creditAll='" + creditAll + '\'' +
-                ", creditUsed='" + creditUsed + '\'' +
+                ", creditAll=" + creditAll +
+                ", creditUsed=" + creditUsed +
                 ", attachmentCode='" + attachmentCode + '\'' +
+                ", version='" + version + '\'' +
+                ", currency='" + currency + '\'' +
+                ", comment='" + comment + '\'' +
+                ", statusCode='" + statusCode + '\'' +
                 '}';
     }
 }

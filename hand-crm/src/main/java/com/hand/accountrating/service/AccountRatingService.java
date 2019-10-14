@@ -28,4 +28,11 @@ public interface AccountRatingService {
      * @return
      */
     boolean modifyAccountRating(AccountRatingVO accountRatingVO);
+
+    /**
+     * 查询客户评级版本信息
+     * @param accountRatingVO
+     * @return
+     */
+    int queryAccountRatingVersion(AccountRatingVO accountRatingVO);
 }

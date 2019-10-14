@@ -8,6 +8,9 @@
         <include refid="queryAllAccountRatingSql"></include>
         limit #{start},#{pageSize}
     </select>
+    <select id="queryAccountRatingVersion" parameterType="com.hand.accountrating.access.vo.AccountRatingVO" resultType="int">
+       select VERSION+1 version from HC_ACCNT_RAT where  ACCNT_CODE = #{accountCode} ORDER BY VERSION desc LIMIT 1
+    </select>
     <select id="queryAccountRatingCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
@@ -18,7 +21,7 @@
     </select>
     <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
         INSERT INTO HC_ACCNT_RAT(CODE,CREATED,CREATED_BY,ACCNT_CODE,RAT_LEVEL,QX_LEVEL,START_DATE,END_DATE,STATUS,CREDIT_ALL,CREDIT_USED,ATT_CODE,VERSION,CURRENCY,COMMENT)
-        VALUES (#{code},sysdate(),#{updatedBy},#{accountCode},#{ratingLevel},#{qixinLevel},#{startDate},#{endDate},#{status},#{creditAll},#{creditUsed},#{attachmentCode},#{version},#{currency},#{comment})
+        VALUES (#{code},sysdate(),#{updatedBy},#{accountCode},#{ratingLevel},#{qixinLevel},#{startDate},#{endDate},#{statusCode},#{creditAll},#{creditUsed},#{attachmentCode},#{version},#{currency},#{comment})
     </insert>
 
     <update id="updateAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
@@ -42,7 +45,8 @@
         T1.QX_LEVEL as qixinLevel,
         T1.START_DATE as startDate,
         T1.END_DATE as endDate,
-        T1.STATUS as status,
+        T1.`STATUS` as statusCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
         T1.CREDIT_ALL as creditAll,
         T1.CREDIT_USED as creditUsed,
         T1.ATT_CODE as attachmentCode,
@@ -85,7 +89,7 @@
                 , COMMENT = #{comment}
             </if>
             <if test="status!=null and status!=''">
-                , STATUS = #{status}
+                , STATUS = #{statusCode}
             </if>
         </if>
     </sql>
@@ -110,7 +114,37 @@
                 AND ACCNT_CODE = #{entity.accountCode}
             </if>
             <if test="entity.status!=null and entity.status!=''">
-                AND STATUS LIKE "%"#{entity.status}"%"
+                AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.status}"%"
+            </if>
+            <if test="entity.ratingLevel!=null and entity.ratingLevel!=''">
+                AND RAT_LEVEL = #{entity.ratingLevel}
+            </if>
+            <if test="entity.qixinLevel!=null and entity.qixinLevel!=''">
+                AND QX_LEVEL = #{entity.qixinLevel}
+            </if>
+            <if test="entity.startDate!=null">
+                AND START_DATE = #{entity.startDate}
+            </if>
+            <if test="entity.endDate!=null">
+                AND END_DATE = #{entity.endDate}
+            </if>
+            <if test="entity.version!=null and entity.version!=''">
+                AND VERSION = #{entity.version}
+            </if>
+            <if test="entity.currency!=null and entity.currency!=''">
+                AND CURRENCY = #{entity.currency}
+            </if>
+            <if test="entity.comment!=null and entity.comment!=''">
+                AND COMMENT LIKE "%"#{entity.comment}"%"
+            </if>
+            <if test="entity.creditAll!=null">
+                AND CREDIT_ALL = #{entity.creditAll}
+            </if>
+            <if test="entity.creditUsed!=null">
+                AND CREDIT_USED = #{entity.creditUsed}
+            </if>
+            <if test="entity.attachmentCode!=null and entity.attachmentCode!=''">
+                AND ATT_CODE LIKE "%"#{entity.attachmentCode}"%"
             </if>
         </if>
     </sql>
