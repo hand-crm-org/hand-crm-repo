@@ -13,7 +13,7 @@ public interface AccountRatingService {
      * @param pageQuery
      * @return
      */
-    List<ContactVO> getAccountRatingList(PageQuery<AccountRatingVO> pageQuery);
+    List<AccountRatingVO> getAccountRatingList(PageQuery<AccountRatingVO> pageQuery);
 
     /**
      * 新建客户评级信息
@@ -34,5 +34,5 @@ public interface AccountRatingService {
      * @param accountRatingVO
      * @return
      */
-    int queryAccountRatingVersion(AccountRatingVO accountRatingVO);
+    AccountRatingVO queryAccountRatingVersion(AccountRatingVO accountRatingVO);
 }

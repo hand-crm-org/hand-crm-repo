@@ -13,7 +13,7 @@ public interface AccountRatingDao {
      * @param pageQuery
      * @return
      */
-    List<ContactVO> queryAccountRatingList(PageQuery<AccountRatingVO> pageQuery);
+    List<AccountRatingVO> queryAccountRatingList(PageQuery<AccountRatingVO> pageQuery);
 
     /**
      * 计数该客户联系人下的评级记录
@@ -41,5 +41,5 @@ public interface AccountRatingDao {
      * @param accountRatingVO
      * @return
      */
-    int queryAccountRatingVersion(AccountRatingVO accountRatingVO);
+    AccountRatingVO queryAccountRatingVersion(AccountRatingVO accountRatingVO);
 }

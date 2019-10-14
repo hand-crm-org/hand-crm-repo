@@ -71,7 +71,7 @@ public class AccountRationController {
     @ApiOperation("新建客户评级")
     @PostMapping("add-accountRating")
     public ResultDTO addAccountRating(@RequestBody AccountRatingVO accountRatingVO){
-        accountRatingVO.setVersion(accountRatingService.queryAccountRatingVersion(accountRatingVO));
+        accountRatingVO.setVersion(accountRatingService.queryAccountRatingVersion(accountRatingVO).getVersion());
         String code = accountRatingService.addAccountRating(accountRatingVO);
         if (!StringUtil.isEmpty(code)){
             JSONObject jsonObject = new JSONObject();

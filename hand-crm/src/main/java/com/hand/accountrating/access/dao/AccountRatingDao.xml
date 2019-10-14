@@ -5,11 +5,12 @@
         <include refid="queryAllSql"></include>
         WHERE
         T1.ACCNT_CODE = #{entity.accountCode}
+        AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
         <include refid="queryAllAccountRatingSql"></include>
         limit #{start},#{pageSize}
     </select>
-    <select id="queryAccountRatingVersion" parameterType="com.hand.accountrating.access.vo.AccountRatingVO" resultType="int">
-       select VERSION+1 version from HC_ACCNT_RAT where  ACCNT_CODE = #{accountCode} ORDER BY VERSION desc LIMIT 1
+    <select id="queryAccountRatingVersion" parameterType="com.hand.accountrating.access.vo.AccountRatingVO" resultType="com.hand.accountrating.access.vo.AccountRatingVO">
+       SELECT T1.VERSION as version FROM HC_ACCNT_RAT T1 where  T1.ACCNT_CODE = #{accountCode} ORDER BY VERSION desc LIMIT 1
     </select>
     <select id="queryAccountRatingCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)

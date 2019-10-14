@@ -2,7 +2,6 @@ package com.hand.accountrating.service;
 
 import com.hand.accountrating.access.dao.AccountRatingDao;
 import com.hand.accountrating.access.vo.AccountRatingVO;
-import com.hand.contact.access.vo.ContactVO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class AccountRatingServiceImpl implements AccountRatingService {
     AccountRatingDao accountRatingDao;
 
     @Override
-    public List<ContactVO> getAccountRatingList(PageQuery<AccountRatingVO> pageQuery) {
+    public List<AccountRatingVO> getAccountRatingList(PageQuery<AccountRatingVO> pageQuery) {
         int count = accountRatingDao.queryAccountRatingCount(pageQuery);
         if (count>0){
             pageQuery.setCount(count);
@@ -55,7 +54,20 @@ public class AccountRatingServiceImpl implements AccountRatingService {
     }
 
     @Override
-    public int queryAccountRatingVersion(AccountRatingVO accountRatingVO) {
-        return accountRatingDao.queryAccountRatingVersion(accountRatingVO);
+    public AccountRatingVO queryAccountRatingVersion(AccountRatingVO accountRatingVO) {
+        AccountRatingVO ratingVO = new AccountRatingVO();
+        try{
+            ratingVO = accountRatingDao.queryAccountRatingVersion(accountRatingVO);
+            if(ratingVO!=null)
+                ratingVO.setVersion(accountRatingDao.queryAccountRatingVersion(accountRatingVO).getVersion()+1);
+            else {
+                ratingVO = new AccountRatingVO();
+                ratingVO.setVersion(1);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return ratingVO;
     }
 }
