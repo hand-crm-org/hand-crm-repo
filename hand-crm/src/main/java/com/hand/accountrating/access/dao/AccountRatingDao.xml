@@ -18,6 +18,7 @@
         HC_ACCNT_RAT T1
         WHERE
         T1.ACCNT_CODE = #{entity.accountCode}
+        AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
         <include refid="queryAllAccountRatingSql"></include>
     </select>
     <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
