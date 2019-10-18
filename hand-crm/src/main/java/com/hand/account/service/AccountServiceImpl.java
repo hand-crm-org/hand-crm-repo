@@ -24,9 +24,8 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public String addAccount(AccountVO accountVO) {
         if (!StringUtil.isEmpty(accountVO.getPriEmpCode()) && !StringUtil.isEmpty(accountVO.getType())
-                && !StringUtil.isEmpty(accountVO.getPeriodCode()) && !StringUtil.isEmpty(accountVO.getName())
-                && !StringUtil.isEmpty(accountVO.getOrgCode()) && !StringUtil.isEmpty(accountVO.getUpdatedBy())
-                && !StringUtil.isEmpty(accountVO.getStatus()) && !StringUtil.isEmpty(accountVO.getPeriodCode())
+                && !StringUtil.isEmpty(accountVO.getName()) && !StringUtil.isEmpty(accountVO.getOrgCode())
+                && !StringUtil.isEmpty(accountVO.getUpdatedBy()) && !StringUtil.isEmpty(accountVO.getStatus())
                 && !StringUtil.isEmpty(accountVO.getPriCtctCode()) && !StringUtil.isEmpty(accountVO.getPhNum()))
         {
             String code = StringUtil.getCode();
@@ -41,8 +40,7 @@ public class AccountServiceImpl implements AccountService{
             }
             else
             {
-                if (!StringUtil.isEmpty(accountVO.getAccntNum())&& !StringUtil.isEmpty(accountVO.getTaxCode())
-                        && !StringUtil.isEmpty(accountVO.getAddrCode()))
+                if (!StringUtil.isEmpty(accountVO.getTaxCode()) && !StringUtil.isEmpty(accountVO.getAddrCode()))
                 {
                     accountVO.setCode(code);
                     int count = accountDao.insertAccount(accountVO);
