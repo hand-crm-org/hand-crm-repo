@@ -47,9 +47,9 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="ownOrgCode", value="归属部门", dataType="String"),
             @ApiImplicitParam(paramType="query", name="lostReason", value="失单原因", dataType="String"),
             @ApiImplicitParam(paramType="query", name="finalUse", value="最终用途", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="createdBy", value="创建人", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="createdName", value="创建人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="updatedBy", value="更新人", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="winRate", value="商机赢单率", dataType="String"),
             @ApiImplicitParam(paramType="query", name="prSales", value="商机负责人", dataType="String"),
@@ -63,8 +63,8 @@ public class OpportunityController {
                                   @RequestParam(value = "optyFsctAmount",required = false) String optyFsctAmount, @RequestParam(value = "expectSignTime",required = false) String expectSignTime,
                                   @RequestParam(value = "desc",required = false) String desc, @RequestParam(value = "ownOrgCode",required = false) String ownOrgCode,
                                   @RequestParam(value = "lostReason",required = false) String lostReason, @RequestParam(value = "finalUse",required = false) String finalUse,
-                                  @RequestParam(value = "createdBy",required = false) String createdBy, @RequestParam(value = "created",required = false) String created,
-                                  @RequestParam(value = "updatedBy",required = false) String updatedBy, @RequestParam(value = "updated",required = false) String updated,
+                                  @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
+                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "updated",required = false) String updated,
                                   @RequestParam(value = "winRate",required = false) String winRate, @RequestParam(value = "prSales",required = false) String prSales,
                                   @RequestParam(value = "optyStage",required = false) String optyStage){
         OpportunityVO opportunityVO = new OpportunityVO();
@@ -89,9 +89,9 @@ public class OpportunityController {
         opportunityVO.setOwnOrgCode(ownOrgCode);
         opportunityVO.setLostReason(lostReason);
         opportunityVO.setFinalUse(finalUse);
-        opportunityVO.setCreatedBy(createdBy);
+        opportunityVO.setCreatedName(createdName);
         opportunityVO.setCreated(DateFormatUtil.strToDate(created));
-        opportunityVO.setUpdatedBy(updatedBy);
+        opportunityVO.setUpdatedName(updatedName);
         opportunityVO.setUpdated(DateFormatUtil.strToDate(updated));
         PageQuery<OpportunityVO> pageQuery = new PageQuery<OpportunityVO>(opportunityVO, currentPage, pageSize);
         return  ServiceData.success(opportunityService.getOpportunity(pageQuery), pageQuery.getMapOfPageQuery());

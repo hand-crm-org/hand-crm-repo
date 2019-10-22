@@ -33,9 +33,9 @@
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND T1.CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.type!=null and entity.type!=''"> AND T1.TYPE LIKE "%"#{entity.type}"%"</if>
             <if test="entity.status!=null and entity.status!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.status}"%"</if>
@@ -85,7 +85,7 @@
         WHERE
         1=1
         <include refid="queryALLConditionSql"></include>
-        order by UPDATED desc
+        order by T1.UPDATED desc
         limit #{start},#{pageSize}
     </select>
 

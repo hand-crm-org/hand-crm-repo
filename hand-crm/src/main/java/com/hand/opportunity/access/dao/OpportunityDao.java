@@ -1,6 +1,5 @@
 package com.hand.opportunity.access.dao;
 
-import com.hand.account.access.vo.AccountVO;
 import com.hand.frame.util.PageQuery;
 import com.hand.opportunity.access.vo.OpportunityVO;
 import org.springframework.stereotype.Repository;

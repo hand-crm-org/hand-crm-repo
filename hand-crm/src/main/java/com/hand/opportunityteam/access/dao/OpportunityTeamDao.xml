@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.opportunityteam.access.dao.OpportunityTeamDao">
+    <sql id="queryAllOppoInfoSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+		(SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+		(SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) as updatedName,
+        T1.OPTY_CODE as optyCode,
+        (SELECT NAME FROM HC_OPTY WHERE CODE = T1.OPTY_CODE) as optyName,
+        T1.TYPE as typeCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'OPTY_TEAM_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = 'CHS' ) AS `type`,
+        T1.EMP_CODE as empCode,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empName,
+        (SELECT WORK_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empWorkPhone,
+		(SELECT PERSONAL_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empPersonalPhone,
+        T1.PRI_FLG as primaryFlag
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
+            <if test="entity.optyName!=null and entity.optyName!=''"> AND (SELECT NAME FROM HC_OPTY WHERE CODE = T1.OPTY_CODE) LIKE "%"#{entity.optyName}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND  ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'OPTY_TEAM_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = 'CHS' ) LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.empName!=null and entity.empName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empName}"%"</if>
+            <if test="entity.empWorkPhone!=null and entity.empWorkPhone!=''"> AND (SELECT WORK_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empWorkPhone}"%"</if>
+            <if test="entity.empPersonalPhone!=null and entity.empPersonalPhone!=''"> AND (SELECT PERSONAL_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empPersonalPhone}"%"</if>
+            <if test="entity.primaryFlag!=null and entity.primaryFlag!=''"> AND T1.PRI_FLG=#{entity.primaryFlag}</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+            <if test="typeCode!=null and typeCode!=''">,TYPE=#{typeCode}</if>
+            <if test="empCode!=null and empCode!=''">,EMP_CODE=#{empCode}</if>
+            <if test="primaryFlag!=null and primaryFlag!=''">,PRI_FLG=#{primaryFlag}</if>
+        </if>
+    </sql>
+
+    <insert id="insertOpportunityTeam" parameterType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
+        INSERT INTO HC_OPTY_TEAM(CODE,CREATED,CREATED_BY,TYPE,OPTY_CODE,EMP_CODE,PRI_FLG)
+        VALUES (#{code},sysdate(),#{updatedBy},#{typeCode},#{optyCode},#{empCode},#{primaryFlag})
+    </insert>
+
+    <select id="queryOpportunityTeam" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
+        <include refid="queryAllOppoInfoSql"></include>
+        FROM
+        HC_OPTY_TEAM T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        order by T1.UPDATED desc
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryOpportunityTeamCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_OPTY_TEAM T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateOpportunityTeam" parameterType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
+        UPDATE HC_OPTY_TEAM SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+</mapper>
