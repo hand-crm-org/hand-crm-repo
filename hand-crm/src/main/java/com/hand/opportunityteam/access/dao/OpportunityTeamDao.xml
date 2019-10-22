@@ -55,6 +55,7 @@
         HC_OPTY_TEAM T1
         WHERE
         1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
         order by T1.UPDATED desc
         limit #{start},#{pageSize}
@@ -66,6 +67,7 @@
         HC_OPTY_TEAM T1
         WHERE
         1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
     </select>
 

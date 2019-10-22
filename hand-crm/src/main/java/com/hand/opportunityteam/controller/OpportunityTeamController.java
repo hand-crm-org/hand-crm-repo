@@ -4,8 +4,6 @@ import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
-import com.hand.frame.util.StringUtil;
-import com.hand.opportunity.access.vo.OpportunityVO;
 import com.hand.opportunityteam.access.vo.OpportunityTeamVO;
 import com.hand.opportunityteam.service.OpportunityTeamService;
 import io.swagger.annotations.Api;
@@ -37,6 +35,7 @@ public class OpportunityTeamController {
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
             @ApiImplicitParam(paramType="query", name="code", value="商机团队编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optyName", value="商机名称", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="optyCode", value="商机编吗", dataType="String"),
             @ApiImplicitParam(paramType="query", name="type", value="商机团队类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="empName", value="成员姓名", dataType="String"),
             @ApiImplicitParam(paramType="query", name="empWorkPhone", value="成员工作电话", dataType="String"),
@@ -54,9 +53,10 @@ public class OpportunityTeamController {
                                   @RequestParam(value = "empWorkPhone",required = false) String empWorkPhone, @RequestParam(value = "empPersonalPhone",required = false) String empPersonalPhone,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag,@RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName,@RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "optyCode",required = false) String optyCode){
         OpportunityTeamVO opportunityTeamVO = new OpportunityTeamVO();
         opportunityTeamVO.setCode(code);
+        opportunityTeamVO.setOptyCode(optyCode);
         opportunityTeamVO.setOptyName(optyName);
         opportunityTeamVO.setType(type);
         opportunityTeamVO.setEmpName(empName);
