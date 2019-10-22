@@ -13,9 +13,9 @@ public class AccountRatingVO {
     private String accountCode;  //客户Code
     private String ratingLevel;  //评级等级
     private String qixinLevel;  //启信宝资信等级
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date startDate;  //生效时间
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date endDate;  //失效时间
     private String status;  //状态
     private Double creditAll;  //可用信用额度

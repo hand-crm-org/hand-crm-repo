@@ -12,11 +12,16 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api("商机相关api")
 public class OpportunityController {
+
+    @Value(value = "${lang.language}")
+    private String langId;
+
     @Autowired
     OpportunityService opportunityService;
 
@@ -36,7 +41,7 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="status", value="商机状态", dataType="String"),
             @ApiImplicitParam(paramType="query", name="accntCode", value="客户编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optySource", value="商机来源", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="optyFsctAmount", value="预计销售额度（万）", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="optyFsctAmount", value="预计销售额度（万）", dataType="Double"),
             @ApiImplicitParam(paramType="query", name="expectSignTime", value="预计签单时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="desc", value="备注", dataType="String"),
             @ApiImplicitParam(paramType="query", name="ownOrgCode", value="归属部门", dataType="String"),
@@ -46,7 +51,9 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updatedBy", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
-
+            @ApiImplicitParam(paramType="query", name="winRate", value="商机赢单率", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="prSales", value="商机负责人", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="optyStage", value="商机阶段", dataType="String"),
     })
     @GetMapping("/getOppInfo")
     public ServiceData getOppInfo(int currentPage, int pageSize,
@@ -57,19 +64,25 @@ public class OpportunityController {
                                   @RequestParam(value = "desc",required = false) String desc, @RequestParam(value = "ownOrgCode",required = false) String ownOrgCode,
                                   @RequestParam(value = "lostReason",required = false) String lostReason, @RequestParam(value = "finalUse",required = false) String finalUse,
                                   @RequestParam(value = "createdBy",required = false) String createdBy, @RequestParam(value = "created",required = false) String created,
-                                  @RequestParam(value = "updatedBy",required = false) String updatedBy, @RequestParam(value = "updated",required = false) String updated){
+                                  @RequestParam(value = "updatedBy",required = false) String updatedBy, @RequestParam(value = "updated",required = false) String updated,
+                                  @RequestParam(value = "winRate",required = false) String winRate, @RequestParam(value = "prSales",required = false) String prSales,
+                                  @RequestParam(value = "optyStage",required = false) String optyStage){
         OpportunityVO opportunityVO = new OpportunityVO();
         opportunityVO.setCode(code);
+        opportunityVO.setWinRate(winRate);
+        opportunityVO.setOptyStage(optyStage);
+        opportunityVO.setPrSales(prSales);
         opportunityVO.setName(name);
         opportunityVO.setType(type);
         opportunityVO.setStatus(status);
+        opportunityVO.setLangId(langId);
         opportunityVO.setAccntCode(accntCode);
         opportunityVO.setOptySource(optySource);
         if(StringUtil.isEmpty(optyFsctAmount)){
-            opportunityVO.setOptyFsctAmount(0);
+            opportunityVO.setOptyFsctAmount(0.00);
         }
         else{
-            opportunityVO.setOptyFsctAmount(Integer.parseInt(optyFsctAmount));
+            opportunityVO.setOptyFsctAmount(Double.valueOf(optyFsctAmount));
         }
         opportunityVO.setExpectSignTime(DateFormatUtil.strToDate(expectSignTime));
         opportunityVO.setDesc(desc);

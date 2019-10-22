@@ -7,10 +7,10 @@ import java.util.Date;
 public class AccountVO {
     private String code;//客户code
     private String accntNum;//客户编码
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date created;//创建日期
     private String createdBy;//创建人
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date updated;//更新日期
     private String updatedBy;//更新人
     private String name;//客户名称
