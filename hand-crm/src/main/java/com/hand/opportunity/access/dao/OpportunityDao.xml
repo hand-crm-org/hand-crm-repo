@@ -13,7 +13,7 @@
         T1.NAME as name,
         T1.TYPE as type,
         T1.STATUS as statusCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as `status`,
         T1.ACCNT_CODE as accntCode,
 				(SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accntName,
         T1.OPTY_SOURCE as optySource,
@@ -25,9 +25,11 @@
         T1.LOST_REASON as lostReason,
         T1.FINAL_USE as finalUse,
         T1.WIN_RATE as winRate,
+         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.WIN_RATE = `NAME` AND TYPE = 'OPTY_WIN_RATE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as winRateCode,
         T1.PR_SALES_CODE as prSalesCode,
         ( SELECT S1.NAME FROM HC_EMP S1 WHERE T1.PR_SALES_CODE = S1.CODE) as prSales,
-        T1.OPTY_STAGE as optyStage
+        T1.OPTY_STAGE as optyStageCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_STAGE = `NAME` AND TYPE = 'OPTY_STAGE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as optyStage
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -47,9 +49,9 @@
             <if test="entity.orgName!=null and entity.orgName!=''"> AND (SELECT NAME FROM HC_ORG WHERE CODE = T1.OWN_ORG_CODE)=#{entity.orgName}</if>
             <if test="entity.lostReason!=null and entity.lostReason!=''"> AND T1.LOST_REASON LIKE "%"#{entity.lostReason}"%"</if>
             <if test="entity.finalUse!=null and entity.finalUse!=''"> AND T1.FINAL_USE LIKE "%"#{entity.finalUse}"%"</if>
-            <if test="entity.optyStage!=null and entity.optyStage!=''"> AND T1.OPTY_STAGE LIKE "%"#{entity.optyStage}"%"</if>
             <if test="entity.prSales!=null and entity.prSales!=''"> AND ( SELECT S1.NAME FROM HC_EMP S1 WHERE T1.PR_SALES_CODE = S1.CODE) LIKE "%"#{entity.prSales}"%"</if>
-            <if test="entity.winRate!=null and entity.winRate!=''"> AND T1.WIN_RATE LIKE "%"#{entity.winRate}"%"</if>
+            <if test="entity.winRate!=null and entity.winRate!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.WIN_RATE = `NAME` AND TYPE = 'OPTY_WIN_RATE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.winRate}"%"</if>
+            <if test="entity.optyStage!=null and entity.optyStage!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_STAGE = `NAME` AND TYPE = 'OPTY_STAGE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) = #{entity.optyStage}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">

@@ -43,7 +43,8 @@ public class ProductController {
 	     @ApiImplicitParam(paramType="query", name="type", value="类型", dataType="String"),
 	     @ApiImplicitParam(paramType="query", name="extCode", value="外部编码", dataType="String"),
 	     @ApiImplicitParam(paramType="query", name="parCode", value="父编码", dataType="String"),
-	     @ApiImplicitParam(paramType="query", name="status", value="是否有效", dataType="String")
+	     @ApiImplicitParam(paramType="query", name="status", value="是否有效", dataType="String"),
+		 @ApiImplicitParam(paramType="query", name="category", value="产品类别", dataType="String")
 	 })
 	 
 	 @GetMapping("/getProdInfo")
@@ -51,7 +52,8 @@ public class ProductController {
              @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
              @RequestParam(value = "desc",required = false) String desc, @RequestParam(value = "prodLevel",required = false) String prodLevel,
              @RequestParam(value = "type",required = false) String type, @RequestParam(value = "extCode",required = false) String extCode,
-             @RequestParam(value = "parCode",required = false) String parCode, @RequestParam(value = "status",required = false) String status){
+             @RequestParam(value = "parCode",required = false) String parCode, @RequestParam(value = "status",required = false) String status,
+			 @RequestParam(value = "category",required = false) String category){
 			ProductVO productVO = new ProductVO();
 			productVO.setCode(code);
 			productVO.setName(name);
@@ -61,6 +63,7 @@ public class ProductController {
 			productVO.setExtCode(extCode);
 			productVO.setParCode(parCode);
 			productVO.setStatus(status);
+		 	productVO.setCategory(category);
 			PageQuery<ProductVO> pageQuery = new PageQuery<ProductVO>(productVO, currentPage, pageSize);
 			return  ServiceData.success(productService.getProduct(pageQuery), pageQuery.getMapOfPageQuery());
 	}

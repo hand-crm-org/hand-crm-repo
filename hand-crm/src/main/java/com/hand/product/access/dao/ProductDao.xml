@@ -14,7 +14,8 @@
         TYPE as type,
         EXT_CODE as extCode,
         PAR_CODE as parCode,
-        STATUS as status
+        STATUS as status,
+        CATEGORY as category
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -30,6 +31,7 @@
             <if test="entity.extCode!=null and entity.extCode!=''">AND EXT_CODE=#{entity.extCode}</if>
             <if test="entity.parCode!=null and entity.parCode!=''"> AND PAR_CODE=#{entity.parCode}</if>
             <if test="entity.status!=null and entity.status!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.category!=null and entity.category!=''"> AND CATEGORY = #{entity.category}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -42,11 +44,12 @@
         <if test="extCode!=null and extCode!=''">,EXT_CODE=#{extCode}</if>
         <if test="parCode!=null and parCode!=''">,PAR_CODE=#{parCode}</if>
         <if test="status!=null and status!=''">,STATUS=#{status}</if>
+        <if test="category!=null and category!=''">,CATEGORY=#{category}</if>
         </if>
     </sql>
 
     <insert id="insertProduct" parameterType="com.hand.product.access.vo.ProductVO">
-        INSERT INTO HC_PROD(CODE,CREATED,CREATED_BY,UPDATED,UPDATED_BY,NAME,`DESC`,PROD_LEVEL,TYPE,EXT_CODE,PAR_CODE,STATUS) VALUES (#{code},sysdate(),#{createdBy},sysdate(),#{updatedBy},#{name},#{desc},#{prodLevel},#{type},#{extCode},#{parCode},#{status})
+        INSERT INTO HC_PROD(CODE,CREATED,CREATED_BY,UPDATED,UPDATED_BY,NAME,`DESC`,PROD_LEVEL,TYPE,EXT_CODE,PAR_CODE,STATUS,CATEGORY) VALUES (#{code},sysdate(),#{createdBy},sysdate(),#{updatedBy},#{name},#{desc},#{prodLevel},#{type},#{extCode},#{parCode},#{status},#{category})
     </insert>
 
     <select id="queryProduct" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.product.access.vo.ProductVO">

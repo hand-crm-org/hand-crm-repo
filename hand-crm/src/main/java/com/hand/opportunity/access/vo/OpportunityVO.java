@@ -31,6 +31,7 @@ public class OpportunityVO {
     private String finalUse;//最终用途
     private String langId;
     private String winRate;//商机赢单率
+    private String winRateCode;//商机赢单率Code
     private String prSalesCode;//商机负责人Code
     private String prSales;//商机负责人
     private String optyStageCode;//商机阶段code
@@ -252,6 +253,14 @@ public class OpportunityVO {
         this.optyStageCode = optyStageCode;
     }
 
+    public String getWinRateCode() {
+        return winRateCode;
+    }
+
+    public void setWinRateCode(String winRateCode) {
+        this.winRateCode = winRateCode;
+    }
+
     @Override
     public String toString() {
         return "OpportunityVO{" +
@@ -278,6 +287,7 @@ public class OpportunityVO {
                 ", finalUse='" + finalUse + '\'' +
                 ", langId='" + langId + '\'' +
                 ", winRate='" + winRate + '\'' +
+                ", winRateCode='" + winRateCode + '\'' +
                 ", prSalesCode='" + prSalesCode + '\'' +
                 ", prSales='" + prSales + '\'' +
                 ", optyStageCode='" + optyStageCode + '\'' +

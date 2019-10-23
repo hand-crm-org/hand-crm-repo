@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.opportunityprod.access.dao.OpportunityProductDao">
+    <sql id="queryAllOppoInfoSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+		(SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+		(SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) as updatedName,
+        T1.OPTY_CODE as optyCode,
+        T1.AMOUNT as amount,
+        T1.EXPECT_SIGN_TIME as expectSignTime,
+        T1.PROD_CODE as productCode,
+        (SELECT NAME FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productName,
+        (SELECT CATEGORY FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productCategory,
+        (SELECT TYPE FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productType,
+        T1.PRI_FLG as primaryFlag
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
+            <if test="entity.productName!=null and entity.productName!=''"> AND (SELECT NAME FROM HC_PROD WHERE CODE = T1.PROD_CODE) LIKE "%"#{entity.productName}"%"</if>
+            <if test="entity.productType!=null and entity.productType!=''"> AND (SELECT TYPE FROM HC_PROD WHERE CODE = T1.PROD_CODE) LIKE "%"#{entity.productType}"%"</if>
+            <if test="entity.amount!=null and entity.amount!=''"> AND T1.AMOUNT LIKE "%"#{entity.amount}"%"</if>
+            <if test="entity.expectSignTime!=null and entity.expectSignTime!=''"> AND T1.EXPECT_SIGN_TIME LIKE "%"#{entity.expectSignTime}"%"</if>
+            <if test="entity.primaryFlag!=null and entity.primaryFlag!=''"> AND T1.PRI_FLG=#{entity.primaryFlag}</if>
+            <if test="entity.productCategory!=null and entity.productCategory!=''"> AND (SELECT CATEGORY FROM HC_PROD WHERE CODE = T1.PROD_CODE)=#{entity.productCategory}</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+            <if test="optyCode!=null and optyCode!=''">,OPTY_CODE=#{optyCode}</if>
+            <if test="productCode!=null and productCode!=''">,PROD_CODE=#{productCode}</if>
+            <if test="amount!=null and amount!=''">,AMOUNT=#{amount}</if>
+            <if test="expectSignTime!=null">,EXPECT_SIGN_TIME=#{expectSignTime}</if>
+            <if test="primaryFlag!=null and primaryFlag!=''">,PRI_FLG=#{primaryFlag}</if>
+        </if>
+    </sql>
+
+    <insert id="insertOpportunityProd" parameterType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
+        INSERT INTO HC_OPTY_PROD(CODE,CREATED,CREATED_BY,OPTY_CODE,EXPECT_SIGN_TIME,AMOUNT,PROD_CODE,PRI_FLG)
+        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{expectSignTime},#{amount},#{productCode},#{primaryFlag})
+    </insert>
+
+    <select id="queryOpportunityProd" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
+        <include refid="queryAllOppoInfoSql"></include>
+        FROM
+        HC_OPTY_PROD T1
+        WHERE
+        1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
+        <include refid="queryALLConditionSql"></include>
+        order by T1.UPDATED desc
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryOpportunityProdCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_OPTY_PROD T1
+        WHERE
+        1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateOpportunityProd" parameterType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
+        UPDATE HC_OPTY_PROD SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+    <delete id="deleteOpportunityProd" parameterType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
+        DELETE FROM HC_OPTY_PROD
+        WHERE CODE=#{code}
+    </delete>
+
+</mapper>

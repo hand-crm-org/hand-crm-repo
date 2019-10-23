@@ -15,6 +15,7 @@ public class ProductVO {
     private String parCode;//父产品code
     private String desc;//描述
     private String status;//状态
+	private String category;//类别
 	public String getCode() {
 		return code;
 	}
@@ -86,5 +87,13 @@ public class ProductVO {
 	}
 	public void setParCode(String parCode) {
 		this.parCode = parCode;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
