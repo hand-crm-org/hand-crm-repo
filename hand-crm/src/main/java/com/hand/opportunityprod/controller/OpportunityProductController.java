@@ -36,7 +36,8 @@ public class OpportunityProductController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
-            @ApiImplicitParam(paramType="query", name="code", value="商机团队编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="optyCode", value="商机编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="code", value="商机产品编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="amount", value="预计销售额度", dataType="String"),
             @ApiImplicitParam(paramType="query", name="expectSignTime", value="预计签单时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="productCategory", value="产品类别", dataType="String"),
