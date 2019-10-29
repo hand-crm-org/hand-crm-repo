@@ -1,6 +1,5 @@
 package com.hand.accountsalesteam.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hand.accountsalesteam.access.vo.AccountSalesTeamVO;
 import com.hand.accountsalesteam.service.AccountSalesTeamService;
 import com.hand.frame.model.ResultDTO;
@@ -55,30 +54,18 @@ public class AccountSalesTeamController {
     @ApiOperation(value="客户-销售团队信息新建")
     @PostMapping("/addAccountSalesTeam")
     public ResultDTO addAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
-        String code = accountSalesTeamService.addAccountSalesTeam(accountSalesTeamVO);
-        if (code!=null){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject);
-        }
-        return ResultDTO.error("客户-销售团队信息新建失败");
+        return accountSalesTeamService.addAccountSalesTeam(accountSalesTeamVO);
     }
     @ApiOperation(value="客户-销售团队信息更新")
     @PutMapping("/modifyAccountSalesTeam")
     public ResultDTO modifyAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
-        if (accountSalesTeamService.modifyAccountSalesTeam(accountSalesTeamVO)){
-            return ResultDTO.success();
-        }
-        return ResultDTO.error("客户-销售团队信息更新失败");
+        return accountSalesTeamService.modifyAccountSalesTeam(accountSalesTeamVO);
     }
 
     @ApiOperation(value="客户-销售团队信息删除")
     @ApiImplicitParam(paramType="query", name="code", value="客户联系人code", dataType="String")
     @DeleteMapping("/remove-account-salesteam")
     public ResultDTO removeAccountSalesTeam(String code){
-        if (accountSalesTeamService.removeAccountSalesTeam(code)){
-            return ResultDTO.success();
-        }
-        return ResultDTO.error("客户-销售团队信息删除失败");
+        return accountSalesTeamService.removeAccountSalesTeam(code);
     }
 }

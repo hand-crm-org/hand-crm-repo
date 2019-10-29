@@ -2,8 +2,10 @@ package com.hand.accountsalesteam.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.accountsalesteam.access.dao.AccountSalesTeamDao;
 import com.hand.accountsalesteam.access.vo.AccountSalesTeamVO;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
     @Autowired
     AccountSalesTeamDao accountSalesTeamDao;
     @Override
-    public String addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
+    public ResultDTO addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
         if (!StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getAccntCode())&&!StringUtil.isEmpty(accountSalesTeamVO.getPriFlg())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getEmpCode())){
@@ -25,11 +27,13 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
             accountSalesTeamVO.setCode(code);
             int count = accountSalesTeamDao.insertAccountSalesTeam(accountSalesTeamVO);
             if (count>0){
-                return code;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("code", code);
+                return ResultDTO.success(jsonObject);
             }
-            return null;
+            return ResultDTO.error("新建销售团队失败");
         }
-        throw new RuntimeException("miss params");
+        return ResultDTO.error("缺失参数");
     }
 
     @Override
@@ -43,21 +47,27 @@ public class AccountSalesTeamServiceImpl implements AccountSalesTeamService {
     }
 
     @Override
-    public boolean modifyAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
+    public ResultDTO modifyAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO) {
         if (!StringUtil.isEmpty(accountSalesTeamVO.getCode())&&
             !StringUtil.isEmpty(accountSalesTeamVO.getUpdatedBy())){
             int count = accountSalesTeamDao.updateAccountSalesTeam(accountSalesTeamVO);
-            return count>0;
+            if (count > 0) {
+                return ResultDTO.success();
+            }
+            return ResultDTO.error("修改销售团队失败");
         }
-        throw new RuntimeException("miss param");
+        return ResultDTO.error("缺失参数");
     }
 
     @Override
-    public boolean removeAccountSalesTeam(String code) {
-        if (!StringUtil.isEmpty(code)){
+    public ResultDTO removeAccountSalesTeam(String code) {
+        if (!StringUtil.isEmpty(code)) {
             int count = accountSalesTeamDao.deleteAccountSalesTeam(code);
-            return count>0;
+            if (count > 0) {
+                return ResultDTO.success();
+            }
+            return ResultDTO.error("删除销售团队失败");
         }
-        throw new RuntimeException("miss param");
+        return ResultDTO.error("缺失参数");
     }
 }

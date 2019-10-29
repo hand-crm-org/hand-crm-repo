@@ -72,20 +72,11 @@ public class AccountRationController {
     @PostMapping("add-accountRating")
     public ResultDTO addAccountRating(@RequestBody AccountRatingVO accountRatingVO){
         accountRatingVO.setVersion(accountRatingService.queryAccountRatingVersion(accountRatingVO).getVersion());
-        String code = accountRatingService.addAccountRating(accountRatingVO);
-        if (!StringUtil.isEmpty(code)){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code",code);
-            return ResultDTO.success(jsonObject);
-        }
-        return ResultDTO.error("新建员工失败");
+        return accountRatingService.addAccountRating(accountRatingVO);
     }
     @ApiOperation("更新客户评级")
     @PutMapping("modify-accountRating")
-    public ResultDTO modifyAccountRating(@RequestBody AccountRatingVO accountRatingVO){
-        if (accountRatingService.modifyAccountRating(accountRatingVO)){
-            return ResultDTO.success();
-        }
-        return ResultDTO.error("更新员工失败");
+    public ResultDTO modifyAccountRating(@RequestBody AccountRatingVO accountRatingVO) {
+        return accountRatingService.modifyAccountRating(accountRatingVO);
     }
 }

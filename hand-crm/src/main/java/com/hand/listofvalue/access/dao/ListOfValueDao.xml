@@ -73,6 +73,7 @@
             <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
             <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG LIKE "%"#{entity.actFlg}"%"</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.nameList!=null and entity.nameList!=''"> AND NAME IN(${entity.nameList})</if>
         </if>
     </sql>
     <sql id="updateConditionSql">

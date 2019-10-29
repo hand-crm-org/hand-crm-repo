@@ -2,6 +2,7 @@ package com.hand.listofvalue.controller;
 
 import com.hand.frame.model.ResultDTO;
 import com.hand.frame.model.ServiceData;
+import com.hand.frame.util.LstOfValList;
 import com.hand.frame.util.PageQuery;
 import com.hand.listofvalue.access.vo.ListOfValueVO;
 import com.hand.listofvalue.service.ListOfValueService;
@@ -12,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 @RestController
@@ -32,12 +35,17 @@ public class ListOfValueController {
             @ApiImplicitParam(paramType="query", name="parLstCode", value="父值列表编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="level", value="等级", dataType="int"),
             @ApiImplicitParam(paramType="query", name="actFlg", value="生效标识", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String")
+            @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="nameList", value="独立语言代码集合", dataType="String")
     })
     @GetMapping("/getLstOfVal")
     public ServiceData getLstOfVal(int currentPage, int pageSize,String code,String type,
                                    String langId,String val,String name,String parLstCode,
-                                   Integer level,String actFlg,String desc){
+                                   Integer level,String actFlg,String desc,String nameList){
+        if(nameList!=null) {
+            LstOfValList lstOfValList = new LstOfValList();
+            nameList = lstOfValList.listOfValList(nameList);
+        }
         ListOfValueVO listOfValueVO = new ListOfValueVO();
         listOfValueVO.setCode(code);
         listOfValueVO.setType(type);
@@ -48,6 +56,7 @@ public class ListOfValueController {
         listOfValueVO.setLevel(level);
         listOfValueVO.setActFlg(actFlg);
         listOfValueVO.setDesc(desc);
+        listOfValueVO.setNameList(nameList);
         PageQuery<ListOfValueVO> pageQuery = new PageQuery<ListOfValueVO>(listOfValueVO, currentPage, pageSize);
         return  ServiceData.success(listOfValueService.getLstOfVaL(pageQuery), pageQuery.getMapOfPageQuery());
     }

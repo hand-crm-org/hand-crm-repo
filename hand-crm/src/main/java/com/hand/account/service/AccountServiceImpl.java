@@ -15,6 +15,7 @@ public class AccountServiceImpl implements AccountService{
     @Autowired
     AccountDao accountDao;
 
+    static final String POT_CUSTOMER = "Potential Customers";//潜在客户
     /**
      * 新建客户
      * @UpdateBy lln
@@ -29,7 +30,7 @@ public class AccountServiceImpl implements AccountService{
                 && !StringUtil.isEmpty(accountVO.getPriCtctCode()) && !StringUtil.isEmpty(accountVO.getPhNum()))
         {
             String code = StringUtil.getCode();
-            if ("Potential Customers".equals(accountVO.getPeriodCode()))
+            if (POT_CUSTOMER.equals(accountVO.getPeriodCode()))
             {
                 accountVO.setCode(code);
                 int count = accountDao.insertAccount(accountVO);

@@ -1,7 +1,9 @@
 package com.hand.accountrating.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hand.accountrating.access.dao.AccountRatingDao;
 import com.hand.accountrating.access.vo.AccountRatingVO;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 import com.hand.frame.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.util.List;
 public class AccountRatingServiceImpl implements AccountRatingService {
 
     @Autowired
-    AccountRatingDao accountRatingDao;
+    private AccountRatingDao accountRatingDao;
 
     @Override
     public List<AccountRatingVO> getAccountRatingList(PageQuery<AccountRatingVO> pageQuery) {
@@ -26,7 +28,7 @@ public class AccountRatingServiceImpl implements AccountRatingService {
     }
 
     @Override
-    public String addAccountRating(AccountRatingVO accountRatingVO) {
+    public ResultDTO addAccountRating(AccountRatingVO accountRatingVO) {
         if (!StringUtil.isEmpty(accountRatingVO.getAccountCode()) && !StringUtil.isEmpty(accountRatingVO.getRatingLevel())
                 && (accountRatingVO.getStartDate()!=null) && !StringUtil.isEmpty(accountRatingVO.getStatusCode())
                 && (accountRatingVO.getCreditAll()!=0) && (accountRatingVO.getCreditUsed()!=0))
@@ -35,22 +37,25 @@ public class AccountRatingServiceImpl implements AccountRatingService {
                 accountRatingVO.setCode(code);
                 int count = accountRatingDao.insertAccountRating(accountRatingVO);
                 if (count > 0) {
-                    return code;
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("code", code);
+                    return ResultDTO.success(jsonObject);
                 }
-                return null;
+            return ResultDTO.error("新建客户评级失败");
         }
-        throw new RuntimeException("miss params");
+        return ResultDTO.error("缺失参数");
     }
 
     @Override
-    public boolean modifyAccountRating(AccountRatingVO accountRatingVO) {
+    public ResultDTO modifyAccountRating(AccountRatingVO accountRatingVO) {
         if (!StringUtil.isEmpty(accountRatingVO.getCode())&&!StringUtil.isEmpty(accountRatingVO.getUpdatedBy())){
             int count = accountRatingDao.updateAccountRating(accountRatingVO);
-            return count>0;
+            if (count > 0) {
+                return ResultDTO.success();
+            }
+            return ResultDTO.error("修改客户评级失败");
         }
-        else {
-            throw new RuntimeException("miss param!");
-        }
+        return ResultDTO.error("缺失参数");
     }
 
     @Override

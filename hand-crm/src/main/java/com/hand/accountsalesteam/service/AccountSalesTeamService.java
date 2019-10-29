@@ -3,6 +3,7 @@ package com.hand.accountsalesteam.service;
 import java.util.List;
 
 import com.hand.accountsalesteam.access.vo.AccountSalesTeamVO;
+import com.hand.frame.model.ResultDTO;
 import com.hand.frame.util.PageQuery;
 
 /**
@@ -14,7 +15,7 @@ public interface AccountSalesTeamService {
      * @param accountSalesTeamVO
      * @return
      */
-    String addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
+    ResultDTO addAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
 
     /**
      * 查询客户销售团队列表
@@ -28,12 +29,12 @@ public interface AccountSalesTeamService {
      * @param accountSalesTeamVO
      * @return
      */
-    boolean modifyAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
+    ResultDTO modifyAccountSalesTeam(AccountSalesTeamVO accountSalesTeamVO);
 
     /**
      * 删除销售团队信息
      * @param code
      * @return
      */
-    boolean removeAccountSalesTeam(String code);
+    ResultDTO removeAccountSalesTeam(String code);
 }

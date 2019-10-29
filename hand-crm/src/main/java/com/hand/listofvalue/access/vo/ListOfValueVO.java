@@ -16,6 +16,7 @@ public class ListOfValueVO {
     private Integer level;//层级
     private String actFlg;//生效标识
     private String desc;//描述
+    private String nameList;//独立语言代码集合
 
     public String getCode() {
         return code;
@@ -119,5 +120,13 @@ public class ListOfValueVO {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getNameList() {
+        return nameList;
+    }
+
+    public void setNameList(String nameList) {
+        this.nameList = nameList;
     }
 }
