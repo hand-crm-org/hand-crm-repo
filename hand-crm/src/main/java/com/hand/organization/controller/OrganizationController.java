@@ -29,13 +29,14 @@ public class OrganizationController {
             @ApiImplicitParam(paramType="query", name="type", value="类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="parOrgCode", value="父组织编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="extFlg", value="内外部组织标识", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String")
+            @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String")
     })
     @GetMapping("/getOrgList")
     public ServiceData getOrgList(int currentPage, int pageSize,String code,
                                   String name, String level,String type,
                                   String parOrgCode,String extFlg,
-                                  String desc){
+                                  String desc,String status){
         OrganizationVO organizationVO = new OrganizationVO();
         organizationVO.setCode(code);
         organizationVO.setName(name);
@@ -44,6 +45,7 @@ public class OrganizationController {
         organizationVO.setParOrgCode(parOrgCode);
         organizationVO.setExtFlg(extFlg);
         organizationVO.setDesc(desc);
+        organizationVO.setStatus(status);//add by lln at 20191031 增加状态字段作为查询条件
         PageQuery<OrganizationVO> pageQuery = new PageQuery<OrganizationVO>(organizationVO, currentPage, pageSize);
         return  ServiceData.success(organizationService.getOrgList(pageQuery), pageQuery.getMapOfPageQuery());
     }

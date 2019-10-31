@@ -51,7 +51,8 @@
         LEVEL as level,
         EXT_FLG as extFlg,
         `DESC` as `desc`,
-        STATUS as  status
+        STATUS as  status,
+        (SELECT NAME FROM HC_ORG B WHERE HC_ORG.PAR_ORG_CODE = B.`CODE`) as parOrgName
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">

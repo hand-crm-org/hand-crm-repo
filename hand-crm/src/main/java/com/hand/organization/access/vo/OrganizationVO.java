@@ -15,6 +15,7 @@ public class OrganizationVO {
     private String extFlg;//内/外部标识
     private String desc;//描述
     private String status;//状态
+    private String parOrgName;//父组织名称 add by lln at 20191031
 
     public String getCode() {
         return code;
@@ -112,9 +113,17 @@ public class OrganizationVO {
         this.status = status;
     }
 
+    public String getParOrgName() {
+        return parOrgName;
+    }
+
+    public void setParOrgName(String parOrgName) {
+        this.parOrgName = parOrgName;
+    }
+
     @Override
     public String toString() {
-        return "Organization{" +
+        return "OrganizationVO{" +
                 "code='" + code + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
@@ -127,6 +136,7 @@ public class OrganizationVO {
                 ", extFlg='" + extFlg + '\'' +
                 ", desc='" + desc + '\'' +
                 ", status='" + status + '\'' +
+                ", parOrgName='" + parOrgName + '\'' +
                 '}';
     }
 }
