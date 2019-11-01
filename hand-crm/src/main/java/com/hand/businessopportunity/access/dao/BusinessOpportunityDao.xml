@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.businessopportunity.access.dao.BusinessOpportunityDao">
+    <sql id="queryAllBusinessOptyInfoSql">
+        SELECT
+        CODE as code,
+        CREATED as created,
+        CREATED_BY as createdBy,
+        UPDATED as updated,
+        UPDATED_BY as updatedBy,
+        OPTY_CODE as optycode,
+        BRAND as brand,
+        QUOTATION as quotation,
+        GOODNESS as goodness,
+        BADNESS as badness,
+        COMMENTS as comments
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.optycode!=null and entity.optycode!=''"> AND OPTY_CODE LIKE "%"#{entity.optycode}"%"</if>
+            <if test="entity.brand!=null and entity.brand!=''"> AND BRAND LIKE "%"#{entity.brand}"%"</if>
+            <if test="entity.quotation!=null and entity.quotation!=''"> AND QUOTATION LIKE "%"#{entity.quotation}"%"</if>
+            <if test="entity.goodness!=null and entity.goodness!=''"> AND GOODNESS LIKE "%"#{entity.goodness}"%"</if>
+            <if test="entity.badness!=null and entity.badness!=''">AND BADNESS=#{entity.badness}</if>
+            <if test="entity.comments!=null and entity.comments!=''"> AND COMMENTS=#{entity.comments}</if>
+        </if>
+    </sql>
+    <sql id="updateConditionSql">
+        <if test="code!=null">
+            <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY = #{updatedBy}</if>
+            <if test="optycode!=null and optycode!=''">,OPTY_CODE = #{optycode}</if>
+            <if test="brand!=null and brand!=''">,BRAND = #{brand}</if>
+            <if test="quotation!=null and quotation!=''">,QUOTATION = #{quotation}</if>
+            <if test="goodness!=null and goodness!=''">,GOODNESS = #{goodness}</if>
+            <if test="badness!=null and badness!=''">,BADNESS = #{badness}</if>
+            <if test="comments!=null and comments!=''">,COMMENTS = #{comments}</if>
+        </if>
+    </sql>
+
+    <insert id="insertBusinessOpty" parameterType="com.hand.businessopportunity.access.vo.BusinessOpportunityVO">
+        INSERT INTO HC_OPTY_COMP(CODE,CREATED,CREATED_BY,UPDATED,UPDATED_BY,OPTY_CODE,BRAND,QUOTATION,GOODNESS,BADNESS,COMMENTS) VALUES (#{code},sysdate(),#{createdBy},sysdate(),#{updatedBy},#{optycode},#{brand},#{quotation},#{goodness},#{badness},#{comments})
+    </insert>
+
+    <select id="queryBusinessOpty" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.businessopportunity.access.vo.BusinessOpportunityVO">
+        <include refid="queryAllBusinessOptyInfoSql"></include>
+        FROM
+        HC_OPTY_COMP
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryBusinessOptyCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        HC_OPTY_COMP
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+
+    <update id="updateBusinessOpty" parameterType="com.hand.businessopportunity.access.vo.BusinessOpportunityVO">
+        UPDATE HC_OPTY_COMP SET UPDATED=sysdate(),
+        <include refid="updateConditionSql"></include>
+        WHERE CODE=#{code}
+    </update>
+
+    <delete id="deleteBusinessOpty" parameterType="String">
+        DELETE FROM HC_OPTY_COMP WHERE CODE=#{code}
+    </delete>
+</mapper>
