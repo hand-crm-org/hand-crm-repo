@@ -27,8 +27,8 @@
     </select>
     <insert id="insertLstOfVal" parameterType="com.hand.listofvalue.access.vo.ListOfValueVO" useGeneratedKeys="true" keyProperty="code">
         INSERT INTO
-        HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`)
-        VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc})
+        HC_LST_OF_VAL(CODE,CREATED,CREATED_BY,TYPE,LANG_ID,VAL,NAME,PAR_LST_CODE,LEVEL,ACT_FLG,`DESC`,PARENT_CODE,PARENT_VAL)
+        VALUES (#{code},sysdate(),#{updatedBy},#{type},#{langId},#{val},#{name},#{parLstCode},#{level},#{actFlg},#{desc},#{parentCode},#{parentVal})
     </insert>
     <delete id="deleteLstOfValByCode" parameterType="String">
         DELETE
@@ -56,7 +56,9 @@
         PAR_LST_CODE as parLstCode,
         LEVEL as level,
         ACT_FLG as actFlg,
-        `DESC` as `desc`
+        `DESC` as `desc`,
+        PARENT_CODE as parentCode,
+        PARENT_VAL as parentVal
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -73,6 +75,7 @@
             <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
             <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG LIKE "%"#{entity.actFlg}"%"</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.parentVal!=null and entity.parentVal!=''"> AND PARENT_VAL LIKE "%"#{entity.parentVal}"%"</if>
             <if test="entity.nameList!=null and entity.nameList!=''"> AND NAME IN(${entity.nameList})</if>
         </if>
     </sql>

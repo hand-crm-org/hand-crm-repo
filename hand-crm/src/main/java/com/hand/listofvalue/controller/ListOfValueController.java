@@ -36,12 +36,13 @@ public class ListOfValueController {
             @ApiImplicitParam(paramType="query", name="level", value="等级", dataType="int"),
             @ApiImplicitParam(paramType="query", name="actFlg", value="生效标识", dataType="String"),
             @ApiImplicitParam(paramType="query", name="desc", value="描述", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="nameList", value="独立语言代码集合", dataType="String")
+            @ApiImplicitParam(paramType="query", name="nameList", value="独立语言代码集合", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="parentVal", value="父值列表显示值", dataType="String")
     })
     @GetMapping("/getLstOfVal")
     public ServiceData getLstOfVal(int currentPage, int pageSize,String code,String type,
                                    String langId,String val,String name,String parLstCode,
-                                   Integer level,String actFlg,String desc,String nameList){
+                                   Integer level,String actFlg,String desc,String nameList,String parentVal){
         if(nameList!=null) {
             LstOfValList lstOfValList = new LstOfValList();
             nameList = lstOfValList.listOfValList(nameList);
@@ -56,6 +57,7 @@ public class ListOfValueController {
         listOfValueVO.setLevel(level);
         listOfValueVO.setActFlg(actFlg);
         listOfValueVO.setDesc(desc);
+        listOfValueVO.setDesc(parentVal);
         listOfValueVO.setNameList(nameList);
         PageQuery<ListOfValueVO> pageQuery = new PageQuery<ListOfValueVO>(listOfValueVO, currentPage, pageSize);
         return  ServiceData.success(listOfValueService.getLstOfVaL(pageQuery), pageQuery.getMapOfPageQuery());
