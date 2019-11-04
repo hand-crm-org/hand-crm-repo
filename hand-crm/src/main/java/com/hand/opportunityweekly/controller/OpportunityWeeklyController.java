@@ -46,7 +46,7 @@ public class OpportunityWeeklyController {
             @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="actived", value="生效时间", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="Status", value="周报状态", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="status", value="周报状态", dataType="String"),
     })
     @GetMapping("/getOppWeeklyInfo")
     public ServiceData getOppWeeklyInfo(int currentPage, int pageSize,
