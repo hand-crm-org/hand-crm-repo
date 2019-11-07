@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("客户-联系人相关api")
 public class AccountContactController {
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
     @Autowired
     AccountContactService accountContactService;
 
@@ -38,7 +38,7 @@ public class AccountContactController {
     })
     @GetMapping("/get-account-contact-info")
     public ServiceData getAccountContactList(int currentPage, int pageSize,String accntCode,String name,String nameForeign
-            ,String phNum,String email,String hobby,String status,String jobTitle,String langId){
+            ,String phNum,String email,String hobby,String status,String jobTitle){
         ContactVO contactVO = new ContactVO();
         contactVO.setAccntCode(accntCode);
         contactVO.setName(name);

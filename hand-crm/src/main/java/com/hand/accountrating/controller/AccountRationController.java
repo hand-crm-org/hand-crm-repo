@@ -20,8 +20,8 @@ import java.util.Date;
 @RestController
 @Api("客户-客户评级api")
 public class AccountRationController {
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
 
     @Autowired
     AccountRatingService accountRatingService;
@@ -50,8 +50,7 @@ public class AccountRationController {
                                             @RequestParam(value = "startDate",required = false)Date startDate, @RequestParam(value = "endDate",required = false)Date endDate,
                                             @RequestParam(value = "version",required = false)Integer version, @RequestParam(value = "creditAll",required = false)Double creditAll,
                                             @RequestParam(value = "creditUsed",required = false)Double creditUsed, @RequestParam(value = "currency",required = false)String currency,
-                                            @RequestParam(value = "comment",required = false)String comment, @RequestParam(value = "attachmentCode",required = false)String attachmentCode,
-                                            @RequestParam(value = "langId",required = false)String langId){
+                                            @RequestParam(value = "comment",required = false)String comment, @RequestParam(value = "attachmentCode",required = false)String attachmentCode){
         AccountRatingVO accountRatingVO = new AccountRatingVO();
         accountRatingVO.setAccountCode(accountCode);
         accountRatingVO.setStatus(status);

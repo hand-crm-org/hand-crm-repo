@@ -23,8 +23,8 @@ public class AccountSalesTeamController {
     /**
      * 语言环境
      */
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
 
     @Autowired
     AccountSalesTeamService accountSalesTeamService;
@@ -40,7 +40,7 @@ public class AccountSalesTeamController {
             @ApiImplicitParam(paramType = "query",name = "desc",value = "备注",dataType = "String")
     })
     @GetMapping("/get-account-salesteam-info")
-    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode, String teamRole, String empName, String empPhoneNum, String desc,String langId){
+    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode, String teamRole, String empName, String empPhoneNum, String desc){
         AccountSalesTeamVO accountSalesTeamVO = new AccountSalesTeamVO();
         accountSalesTeamVO.setAccntCode(accntCode);
         accountSalesTeamVO.setTeamRole(teamRole);

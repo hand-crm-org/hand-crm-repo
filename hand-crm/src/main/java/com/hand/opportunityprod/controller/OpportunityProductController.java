@@ -20,8 +20,8 @@ import java.util.Date;
 @RestController
 @Api("商机产品相关api")
 public class OpportunityProductController {
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
 
     @Autowired
     OpportunityProductService opportunityProductService;
@@ -53,8 +53,7 @@ public class OpportunityProductController {
                                   @RequestParam(value = "amount",required = false) Double amount, @RequestParam(value = "productCategory",required = false) String productCategory,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
-                                      @RequestParam(value = "langId",required = false)String langId){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
         OpportunityProductVO opportunityProductVO = new OpportunityProductVO();
         opportunityProductVO.setCode(code);
         opportunityProductVO.setOptyCode(optyCode);

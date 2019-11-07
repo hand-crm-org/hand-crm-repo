@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("商机周报相关api")
 public class OpportunityWeeklyController {
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
 
     @Autowired
     OpportunityWeeklyService opportunityWeeklyService;
@@ -55,8 +55,7 @@ public class OpportunityWeeklyController {
                                         @RequestParam(value = "weeklyRisk",required = false) String weeklyRisk, @RequestParam(value = "weeklyPushStatus",required = false) String weeklyPushStatus,
                                         @RequestParam(value = "actived",required = false) String actived, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
-                                        @RequestParam(value = "langId",required = false)String langId){
+                                        @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
         OpportunityWeeklyVO opportunityWeeklyVO = new OpportunityWeeklyVO();
         opportunityWeeklyVO.setCode(code);
         opportunityWeeklyVO.setOptyCode(optyCode);

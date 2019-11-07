@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("商机团队组建相关api")
 public class OpportunityTeamController {
-    //@Value(value = "${lang.language}")
-    //private String langId;
+    @Value(value = "${lang.language}")
+    private String langId;
 
     @Autowired
     OpportunityTeamService opportunityTeamService;
@@ -53,8 +53,7 @@ public class OpportunityTeamController {
                                   @RequestParam(value = "empWorkPhone",required = false) String empWorkPhone, @RequestParam(value = "empPersonalPhone",required = false) String empPersonalPhone,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag,@RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName,@RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "optyCode",required = false) String optyCode,
-                                      @RequestParam(value = "langId",required = false)String langId){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "optyCode",required = false) String optyCode){
         OpportunityTeamVO opportunityTeamVO = new OpportunityTeamVO();
         opportunityTeamVO.setCode(code);
         opportunityTeamVO.setOptyCode(optyCode);
