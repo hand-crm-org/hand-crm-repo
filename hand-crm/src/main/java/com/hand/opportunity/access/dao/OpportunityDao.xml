@@ -77,7 +77,7 @@
 
     <insert id="insertOpportunity" parameterType="com.hand.opportunity.access.vo.OpportunityVO">
         INSERT INTO HC_OPTY(CODE,CREATED,CREATED_BY,NAME,TYPE,STATUS,ACCNT_CODE,OPTY_SOURCE,OPTY_FSCT_AMOUNT,EXPECT_SIGN_TIME,`DESC`,OWN_ORG_CODE,LOST_REASON,FINAL_USE,PR_SALES_CODE)
-        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySource},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},,#{updatedBy})
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySource},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},#{updatedBy})
     </insert>
 
     <select id="queryOpportunity" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunity.access.vo.OpportunityVO">

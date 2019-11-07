@@ -22,7 +22,7 @@ public class OpportunityWeeklyVO {
     private String weeklyPushStatusCode;//推进状态code
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date actived;//生效时间
-    private String Status;//周报状态
+    private String status;//周报状态
     private String langId;
 
     public String getCode() {
@@ -138,11 +138,11 @@ public class OpportunityWeeklyVO {
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
     public String getLangId() {

@@ -26,7 +26,7 @@ public class OpportunityController {
     OpportunityService opportunityService;
 
     @ApiOperation(value="新建商机")
-    @PostMapping("/addOpportunity")
+    @PostMapping("/add-opportunity")
     public ResultDTO addOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.addOpportunity(opportunityVO);
     }
@@ -55,7 +55,7 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="prSales", value="商机负责人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optyStage", value="商机阶段", dataType="String"),
     })
-    @GetMapping("/getOppInfo")
+    @GetMapping("/get-opportunity-info")
     public ServiceData getOppInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "status",required = false) String status,
@@ -98,7 +98,7 @@ public class OpportunityController {
     }
 
     @ApiOperation(value="修改商机")
-    @PutMapping("/modifyOpportunity")
+    @PutMapping("/modify-opportunity")
     public ResultDTO modifyOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.modifyOpportunity(opportunityVO);
     }

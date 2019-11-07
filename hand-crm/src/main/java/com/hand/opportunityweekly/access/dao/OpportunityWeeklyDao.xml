@@ -48,7 +48,7 @@
 
     <insert id="insertOpportunityWeekly" parameterType="com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO">
         INSERT INTO HC_OPTY_WEEKLY(CODE,CREATED,CREATED_BY,OPTY_CODE,NAME,WEEKLY_SUMMERY,WEEKLY_RISK,WEEKLY_PUSH,ACTIVED,STATUS)
-        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{name},#{weeklySummary},#{weeklyRisk},#{weeklyPushStatusCode},#{actived},#{Status})
+        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{name},#{weeklySummary},#{weeklyRisk},#{weeklyPushStatusCode},#{actived},#{status})
     </insert>
 
     <select id="queryOpportunityWeekly" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO">
