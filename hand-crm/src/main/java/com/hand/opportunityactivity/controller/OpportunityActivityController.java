@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("商机活动相关api")
 public class OpportunityActivityController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+   // private String langId;
 
     @Autowired
     OpportunityActivityServcie opportunityActivityServcie;
 
     @ApiOperation(value="新建商机活动")
-    @PostMapping("/addOpportunityActive")
+    @PostMapping("/add-opportunity-active")
     public ResultDTO addOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.addOpportunityActivity(opportunityActivityVO);
     }
@@ -48,7 +48,7 @@ public class OpportunityActivityController {
             @ApiImplicitParam(paramType="query", name="endTime", value="结束时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="respName", value="责任人姓名", dataType="String"),
     })
-    @GetMapping("/getOppActiveInfo")
+    @GetMapping("/get-opportunity-active-info")
     public ServiceData getOppActiveInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "status",required = false) String status,
@@ -56,7 +56,7 @@ public class OpportunityActivityController {
                                   @RequestParam(value = "startTime",required = false) String startTime, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
                                   @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
-                                  @RequestParam(value = "endTime",required = false) String endTime){
+                                  @RequestParam(value = "endTime",required = false) String endTime,@RequestParam(value = "langId",required = false)String langId){
         OpportunityActivityVO opportunityActivityVO = new OpportunityActivityVO();
         opportunityActivityVO.setCode(code);
         opportunityActivityVO.setOptyCode(optyCode);
@@ -77,13 +77,13 @@ public class OpportunityActivityController {
     }
 
     @ApiOperation(value="修改商机活动")
-    @PutMapping("/modifyOpportunityActive")
+    @PutMapping("/modify-opportunity-active")
     public ResultDTO modifyOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.modifyOpportunityActivity(opportunityActivityVO);
     }
 
     @ApiOperation(value="删除商机活动")
-    @DeleteMapping("/deleteOpportunityActive")
+    @DeleteMapping("/delete-opportunity-active")
     public ResultDTO deleteOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.deleteOpportunityActivity(opportunityActivityVO);
     }

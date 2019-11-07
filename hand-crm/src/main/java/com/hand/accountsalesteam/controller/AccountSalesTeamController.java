@@ -23,8 +23,8 @@ public class AccountSalesTeamController {
     /**
      * 语言环境
      */
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     AccountSalesTeamService accountSalesTeamService;
@@ -39,8 +39,8 @@ public class AccountSalesTeamController {
             @ApiImplicitParam(paramType = "query",name = "empPhoneNum",value = "员工电话",dataType = "String"),
             @ApiImplicitParam(paramType = "query",name = "desc",value = "备注",dataType = "String")
     })
-    @GetMapping("/getAccountSalesTeamList")
-    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode, String teamRole, String empName, String empPhoneNum, String desc){
+    @GetMapping("/get-account-salesteam-info")
+    public ServiceData getAccountSalesTeamList(int currentPage, int pageSize, String accntCode, String teamRole, String empName, String empPhoneNum, String desc,String langId){
         AccountSalesTeamVO accountSalesTeamVO = new AccountSalesTeamVO();
         accountSalesTeamVO.setAccntCode(accntCode);
         accountSalesTeamVO.setTeamRole(teamRole);
@@ -52,12 +52,12 @@ public class AccountSalesTeamController {
         return ServiceData.success(accountSalesTeamService.getAccountSalesTeamList(pageQuery), pageQuery.getMapOfPageQuery());
     }
     @ApiOperation(value="客户-销售团队信息新建")
-    @PostMapping("/addAccountSalesTeam")
+    @PostMapping("/add-account-salesteam")
     public ResultDTO addAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
         return accountSalesTeamService.addAccountSalesTeam(accountSalesTeamVO);
     }
     @ApiOperation(value="客户-销售团队信息更新")
-    @PutMapping("/modifyAccountSalesTeam")
+    @PutMapping("/modify-account-salesteam")
     public ResultDTO modifyAccountSalesTeam(@RequestBody AccountSalesTeamVO accountSalesTeamVO){
         return accountSalesTeamService.modifyAccountSalesTeam(accountSalesTeamVO);
     }

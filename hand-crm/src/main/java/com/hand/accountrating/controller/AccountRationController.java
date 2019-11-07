@@ -20,8 +20,8 @@ import java.util.Date;
 @RestController
 @Api("客户-客户评级api")
 public class AccountRationController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     AccountRatingService accountRatingService;
@@ -43,14 +43,15 @@ public class AccountRationController {
             @ApiImplicitParam(paramType = "query",name = "comment",value = "备注",dataType = "String"),
             @ApiImplicitParam(paramType = "query",name = "attachmentCode",value = "评级附件",dataType = "String")
     })
-    @GetMapping("/get-accountRating-list")
+    @GetMapping("/get-account-rating-info")
     public ServiceData getAccountRatingList(int currentPage, int pageSize,
                                             @RequestParam(value = "accountCode",required = false)String accountCode, @RequestParam(value = "status",required = false)String status,
                                             @RequestParam(value = "ratingLevel",required = false)String ratingLevel, @RequestParam(value = "qixinLevel",required = false)String qixinLevel,
                                             @RequestParam(value = "startDate",required = false)Date startDate, @RequestParam(value = "endDate",required = false)Date endDate,
                                             @RequestParam(value = "version",required = false)Integer version, @RequestParam(value = "creditAll",required = false)Double creditAll,
                                             @RequestParam(value = "creditUsed",required = false)Double creditUsed, @RequestParam(value = "currency",required = false)String currency,
-                                            @RequestParam(value = "comment",required = false)String comment, @RequestParam(value = "attachmentCode",required = false)String attachmentCode){
+                                            @RequestParam(value = "comment",required = false)String comment, @RequestParam(value = "attachmentCode",required = false)String attachmentCode,
+                                            @RequestParam(value = "langId",required = false)String langId){
         AccountRatingVO accountRatingVO = new AccountRatingVO();
         accountRatingVO.setAccountCode(accountCode);
         accountRatingVO.setStatus(status);
@@ -69,13 +70,13 @@ public class AccountRationController {
         return ServiceData.success(accountRatingService.getAccountRatingList(pageQuery), pageQuery.getMapOfPageQuery());
     }
     @ApiOperation("新建客户评级")
-    @PostMapping("add-accountRating")
+    @PostMapping("add-account-rating")
     public ResultDTO addAccountRating(@RequestBody AccountRatingVO accountRatingVO){
         accountRatingVO.setVersion(accountRatingService.queryAccountRatingVersion(accountRatingVO).getVersion());
         return accountRatingService.addAccountRating(accountRatingVO);
     }
     @ApiOperation("更新客户评级")
-    @PutMapping("modify-accountRating")
+    @PutMapping("modify-account-rating")
     public ResultDTO modifyAccountRating(@RequestBody AccountRatingVO accountRatingVO) {
         return accountRatingService.modifyAccountRating(accountRatingVO);
     }

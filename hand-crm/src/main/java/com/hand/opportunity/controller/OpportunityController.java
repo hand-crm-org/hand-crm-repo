@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @Api("商机相关api")
 public class OpportunityController {
 
-    @Value(value = "${lang.language}")
-    private String langId;
+   // @Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     OpportunityService opportunityService;
@@ -66,7 +66,7 @@ public class OpportunityController {
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "updated",required = false) String updated,
                                   @RequestParam(value = "winRate",required = false) String winRate, @RequestParam(value = "prSales",required = false) String prSales,
-                                  @RequestParam(value = "optyStage",required = false) String optyStage){
+                                  @RequestParam(value = "optyStage",required = false) String optyStage,@RequestParam(value = "langId",required = false)String langId){
         OpportunityVO opportunityVO = new OpportunityVO();
         opportunityVO.setCode(code);
         opportunityVO.setWinRate(winRate);

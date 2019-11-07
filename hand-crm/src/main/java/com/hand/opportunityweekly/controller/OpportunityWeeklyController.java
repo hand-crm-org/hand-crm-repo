@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("商机周报相关api")
 public class OpportunityWeeklyController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     OpportunityWeeklyService opportunityWeeklyService;
 
     @ApiOperation(value="新建商机周报")
-    @PostMapping("/addOpportunityWeekly")
+    @PostMapping("/add-opportunity-weekly")
     public ResultDTO addOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.addOpportunityWeekly(opportunityWeeklyVO);
     }
@@ -48,14 +48,15 @@ public class OpportunityWeeklyController {
             @ApiImplicitParam(paramType="query", name="actived", value="生效时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="status", value="周报状态", dataType="String"),
     })
-    @GetMapping("/getOppWeeklyInfo")
+    @GetMapping("/get-opportunity-weekly-info")
     public ServiceData getOppWeeklyInfo(int currentPage, int pageSize,
                                         @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                         @RequestParam(value = "weeklySummary",required = false) String weeklySummary, @RequestParam(value = "status",required = false) String status,
                                         @RequestParam(value = "weeklyRisk",required = false) String weeklyRisk, @RequestParam(value = "weeklyPushStatus",required = false) String weeklyPushStatus,
                                         @RequestParam(value = "actived",required = false) String actived, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
+                                        @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
+                                        @RequestParam(value = "langId",required = false)String langId){
         OpportunityWeeklyVO opportunityWeeklyVO = new OpportunityWeeklyVO();
         opportunityWeeklyVO.setCode(code);
         opportunityWeeklyVO.setOptyCode(optyCode);
@@ -75,13 +76,13 @@ public class OpportunityWeeklyController {
     }
 
     @ApiOperation(value="修改商机周报")
-    @PutMapping("/modifyOpportunityWeekly")
+    @PutMapping("/modify-opportunity-weekly")
     public ResultDTO modifyOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.modifyOpportunityWeekly(opportunityWeeklyVO);
     }
 
     @ApiOperation(value="删除商机周报")
-    @DeleteMapping("/deleteOpportunityWeekly")
+    @DeleteMapping("/delete-opportunity-weekly")
     public ResultDTO deleteOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.deleteOpportunityWeekly(opportunityWeeklyVO);
     }

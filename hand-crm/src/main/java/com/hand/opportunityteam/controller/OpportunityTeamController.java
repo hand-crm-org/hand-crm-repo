@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("商机团队组建相关api")
 public class OpportunityTeamController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     OpportunityTeamService opportunityTeamService;
 
     @ApiOperation(value="新建商机团队")
-    @PostMapping("/addOpportunityTeam")
+    @PostMapping("/add-opportunity-team")
     public ResultDTO addOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
         return opportunityTeamService.addOpportunityTeam(opportunityTeamVO);
     }
@@ -46,14 +46,15 @@ public class OpportunityTeamController {
             @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
     })
-    @GetMapping("/getOppTeamInfo")
-    public ServiceData getOppInfo(int currentPage, int pageSize,
+    @GetMapping("/get-opportunity-team-info")
+    public ServiceData getOppTeamInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "optyName",required = false) String optyName,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "empName",required = false) String empName,
                                   @RequestParam(value = "empWorkPhone",required = false) String empWorkPhone, @RequestParam(value = "empPersonalPhone",required = false) String empPersonalPhone,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag,@RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName,@RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "optyCode",required = false) String optyCode){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "optyCode",required = false) String optyCode,
+                                      @RequestParam(value = "langId",required = false)String langId){
         OpportunityTeamVO opportunityTeamVO = new OpportunityTeamVO();
         opportunityTeamVO.setCode(code);
         opportunityTeamVO.setOptyCode(optyCode);
@@ -73,7 +74,7 @@ public class OpportunityTeamController {
     }
 
     @ApiOperation(value="修改商机团队")
-    @PutMapping("/modifyOpportunityTeam")
+    @PutMapping("/modify-opportunity-team")
     public ResultDTO modifyOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
         return opportunityTeamService.modifyOpportunityTeam(opportunityTeamVO);
     }

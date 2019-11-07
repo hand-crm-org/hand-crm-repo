@@ -20,14 +20,14 @@ import java.util.Date;
 @RestController
 @Api("商机产品相关api")
 public class OpportunityProductController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     OpportunityProductService opportunityProductService;
 
     @ApiOperation(value="新建商机产品")
-    @PostMapping("/addOpportunityProd")
+    @PostMapping("/add-opportunity-product")
     public ResultDTO addOpportunityProd(@RequestBody OpportunityProductVO opportunityProductVO){
         return opportunityProductService.addOpportunityProd(opportunityProductVO);
     }
@@ -47,13 +47,14 @@ public class OpportunityProductController {
             @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
     })
-    @GetMapping("/getOppProdInfo")
-    public ServiceData getOppInfo(int currentPage, int pageSize,
+    @GetMapping("/get-opportunity-product-info")
+    public ServiceData getOppProdInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "expectSignTime",required = false) Date expectSignTime,
                                   @RequestParam(value = "amount",required = false) Double amount, @RequestParam(value = "productCategory",required = false) String productCategory,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
+                                      @RequestParam(value = "langId",required = false)String langId){
         OpportunityProductVO opportunityProductVO = new OpportunityProductVO();
         opportunityProductVO.setCode(code);
         opportunityProductVO.setOptyCode(optyCode);
@@ -71,13 +72,13 @@ public class OpportunityProductController {
     }
 
     @ApiOperation(value="修改商机产品")
-    @PutMapping("/modifyOpportunityProd")
+    @PutMapping("/modify-opportunity-product")
     public ResultDTO modifyOpportunityProd(@RequestBody OpportunityProductVO opportunityProductVO){
         return opportunityProductService.modifyOpportunityProd(opportunityProductVO);
     }
 
     @ApiOperation(value="删除商机产品")
-    @DeleteMapping("/deleteOpportunityProd")
+    @DeleteMapping("/delete-opportunity-product")
     public ResultDTO deleteOpportunityProd(@RequestBody OpportunityProductVO opportunityProductVO){
         return opportunityProductService.deleteOpportunityProd(opportunityProductVO);
     }

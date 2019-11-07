@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("客户头相关api")
 public class AccountController {
-    @Value(value = "${lang.language}")
-    private String langId;
+    //@Value(value = "${lang.language}")
+    //private String langId;
 
     @Autowired
     AccountService accountService;
 
     @ApiOperation(value="新建客户头")
-    @PostMapping("/addAccount")
+    @PostMapping("/add-account")
     public ResultDTO addAccount(@RequestBody AccountVO accountVO){
         String code = accountService.addAccount(accountVO);
         if (code!=null){
@@ -65,7 +65,7 @@ public class AccountController {
             @ApiImplicitParam(paramType="query", name="street", value="镇", dataType="String"),
 
     })
-    @GetMapping("/getAccInfo")
+    @GetMapping("/get-account-info")
     public ServiceData getAccInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "nameEnu",required = false) String nameEnu, @RequestParam(value = "taxCode",required = false) String taxCode,
@@ -78,7 +78,7 @@ public class AccountController {
                                   @RequestParam(value = "industry",required = false) String industry,@RequestParam(value = "subIndustry",required = false) String subIndustry,
                                   @RequestParam(value = "country",required = false) String country,@RequestParam(value = "state",required = false) String state,
                                   @RequestParam(value = "city",required = false) String city,@RequestParam(value = "county",required = false) String county,
-                                  @RequestParam(value = "street",required = false) String street){
+                                  @RequestParam(value = "street",required = false) String street,@RequestParam(value = "langId",required = false)String langId){
         AccountVO accountVO = new AccountVO();
         accountVO.setCode(code);
         accountVO.setName(name);
@@ -109,7 +109,7 @@ public class AccountController {
     }
 
     @ApiOperation(value="修改客户头")
-    @PutMapping("/modifyAccount")
+    @PutMapping("/modify-account")
     public ResultDTO modifyAccount(@RequestBody AccountVO accountVO){
         if (accountService.modifyAccount(accountVO)){
             return ResultDTO.success();
