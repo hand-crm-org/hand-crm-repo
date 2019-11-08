@@ -71,14 +71,14 @@
             <if test="finalUse!=null and finalUse!=''">,FINAL_USE=#{finalUse}</if>
             <if test="winRate!=null and winRate!=''">,WIN_RATE=#{winRate}</if>
             <if test="prSalesCode!=null and prSalesCode!=''">,PR_SALES_CODE=#{prSalesCode}</if>
-            <if test="optyStage!=null and optyStage!=''">,OPTY_STAGE=#{optyStage}</if>
+            <if test="optyStageCode!=null and optyStageCode!=''">,OPTY_STAGE=#{optyStageCode}</if>
 
         </if>
     </sql>
 
     <insert id="insertOpportunity" parameterType="com.hand.opportunity.access.vo.OpportunityVO">
-        INSERT INTO HC_OPTY(CODE,CREATED,CREATED_BY,NAME,TYPE,STATUS,ACCNT_CODE,OPTY_SOURCE,OPTY_FSCT_AMOUNT,EXPECT_SIGN_TIME,`DESC`,OWN_ORG_CODE,LOST_REASON,FINAL_USE,PR_SALES_CODE)
-        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySourceCode},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},#{updatedBy})
+        INSERT INTO HC_OPTY(CODE,CREATED,CREATED_BY,NAME,TYPE,STATUS,ACCNT_CODE,OPTY_SOURCE,OPTY_FSCT_AMOUNT,EXPECT_SIGN_TIME,`DESC`,OWN_ORG_CODE,LOST_REASON,FINAL_USE,PR_SALES_CODE,OPTY_STAGE,WIN_RATE)
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySourceCode},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},#{updatedBy},#{optyStageCode},#{winRateCode})
     </insert>
 
     <select id="queryOpportunity" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunity.access.vo.OpportunityVO">
