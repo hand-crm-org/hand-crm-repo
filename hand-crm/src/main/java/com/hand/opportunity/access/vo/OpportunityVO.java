@@ -21,6 +21,7 @@ public class OpportunityVO {
     private String accntCode;//客户code
     private String accntName;//客户名称
     private String optySource;//商机来源
+    private String optySourceCode;//商机来源Code
     private Double optyFsctAmount;//预计销售额度(万)
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date expectSignTime;//预计签单时间
@@ -36,6 +37,14 @@ public class OpportunityVO {
     private String prSales;//商机负责人
     private String optyStageCode;//商机阶段code
     private String optyStage;//商机阶段
+
+    public String getOptySourceCode() {
+        return optySourceCode;
+    }
+
+    public void setOptySourceCode(String optySourceCode) {
+        this.optySourceCode = optySourceCode;
+    }
 
     public String getCode() {
         return code;

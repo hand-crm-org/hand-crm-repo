@@ -32,4 +32,12 @@ public interface OpportunityTeamService {
      * @Return int
      */
     ResultDTO modifyOpportunityTeam(OpportunityTeamVO opportunityTeamVO);
+
+    /**
+     * 删除商机团队信息
+     * UpdateBy LIUDH
+     * @param opportunityTeamVO
+     * @return int
+     */
+    ResultDTO deleteOpportunityTeam(OpportunityTeamVO opportunityTeamVO);
 }

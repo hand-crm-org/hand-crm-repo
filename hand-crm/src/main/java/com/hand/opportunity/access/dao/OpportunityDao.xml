@@ -16,7 +16,8 @@
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as `status`,
         T1.ACCNT_CODE as accntCode,
 				(SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accntName,
-        T1.OPTY_SOURCE as optySource,
+        T1.OPTY_SOURCE as optySourceCode,
+         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_SOURCE = `NAME` AND TYPE = 'OPTY_SOURCE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as `optySource`,
         T1.OPTY_FSCT_AMOUNT as optyFsctAmount,
         T1.EXPECT_SIGN_TIME as expectSignTime,
         T1.DESC as `desc`,
@@ -61,7 +62,7 @@
             <if test="type!=null and type!=''">,TYPE=#{type}</if>
             <if test="statusCode!=null and statusCode!=''">,STATUS=#{statusCode}</if>
             <if test="accntCode!=null and accntCode!=''">,ACCNT_CODE=#{accntCode}</if>
-            <if test="optySource!=null and optySource!=''">,OPTY_SOURCE=#{optySource}</if>
+            <if test="optySourceCode!=null and optySourceCode!=''">,OPTY_SOURCE=#{optySourceCode}</if>
             <if test="optyFsctAmount!=null and optyFsctAmount!=''">,OPTY_FSCT_AMOUNT=#{optyFsctAmount}</if>
             <if test="expectSignTime!=null">,EXPECT_SIGN_TIME=#{expectSignTime}</if>
             <if test="desc!=null and desc!=''">,`DESC`=#{desc}</if>
@@ -77,7 +78,7 @@
 
     <insert id="insertOpportunity" parameterType="com.hand.opportunity.access.vo.OpportunityVO">
         INSERT INTO HC_OPTY(CODE,CREATED,CREATED_BY,NAME,TYPE,STATUS,ACCNT_CODE,OPTY_SOURCE,OPTY_FSCT_AMOUNT,EXPECT_SIGN_TIME,`DESC`,OWN_ORG_CODE,LOST_REASON,FINAL_USE,PR_SALES_CODE)
-        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySource},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},#{updatedBy})
+        VALUES (#{code},sysdate(),#{updatedBy},#{name},#{type},#{statusCode},#{accntCode},#{optySourceCode},#{optyFsctAmount},#{expectSignTime},#{desc},#{ownOrgCode},#{lostReason},#{finalUse},#{updatedBy})
     </insert>
 
     <select id="queryOpportunity" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunity.access.vo.OpportunityVO">

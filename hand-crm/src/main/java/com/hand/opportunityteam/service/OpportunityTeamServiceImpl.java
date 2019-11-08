@@ -55,4 +55,16 @@ public class OpportunityTeamServiceImpl implements OpportunityTeamService {
         }
         return ResultDTO.error("缺失参数");
     }
+
+    @Override
+    public ResultDTO deleteOpportunityTeam(OpportunityTeamVO opportunityTeamVO) {
+        if (!StringUtil.isEmpty(opportunityTeamVO.getUpdatedBy())) {
+            int count = opportunityTeamDao.deleteOpportunityTeam(opportunityTeamVO);
+            if (count > 0) {
+                return ResultDTO.success();
+            }
+            return ResultDTO.error("删除商机周报失败");
+        }
+        return ResultDTO.error("缺失参数");
+    }
 }

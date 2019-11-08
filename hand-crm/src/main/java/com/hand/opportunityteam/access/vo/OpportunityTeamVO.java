@@ -23,7 +23,16 @@ public class OpportunityTeamVO {
     private String primaryFlag;//主要标识
     private String type;//类型
     private String typeCode;//类型code
+    private String desc;//备注
     private String langId;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public String getCode() {
         return code;

@@ -6,6 +6,7 @@ import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
 import com.hand.opportunityteam.access.vo.OpportunityTeamVO;
 import com.hand.opportunityteam.service.OpportunityTeamService;
+import com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -76,5 +77,11 @@ public class OpportunityTeamController {
     @PutMapping("/modify-opportunity-team")
     public ResultDTO modifyOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
         return opportunityTeamService.modifyOpportunityTeam(opportunityTeamVO);
+    }
+
+    @ApiOperation(value="删除商机团队")
+    @DeleteMapping("/delete-opportunity-team")
+    public ResultDTO deleteOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
+        return opportunityTeamService.deleteOpportunityTeam(opportunityTeamVO);
     }
 }
