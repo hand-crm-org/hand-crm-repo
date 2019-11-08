@@ -36,8 +36,8 @@ public interface OpportunityTeamService {
     /**
      * 删除商机团队信息
      * UpdateBy LIUDH
-     * @param opportunityTeamVO
+     * @param code
      * @return int
      */
-    ResultDTO deleteOpportunityTeam(OpportunityTeamVO opportunityTeamVO);
+    ResultDTO deleteOpportunityTeam(String code);
 }

@@ -80,8 +80,9 @@ public class OpportunityTeamController {
     }
 
     @ApiOperation(value="删除商机团队")
+    @ApiImplicitParam(paramType="query", name="code", value="商机团队code", dataType="String")
     @DeleteMapping("/delete-opportunity-team")
-    public ResultDTO deleteOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
-        return opportunityTeamService.deleteOpportunityTeam(opportunityTeamVO);
+    public ResultDTO deleteOpportunityTeam(@RequestParam(value = "code",required = false)String code){
+        return opportunityTeamService.deleteOpportunityTeam(code);
     }
 }

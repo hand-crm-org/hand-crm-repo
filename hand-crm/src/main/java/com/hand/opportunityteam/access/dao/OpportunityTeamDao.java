@@ -42,8 +42,8 @@ public interface OpportunityTeamDao {
     /**
      * 删除商机团队信息
      * UpdateBy LIUDH
-     * @param opportunityTeamVO
+     * @param code
      * @return int
      */
-    int deleteOpportunityTeam(OpportunityTeamVO opportunityTeamVO);
+    int deleteOpportunityTeam(String code);
 }

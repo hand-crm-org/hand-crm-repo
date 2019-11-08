@@ -77,7 +77,7 @@
         <include refid="updateConditionSql"></include>
         WHERE CODE=#{code}
     </update>
-    <delete id="deleteOpportunityTeam" parameterType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
+    <delete id="deleteOpportunityTeam" parameterType="String">
         DELETE FROM HC_OPTY_TEAM
         WHERE CODE=#{code}
     </delete>
