@@ -46,7 +46,7 @@
     </sql>
 
     <insert id="insertOpportunityTeam" parameterType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
-        INSERT INTO HC_OPTY_TEAM(CODE,CREATED,CREATED_BY,TYPE,OPTY_CODE,EMP_CODE,PRI_FLG,DESC)
+        INSERT INTO HC_OPTY_TEAM(CODE,CREATED,CREATED_BY,TYPE,OPTY_CODE,EMP_CODE,PRI_FLG,`DESC`)
         VALUES (#{code},sysdate(),#{updatedBy},#{typeCode},#{optyCode},#{empCode},#{primaryFlag},#{desc})
     </insert>
 
