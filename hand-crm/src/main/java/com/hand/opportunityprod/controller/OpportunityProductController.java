@@ -40,7 +40,9 @@ public class OpportunityProductController {
             @ApiImplicitParam(paramType="query", name="code", value="商机产品编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="amount", value="预计销售额度", dataType="String"),
             @ApiImplicitParam(paramType="query", name="expectSignTime", value="预计签单时间", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="productCategory", value="产品类别", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productCtlg", value="产品大类", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productCtgy", value="产品小类", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productNum", value="产品编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="primaryFlag", value="是否主要", dataType="Double"),
             @ApiImplicitParam(paramType="query", name="createdName", value="创建人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
@@ -50,16 +52,19 @@ public class OpportunityProductController {
     @GetMapping("/get-opportunity-product-info")
     public ServiceData getOppProdInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "expectSignTime",required = false) Date expectSignTime,
-                                  @RequestParam(value = "amount",required = false) Double amount, @RequestParam(value = "productCategory",required = false) String productCategory,
+                                  @RequestParam(value = "amount",required = false) Double amount, @RequestParam(value = "productCtlg",required = false) String productCtlg,
                                   @RequestParam(value = "primaryFlag",required = false) String primaryFlag, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
-                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
+                                  @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode,
+                                      @RequestParam(value = "productCtgy",required = false) String productCtgy,@RequestParam(value = "productNum",required = false) String productNum){
         OpportunityProductVO opportunityProductVO = new OpportunityProductVO();
         opportunityProductVO.setCode(code);
         opportunityProductVO.setOptyCode(optyCode);
         opportunityProductVO.setAmount(amount);
         opportunityProductVO.setExpectSignTime(expectSignTime);
-        opportunityProductVO.setProductCategory(productCategory);
+        opportunityProductVO.setProductCtlg(productCtlg);
+        opportunityProductVO.setProductCtgy(productCtgy);
+        opportunityProductVO.setProductNum(productNum);
         opportunityProductVO.setPrimaryFlag(primaryFlag);
         opportunityProductVO.setLangId(langId);
         opportunityProductVO.setCreatedName(createdName);

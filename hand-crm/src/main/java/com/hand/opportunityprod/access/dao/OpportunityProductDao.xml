@@ -15,8 +15,11 @@
         T1.EXPECT_SIGN_TIME as expectSignTime,
         T1.PROD_CODE as productCode,
         (SELECT NAME FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productName,
-        (SELECT CATEGORY FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productCategory,
-        (SELECT TYPE FROM HC_PROD WHERE CODE = T1.PROD_CODE) as productType,
+        T1.PROD_CTLG as productCtlgCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as productCtlg,
+        T1.PROD_CTGY as productCtgyCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as productCtgy,
+        T1.PROD_NUM as productNum,
         T1.PRI_FLG as primaryFlag
     </sql>
     <sql id="queryALLConditionSql">
@@ -27,11 +30,12 @@
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
             <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
             <if test="entity.productName!=null and entity.productName!=''"> AND (SELECT NAME FROM HC_PROD WHERE CODE = T1.PROD_CODE) LIKE "%"#{entity.productName}"%"</if>
-            <if test="entity.productType!=null and entity.productType!=''"> AND (SELECT TYPE FROM HC_PROD WHERE CODE = T1.PROD_CODE) LIKE "%"#{entity.productType}"%"</if>
             <if test="entity.amount!=null and entity.amount!=''"> AND T1.AMOUNT LIKE "%"#{entity.amount}"%"</if>
             <if test="entity.expectSignTime!=null and entity.expectSignTime!=''"> AND T1.EXPECT_SIGN_TIME LIKE "%"#{entity.expectSignTime}"%"</if>
             <if test="entity.primaryFlag!=null and entity.primaryFlag!=''"> AND T1.PRI_FLG=#{entity.primaryFlag}</if>
-            <if test="entity.productCategory!=null and entity.productCategory!=''"> AND (SELECT CATEGORY FROM HC_PROD WHERE CODE = T1.PROD_CODE)=#{entity.productCategory}</if>
+            <if test="entity.productCtlg!=null and entity.productCtlg!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) =#{entity.productCtlg}</if>
+            <if test="entity.productCtgy!=null and entity.productCtgy!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) =#{entity.productCtgy}</if>
+            <if test="entity.productNum!=null and entity.productNum!=''"> AND T1.PROD_NUM =#{entity.productNum}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -42,12 +46,15 @@
             <if test="amount!=null and amount!=''">,AMOUNT=#{amount}</if>
             <if test="expectSignTime!=null">,EXPECT_SIGN_TIME=#{expectSignTime}</if>
             <if test="primaryFlag!=null and primaryFlag!=''">,PRI_FLG=#{primaryFlag}</if>
+            <if test="productCtlgCode!=null and productCtlgCode!=''">,PROD_CTLG=#{productCtlgCode}</if>
+            <if test="productCtgyCode!=null and productCtgyCode!=''">,PROD_CTGY=#{productCtgyCode}</if>
+            <if test="productNum!=null and productNum!=''">,PROD_NUM=#{productNum}</if>
         </if>
     </sql>
 
     <insert id="insertOpportunityProd" parameterType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
-        INSERT INTO HC_OPTY_PROD(CODE,CREATED,CREATED_BY,OPTY_CODE,EXPECT_SIGN_TIME,AMOUNT,PROD_CODE,PRI_FLG)
-        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{expectSignTime},#{amount},#{productCode},#{primaryFlag})
+        INSERT INTO HC_OPTY_PROD(CODE,CREATED,CREATED_BY,OPTY_CODE,EXPECT_SIGN_TIME,AMOUNT,PROD_CODE,PRI_FLG,PROD_CTLG,PROD_CTGY,PROD_NUM)
+        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{expectSignTime},#{amount},#{productCode},#{primaryFlag},#{productCtlgCode},#{productCtgyCode},#{productNum})
     </insert>
 
     <select id="queryOpportunityProd" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityprod.access.vo.OpportunityProductVO">
