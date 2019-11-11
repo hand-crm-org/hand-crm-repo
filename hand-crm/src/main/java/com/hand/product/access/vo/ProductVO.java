@@ -16,6 +16,25 @@ public class ProductVO {
     private String desc;//描述
     private String status;//状态
 	private String category;//类别
+	private String langId;
+	private String typeCode;
+
+	public String getTypeCode() {
+		return typeCode;
+	}
+
+	public void setTypeCode(String typeCode) {
+		this.typeCode = typeCode;
+	}
+
+	public String getLangId() {
+		return langId;
+	}
+
+	public void setLangId(String langId) {
+		this.langId = langId;
+	}
+
 	public String getCode() {
 		return code;
 	}

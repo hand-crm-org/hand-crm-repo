@@ -2,6 +2,7 @@ package com.hand.product.controller;
 
 import com.hand.frame.model.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,9 @@ import com.hand.product.service.ProductService;
 @RestController
 @Api("产品相关api")
 public class ProductController {
+	@Value(value = "${lang.language}")
+	private String langId;
+
 	 @Autowired
 	 ProductService productService;
 	
@@ -63,6 +67,7 @@ public class ProductController {
 			productVO.setExtCode(extCode);
 			productVO.setParCode(parCode);
 			productVO.setStatus(status);
+		 	productVO.setLangId(langId);
 		 	productVO.setCategory(category);
 			PageQuery<ProductVO> pageQuery = new PageQuery<ProductVO>(productVO, currentPage, pageSize);
 			return  ServiceData.success(productService.getProduct(pageQuery), pageQuery.getMapOfPageQuery());
