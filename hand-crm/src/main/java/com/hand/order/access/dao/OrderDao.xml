@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.order.access.dao.OrderDao">
+    <select id="queryOrderList" parameterType="com.hand.order.access.vo.OrderVO" resultType="com.hand.order.access.vo.OrderVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_ORDER T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryOrderCount" parameterType="com.hand.order.access.vo.OrderVO" resultType="int">
+        SELECT count(*)
+        FROM HC_ORDER
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+    <insert id="insertOrder" parameterType="com.hand.order.access.vo.OrderVO">
+        INSERT
+        INTO
+        HC_ORDER(CODE,CREATED,CREATED_BY,ORDER_NUM,ACCNT_CODE,ACCNT_ADDR_CODE,REF_OPTY_CODE,OWN_DEPT_CODE,`TYPE`,ORDER_ENTITY,ORDER_PROP,COUNTRY,RATE,REATED_FLG,TOTAL_AMOUNT,RATED_AMOUNT,UNRATED_AMOUNT,CURRENCY,INDUSTY,SUB_INDUSTY,SALES_METHOD,ORDER_CONDITION,SHIP_CONDITION,SIGN_TIME,EFFECT_TIME,APPROVED_TIME,STATUS)
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderNumber},#{accountCode},#{accountAddrCode},#{refOptyCode},#{ownerDeptCode},#{orderTypeCode},#{orderEntity},#{orderProperty},#{country},#{rate},#{amountRatedFlag},#{totalAmount},#{ratedAmount},#{unratedAmount},#{currencyCode},#{industy},#{subIndusty},#{salesMethodCode},#{orderCondition},#{shipCondition},#{orderSignTime},#{orderEffectTime},#{orderApproveTime},#{orderStatusCode})
+    </insert>
+    <update id="updateOrder" parameterType="com.hand.order.access.vo.OrderVO">
+        UPDATE
+        HC_ORDER
+        SET UPDATED=sysdate(),
+        <include refid="updateAllConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <delete id="deleteOrderByCode" parameterType="String">
+        DELETE
+        FROM
+        HC_ORDER
+        WHERE
+        CODE = #{code}
+    </delete>
+    <sql id="queryAllSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ORDER_NUM as orderNumber,
+        T1.ACCNT_CODE as accountCode,
+        (SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accountName,
+        T1.ACCNT_ADDR_CODE as accountAddrCode,
+        T1.REF_OPTY_CODE as refOptyCode,
+        T1.OWN_DEPT_CODE as ownerDeptCode,
+        T1.TYPE as orderTypeCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TYPE AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderType,
+        T1.ORDER_ENTITY as orderEntity,
+        T1.ORDER_PROP as orderProperty,
+        T1.COUNTRY as country,
+        T1.RATE as rate,
+        T1.REATED_FLG as amountRatedFlag,
+        T1.TOTAL_AMOUNT as totalAmount,
+        T1.RATED_AMOUNT as ratedAmount,
+        T1.UNRATED_AMOUNT as unratedAmount,
+        T1.CURRENCY as currencyCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as currency,
+        T1.INDUSTY as industy,
+        T1.SUB_INDUSTY as subIndusty,
+        T1.SALES_METHOD as salesMethodCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as salesMethod,
+        T1.ORDER_CONDITION as orderCondition,
+        T1.SHIP_CONDITION as shipCondition,
+        T1.SIGN_TIME as orderSignTime,
+        T1.EFFECT_TIME as orderEffectTime,
+        T1.APPROVED_TIME as orderApproveTime,
+        T1.STATUS as orderStatusCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderStatus
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.orderNumber!=null and entity.orderNumber!=''"> AND ORDER_NUM LIKE "%"#{entity.orderNumber}"%"</if>
+            <if test="entity.accountName!=null and entity.accountName!=''"> AND (SELECT NAME FROM HC_ACCNT WHERE CODE = ACCNT_CODE) LIKE "%"#{entity.accountName}"%"</if>
+            <if test="entity.refOptyCode!=null and entity.refOptyCode!=''"> AND REF_OPTY_CODE LIKE "%"#{entity.refOptyCode}"%"</if>
+            <if test="entity.ownerDeptCode!=null and entity.ownerDeptCode!=''">AND OWN_DEPT_CODE=#{entity.ownerDeptCode}</if>
+            <if test="entity.orderType!=null and entity.orderType!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = `TYPE` AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderType}"%"</if>
+            <if test="entity.orderEntity!=null and entity.orderEntity!=''"> AND ORDER_ENTITY LIKE "%"#{entity.orderEntity}"%"</if>
+            <if test="entity.orderProperty!=null and entity.orderProperty!=''"> AND ORDER_PROP LIKE "%"#{entity.orderProperty}"%"</if>
+            <if test="entity.country!=null and entity.country!=''"> AND COUNTRY LIKE "%"#{entity.country}"%"</if>
+            <if test="entity.rate!=null and entity.rate!=''"> AND RATE LIKE "%"#{entity.rate}"%"</if>
+            <if test="entity.amountRatedFlag!=null and entity.amountRatedFlag!=''"> AND REATED_FLG LIKE "%"#{entity.amountRatedFlag}"%"</if>
+            <if test="entity.totalAmount!=null and entity.totalAmount!=''"> AND TOTAL_AMOUNT LIKE "%"#{entity.totalAmount}"%"</if>
+            <if test="entity.ratedAmount!=null and entity.ratedAmount!=''"> AND RATED_AMOUNT LIKE "%"#{entity.ratedAmount}"%"</if>
+            <if test="entity.unratedAmount!=null and entity.unratedAmount!=''"> AND UNRATED_AMOUNT LIKE "%"#{entity.unratedAmount}"%"</if>
+            <if test="entity.currency!=null and entity.currency!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.currency}"%"</if>
+            <if test="entity.industy!=null and entity.industy!=''"> AND INDUSTY LIKE "%"#{entity.industy}"%"</if>
+            <if test="entity.subIndusty!=null and entity.subIndusty!=''"> AND SUB_INDUSTY LIKE "%"#{entity.subIndusty}"%"</if>
+            <if test="entity.salesMethod!=null and entity.salesMethod!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.salesMethod}"%"</if>
+            <if test="entity.orderCondition!=null and entity.orderCondition!=''"> AND ORDER_CONDITION LIKE "%"#{entity.orderCondition}"%"</if>
+            <if test="entity.orderStatus!=null and entity.orderStatus!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderStatus}"%"</if>
+            <if test="entity.orderSignTime!=null"> AND SIGN_TIME LIKE "%"#{entity.orderSignTime}"%"</if>
+            <if test="entity.orderEffectTime!=null"> AND EFFECT_TIME LIKE "%"#{entity.orderEffectTime}"%"</if>
+            <if test="entity.orderApproveTime!=null"> AND APPROVED_TIME LIKE "%"#{entity.orderApproveTime}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateAllConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="orderNumber!=null and orderNumber!=''">,ORDER_NUM=#{orderNumber}</if>
+        <if test="accountCode!=null and accountCode!=''">,ACCNT_CODE=#{accountCode}</if>
+        <if test="accountAddrCode!=null and accountAddrCode!=''">,ACCNT_ADDR_CODE=#{accountAddrCode}</if>
+        <if test="refOptyCode!=null and refOptyCode!=''">,REF_OPTY_CODE=#{refOptyCode}</if>
+        <if test="ownerDeptCode!=null and ownerDeptCode!=''">,OWN_DEPT_CODE=#{ownerDeptCode}</if>
+        <if test="orderTypeCode!=null and orderTypeCode!=''">,TYPE=#{orderTypeCode}</if>
+        <if test="orderEntity!=null and orderEntity!=''">,ORDER_ENTITY=#{orderEntity}</if>
+        <if test="orderProperty!=null and orderProperty!=''">,ORDER_PROP=#{orderProperty}</if>
+        <if test="country!=null and country!=''">,COUNTRY=#{country}</if>
+        <if test="rate!=null and rate!=''">,RATE=#{rate}</if>
+        <if test="amountRatedFlag!=null and amountRatedFlag!=''">,REATED_FLG=#{amountRatedFlag}</if>
+        <if test="totalAmount!=null and totalAmount!=''">,TOTAL_AMOUNT=#{totalAmount}</if>
+        <if test="ratedAmount!=null and ratedAmount!=''">,RATED_AMOUNT=#{ratedAmount}</if>
+        <if test="unratedAmount!=null and unratedAmount!=''">,UNRATED_AMOUNT=#{unratedAmount}</if>
+        <if test="currencyCode!=null and currencyCode!=''">,CURRENCY=#{currencyCode}</if>
+        <if test="industy!=null and industy!=''">,INDUSTY=#{industy}</if>
+        <if test="subIndusty!=null and subIndusty!=''">,SUB_INDUSTY=#{subIndusty}</if>
+        <if test="salesMethodCode!=null and salesMethodCode!=''">,SALES_METHOD=#{salesMethodCode}</if>
+        <if test="orderCondition!=null and orderCondition!=''">,ORDER_CONDITION=#{orderCondition}</if>
+        <if test="shipCondition!=null and shipCondition!=''">,SHIP_CONDITION=#{shipCondition}</if>
+        <if test="orderSignTime!=null">,SIGN_TIME=#{orderSignTime}</if>
+        <if test="orderEffectTime!=null">,EFFECT_TIME=#{orderEffectTime}</if>
+        <if test="orderApproveTime!=null">,APPROVED_TIME=#{orderApproveTime}</if>
+        <if test="orderStatusCode!=null and orderStatusCode!=''">,STATUS=#{orderStatusCode}</if>
+    </sql>
+</mapper>

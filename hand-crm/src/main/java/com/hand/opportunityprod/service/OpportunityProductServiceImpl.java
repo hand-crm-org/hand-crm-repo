@@ -58,7 +58,7 @@ public class OpportunityProductServiceImpl implements OpportunityProductService 
 
     @Override
     public ResultDTO deleteOpportunityProd(OpportunityProductVO opportunityProductVO) {
-        if(!StringUtil.isEmpty(opportunityProductVO.getUpdatedBy())) {
+        if(!StringUtil.isEmpty(opportunityProductVO.getCode())) {
             int count = opportunityProductDao.deleteOpportunityProd(opportunityProductVO);
             if (count > 0) {
                 return ResultDTO.success();
