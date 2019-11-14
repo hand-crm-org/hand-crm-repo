@@ -25,7 +25,7 @@ public class OpportunityActivityController {
     OpportunityActivityServcie opportunityActivityServcie;
 
     @ApiOperation(value="新建商机活动")
-    @PostMapping("/add-opportunity-active")
+    @PostMapping("/add-opportunity-activity")
     public ResultDTO addOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.addOpportunityActivity(opportunityActivityVO);
     }
@@ -48,7 +48,7 @@ public class OpportunityActivityController {
             @ApiImplicitParam(paramType="query", name="endTime", value="结束时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="respName", value="责任人姓名", dataType="String"),
     })
-    @GetMapping("/get-opportunity-active-info")
+    @GetMapping("/get-opportunity-activity-info")
     public ServiceData getOppActiveInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "status",required = false) String status,
@@ -77,13 +77,13 @@ public class OpportunityActivityController {
     }
 
     @ApiOperation(value="修改商机活动")
-    @PutMapping("/modify-opportunity-active")
+    @PutMapping("/modify-opportunity-activity")
     public ResultDTO modifyOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.modifyOpportunityActivity(opportunityActivityVO);
     }
 
     @ApiOperation(value="删除商机活动")
-    @DeleteMapping("/delete-opportunity-active")
+    @DeleteMapping("/delete-opportunity-activity")
     public ResultDTO deleteOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.deleteOpportunityActivity(opportunityActivityVO);
     }

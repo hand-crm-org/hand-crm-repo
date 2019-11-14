@@ -102,5 +102,6 @@
         <if test="status!=null and status!=''">,STATUS = #{status}</if>
         <if test="desc!=null and desc!=''">,`DESC` = #{desc}</if>
         <if test="teamRoleCode!=null and teamRoleCode!=''">,TEAM_ROLE = #{teamRoleCode}</if>
+        <if test="priFlg!=null and priFlg!=''">,PRI_FLG = #{priFlg}</if>
     </sql>
 </mapper>
