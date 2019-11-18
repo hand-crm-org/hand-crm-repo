@@ -12,6 +12,7 @@
         T1.NAME_ENU as nameEnu,
         T1.TAX_CODE as taxCode,
         T1.PAR_ACCNT_CODE as parAccntCode,
+        (SELECT NAME FROM HC_ACCNT WHERE CODE = T1.PAR_ACCNT_CODE) as parAccntName,
         T1.PRI_EMP_CODE as priEmpCode,
         (SELECT NAME FROM HC_EMP WHERE CODE = T1.PRI_EMP_CODE AND STATUS = 'Active') as priEmpName,
         T1.ORG_CODE as orgCode,
