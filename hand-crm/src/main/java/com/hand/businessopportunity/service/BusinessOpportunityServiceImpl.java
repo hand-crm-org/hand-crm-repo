@@ -45,6 +45,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
     @Override
     public List<BusinessOpportunityVO> getBusinessOpty(PageQuery<BusinessOpportunityVO> pageQuery) {
         int count = businessOptyDao.queryBusinessOptyCount(pageQuery);
+        pageQuery.setCount(count);
         if(count > 0) {
             return businessOptyDao.queryBusinessOpty(pageQuery);
         }
