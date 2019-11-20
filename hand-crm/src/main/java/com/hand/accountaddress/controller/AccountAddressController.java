@@ -14,11 +14,15 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api("客户-地址相关api")
 public class AccountAddressController {
+    @Value(value = "${lang.language}")
+    private String langId;
+
     @Autowired
     AccountAddressServcice accountAddressServcice;
 
@@ -58,6 +62,7 @@ public class AccountAddressController {
         addressVO.setDesc(desc);
         addressVO.setType(type);
         addressVO.setStatus(status);
+        addressVO.setLangId(langId);
         PageQuery<AccountAddressVO> pageQuery = new PageQuery<AccountAddressVO>(addressVO, currentPage, pageSize);
         return  ServiceData.success(accountAddressServcice.getAccountAddr(pageQuery), pageQuery.getMapOfPageQuery());
     }

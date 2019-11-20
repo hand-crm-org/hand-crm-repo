@@ -19,6 +19,7 @@ public class AccountVO {
     private String typeCode;//客户类型code
     private String taxCode;//统一信用编码
     private String parAccntCode;//父客户code
+    private String parAccntName;//父客户
     private String priEmpCode;//跟进人code
     private String priEmpName;//跟进人
     private String orgCode;//组织code
@@ -430,6 +431,14 @@ public class AccountVO {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getParAccntName() {
+        return parAccntName;
+    }
+
+    public void setParAccntName(String parAccntName) {
+        this.parAccntName = parAccntName;
     }
 
     @Override
