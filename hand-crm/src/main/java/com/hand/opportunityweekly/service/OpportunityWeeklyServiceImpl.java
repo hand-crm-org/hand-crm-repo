@@ -20,7 +20,7 @@ public class OpportunityWeeklyServiceImpl implements OpportunityWeeklyService {
     public ResultDTO addOpportunityWeekly(OpportunityWeeklyVO opportunityWeeklyVO) {
         if (!StringUtil.isEmpty(opportunityWeeklyVO.getOptyCode()) && !StringUtil.isEmpty(opportunityWeeklyVO.getUpdatedBy())
                 && !StringUtil.isEmpty(opportunityWeeklyVO.getName()) && !StringUtil.isEmpty(opportunityWeeklyVO.getWeeklySummary())
-                && !StringUtil.isEmpty(opportunityWeeklyVO.getWeeklyRisk()) && !StringUtil.isEmpty(opportunityWeeklyVO.getWeeklyPushStatusCode())) {
+                && !StringUtil.isEmpty(opportunityWeeklyVO.getWeeklyPushStatusCode())) {
             String code = StringUtil.getCode();
             opportunityWeeklyVO.setCode(code);
             int count = opportunityWeeklyDao.insertOpportunityWeekly(opportunityWeeklyVO);
