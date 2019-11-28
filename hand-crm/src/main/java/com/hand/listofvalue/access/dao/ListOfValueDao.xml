@@ -68,6 +68,7 @@
             <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.type==null or entity.type==''"> AND TYPE <![CDATA[<>]]> 'LOV_TYPE'</if>
             <if test="entity.langId!=null and entity.langId!=''"> AND LANG_ID LIKE "%"#{entity.langId}"%"</if>
             <if test="entity.val!=null and entity.val!=''"> AND VAL LIKE "%"#{entity.val}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
