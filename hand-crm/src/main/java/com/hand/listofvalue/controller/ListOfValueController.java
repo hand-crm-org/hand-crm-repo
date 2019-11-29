@@ -57,7 +57,7 @@ public class ListOfValueController {
         listOfValueVO.setLevel(level);
         listOfValueVO.setActFlg(actFlg);
         listOfValueVO.setDesc(desc);
-        listOfValueVO.setDesc(parentVal);
+        listOfValueVO.setParentVal(parentVal);
         listOfValueVO.setNameList(nameList);
         PageQuery<ListOfValueVO> pageQuery = new PageQuery<ListOfValueVO>(listOfValueVO, currentPage, pageSize);
         return  ServiceData.success(listOfValueService.getLstOfVaL(pageQuery), pageQuery.getMapOfPageQuery());
