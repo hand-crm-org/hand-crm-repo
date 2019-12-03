@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.orderpayterm.access.dao.OrderPayTermDao">
+    <select id="queryPayTermList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.orderpayterm.access.vo.OrderPayTermVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_ORDER_TERM T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryPayTermCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT count(*)
+        FROM HC_ORDER_TERM
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+    <insert id="insertPayTerm" parameterType="com.hand.orderpayterm.access.vo.OrderPayTermVO">
+        INSERT
+        INTO
+        HC_ORDER_TERM(CODE,CREATED,CREATED_BY,ORDER_CODE,PAY_COND,PAY_METHOD,PAY_AMOUNT,PAY_TIME,`DESC`)
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderCode},#{payCondition},#{payMethod},#{payAmount},#{payTime},#{description})
+    </insert>
+    <update id="updatePayTerm" parameterType="com.hand.orderpayterm.access.vo.OrderPayTermVO">
+        UPDATE
+        HC_ORDER_TERM
+        SET UPDATED=sysdate(),
+        <include refid="updateAllConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <delete id="deletePayTerm" parameterType="String">
+        DELETE
+        FROM
+        HC_ORDER_TERM
+        WHERE
+        CODE = #{code}
+    </delete>
+    <sql id="queryAllSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ORDER_CODE as orderCode,
+        T1.PAY_COND as payCondition,
+        T1.PAY_METHOD as payMethod,
+        T1.PAY_AMOUNT as payAmount,
+        T1.PAY_TIME as payTime,
+        T1.DESC as description
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
+            <if test="entity.payCondition!=null and entity.payCondition!=''"> AND PAY_COND LIKE "%"#{entity.payCondition}"%"</if>
+            <if test="entity.payMethod!=null and entity.payMethod!=''">AND PAY_METHOD=#{entity.payMethod}"%"</if>
+            <if test="entity.payAmount!=null and entity.payAmount!=''"> AND PAY_AMOUNT LIKE "%"#{entity.payAmount}</if>
+            <if test="entity.payTime!=null"> AND PAY_TIME LIKE "%"#{entity.payTime}"%"</if>
+            <if test="entity.description!=null and entity.description!=''"> AND `DESC` LIKE "%"#{entity.description}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateAllConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="payCondition!=null and payCondition!=''">,PAY_COND=#{payCondition}</if>
+        <if test="payMethod!=null and payMethod!=''">,PAY_METHOD=#{payMethod}</if>
+        <if test="payAmount!=null and payAmount!=''">,PAY_AMOUNT=#{payAmount}</if>
+        <if test="payTime!=null">,PAY_TIME=#{payTime}</if>
+        <if test="description!=null and description!=''">,`DESC`=#{description}</if>
+    </sql>
+</mapper>

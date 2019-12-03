@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.orderproduct.access.dao.OrderProductDao">
-    <select id="queryOrderProdList" parameterType="com.hand.orderproduct.access.vo.OrderProductVO" resultType="com.hand.orderproduct.access.vo.OrderProductVO">
+    <select id="queryOrderProdList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.orderproduct.access.vo.OrderProductVO">
         <include refid="queryAllSql"></include>
         FROM
         HC_ORDER_ITEM T1
@@ -10,7 +10,7 @@
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
-    <select id="queryOrderProdCount" parameterType="com.hand.orderproduct.access.vo.OrderProductVO" resultType="int">
+    <select id="queryOrderProdCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT count(*)
         FROM HC_ORDER_ITEM
         WHERE

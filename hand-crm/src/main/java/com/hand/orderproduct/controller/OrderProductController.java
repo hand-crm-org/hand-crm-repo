@@ -47,7 +47,7 @@ public class OrderProductController {
             @ApiImplicitParam(paramType="query", name="description", value="备注", dataType="String"),
     })
     @GetMapping("/get-order-product-info")
-    public ServiceData getOppActiveInfo(int currentPage, int pageSize,
+    public ServiceData getOrderProdInfo(int currentPage, int pageSize,
                                         @RequestParam(value = "code",required = false) String code, @RequestParam(value = "productNum",required = false) String productNum,
                                         @RequestParam(value = "productCtlg",required = false) String productCtlg, @RequestParam(value = "productCtgy",required = false) String productCtgy,
                                         @RequestParam(value = "productUnit",required = false) String productUnit, @RequestParam(value = "productQuantity",required = false) String productQuantity,

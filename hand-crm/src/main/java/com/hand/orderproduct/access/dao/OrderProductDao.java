@@ -32,14 +32,14 @@ public interface OrderProductDao {
 
     /**
      * 修改订单产品
-     * @UpdateBy fuzw
+     * @UpdateBy LIUDH
      * @param orderProductVO
      * @Return int
      */
     int updateOrderProd(OrderProductVO orderProductVO);
     /**
      * 删除订单产品
-     * @UpdateBy fuzw
+     * @UpdateBy LIUDH
      * @param code
      * @Return int
      */

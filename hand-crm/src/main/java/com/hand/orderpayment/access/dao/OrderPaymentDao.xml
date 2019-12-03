@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.orderpayment.access.dao.OrderPaymentDao">
+    <select id="queryPaymentList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.orderpayment.access.vo.OrderPaymentVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_ORDER_PAY T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryPaymentCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT count(*)
+        FROM HC_ORDER_PAY
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+    <insert id="insertPayment" parameterType="com.hand.orderpayment.access.vo.OrderPaymentVO">
+        INSERT
+        INTO
+        HC_ORDER_PAY(CODE,CREATED,CREATED_BY,ORDER_CODE,`NAME`,PLAN_PAY_AMOUNT,PLAN_PAY_TIME,BIILL_AMOUNT,RECEIVE_AMOUNT,`DESC`)
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderCode},#{paymentName},#{planPaymentAmount},#{planPaymentTime},#{billAmount},#{receivedAmount},#{description})
+    </insert>
+    <update id="updatePayment" parameterType="com.hand.orderpayment.access.vo.OrderPaymentVO">
+        UPDATE
+        HC_ORDER_PAY
+        SET UPDATED=sysdate(),
+        <include refid="updateAllConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <delete id="deletePayment" parameterType="String">
+        DELETE
+        FROM
+        HC_ORDER_PAY
+        WHERE
+        CODE = #{code}
+    </delete>
+    <sql id="queryAllSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ORDER_CODE as orderCode,
+        T1.NAME as paymentName,
+        T1.PLAN_PAY_AMOUNT as planPaymentAmount,
+        T1.PLAN_PAY_TIME as planPaymentTime,
+        T1.BIILL_AMOUNT as billAmount,
+        T1.RECEIVE_AMOUNT as receivedAmount,
+        T1.DESC as description
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
+            <if test="entity.paymentName!=null and entity.paymentName!=''"> AND NAME LIKE "%"#{entity.paymentName}"%"</if>
+            <if test="entity.planPaymentAmount!=null and entity.planPaymentAmount!=''">AND PLAN_PAY_AMOUNT=#{entity.planPaymentAmount}"%"</if>
+            <if test="entity.planPaymentTime!=null"> AND PLAN_PAY_TIME LIKE "%"#{entity.planPaymentTime}</if>
+            <if test="entity.billAmount!=null and entity.billAmount!=''">AND BIILL_AMOUNT=#{entity.billAmount}"%"</if>
+            <if test="entity.receivedAmount!=null and entity.receivedAmount!=''"> AND RECEIVE_AMOUNT LIKE "%"#{entity.receivedAmount}"%"</if>
+            <if test="entity.description!=null and entity.description!=''"> AND `DESC` LIKE "%"#{entity.description}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateAllConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="paymentName!=null and paymentName!=''">,NAME=#{paymentName}</if>
+        <if test="planPaymentAmount!=null and planPaymentAmount!=''">,PLAN_PAY_AMOUNT=#{planPaymentAmount}</if>
+        <if test="planPaymentTime!=null">,PLAN_PAY_TIME=#{planPaymentTime}</if>
+        <if test="billAmount!=null and billAmount!=''">,BIILL_AMOUNT=#{billAmount}</if>
+        <if test="receivedAmount!=null and receivedAmount!=''">,RECEIVE_AMOUNT=#{receivedAmount}</if>
+        <if test="description!=null and description!=''">,`DESC`=#{description}</if>
+    </sql>
+</mapper>
