@@ -6,6 +6,7 @@ import com.hand.order.access.vo.OrderVO;
 import java.util.List;
 
 public interface OrderDao {
+
     /**
      * 插入销售订单信息
      * @UpdateBy LIUDH

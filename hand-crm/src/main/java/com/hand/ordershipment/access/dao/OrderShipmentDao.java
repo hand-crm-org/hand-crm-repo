@@ -6,6 +6,7 @@ import com.hand.ordershipment.access.vo.OrderShipmentVO;
 import java.util.List;
 
 public interface OrderShipmentDao {
+
     /**
      * 插入订单发到货信息
      * @UpdateBy LIUDH

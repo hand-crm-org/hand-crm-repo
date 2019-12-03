@@ -15,7 +15,6 @@ public interface OrderPayTermService {
      */
     ResultDTO addOrderPayTerm(OrderPayTermVO orderPayTermVO);
 
-
     /**
      * 根据条件查询付款条件
      * @UpdateBy liudh

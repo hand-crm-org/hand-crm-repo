@@ -18,6 +18,7 @@ import java.util.Date;
 @RestController
 @Api("销售订单相关api")
 public class OrderController {
+
     @Value(value = "${lang.language}")
     private String langId;
 

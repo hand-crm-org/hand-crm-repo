@@ -24,7 +24,6 @@ public interface OrderProductService {
      */
     List<OrderProductVO> getOrderProd(PageQuery<OrderProductVO> pageQuery);
 
-
     /**
      * 更新订单产品
      * @UpdateBy liudh

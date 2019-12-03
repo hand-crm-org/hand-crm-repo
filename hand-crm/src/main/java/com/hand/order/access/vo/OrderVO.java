@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class OrderVO {
+
     private String code;//订单头编码
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date created;//创建日期
@@ -18,7 +19,9 @@ public class OrderVO {
     private String accountName;//客户
     private String accountAddrCode;//客户地址编码
     private String refOptyCode;//关联商机编码
+    private String refOptyName;//关联商机名称
     private String ownerDeptCode;//业绩归属部门编码
+    private String ownerDeptName;//业绩归属部门
     private String orderType;//合同类型
     private String orderTypeCode;//合同类型
     private String orderEntity;//经营单位（签约主体）
@@ -45,7 +48,43 @@ public class OrderVO {
     private Date orderApproveTime;//审批通过时间
     private String orderStatus;//订单状态
     private String orderStatusCode;//订单状态
+    private String state;
+    private String city;
+    private String county;
+    private String street;
     private String langId;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
     public String getLangId() {
         return langId;
@@ -53,6 +92,22 @@ public class OrderVO {
 
     public void setLangId(String langId) {
         this.langId = langId;
+    }
+
+    public String getRefOptyName() {
+        return refOptyName;
+    }
+
+    public void setRefOptyName(String refOptyName) {
+        this.refOptyName = refOptyName;
+    }
+
+    public String getOwnerDeptName() {
+        return ownerDeptName;
+    }
+
+    public void setOwnerDeptName(String ownerDeptName) {
+        this.ownerDeptName = ownerDeptName;
     }
 
     public String getAccountName() {

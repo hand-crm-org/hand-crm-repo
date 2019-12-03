@@ -6,6 +6,7 @@ import com.hand.orderpayterm.access.vo.OrderPayTermVO;
 import java.util.List;
 
 public interface OrderPayTermDao {
+
     /**
      * 插入订单付款条件信息
      * @UpdateBy LIUDH

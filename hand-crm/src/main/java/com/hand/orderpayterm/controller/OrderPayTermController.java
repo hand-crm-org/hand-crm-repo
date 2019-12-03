@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("订单付款条件api")
 public class OrderPayTermController {
+
     @Value(value = "${lang.language}")
     private String langId;
 

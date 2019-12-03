@@ -38,6 +38,7 @@
         WHERE
         CODE = #{code}
     </delete>
+
     <sql id="queryAllSql">
         SELECT
         T1.CODE as code,

@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class OrderProductServiceImpl implements OrderProductService {
-
     @Autowired
     private OrderProductDao orderProductDao;
 

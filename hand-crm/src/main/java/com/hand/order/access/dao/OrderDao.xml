@@ -51,6 +51,7 @@
         (SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accountName,
         T1.ACCNT_ADDR_CODE as accountAddrCode,
         T1.REF_OPTY_CODE as refOptyCode,
+        (SELECT NAME FROM HC_OPTY WHERE CODE = T1.REF_OPTY_CODE) as refOptyName,
         T1.OWN_DEPT_CODE as ownerDeptCode,
         T1.TYPE as orderTypeCode,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TYPE AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderType,
@@ -74,7 +75,11 @@
         T1.EFFECT_TIME as orderEffectTime,
         T1.APPROVED_TIME as orderApproveTime,
         T1.STATUS as orderStatusCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderStatus
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderStatus,
+        (SELECT STATE FROM HC_ADDR WHERE CODE = T1.ACCNT_ADDR_CODE) as state,
+        (SELECT CITY FROM HC_ADDR WHERE CODE = T1.ACCNT_ADDR_CODE) as city,
+        (SELECT COUNTY FROM HC_ADDR WHERE CODE = T1.ACCNT_ADDR_CODE) as county,
+        (SELECT STREET FROM HC_ADDR WHERE CODE = T1.ACCNT_ADDR_CODE) as street
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -85,7 +90,7 @@
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.orderNumber!=null and entity.orderNumber!=''"> AND ORDER_NUM LIKE "%"#{entity.orderNumber}"%"</if>
             <if test="entity.accountName!=null and entity.accountName!=''"> AND (SELECT NAME FROM HC_ACCNT WHERE CODE = ACCNT_CODE) LIKE "%"#{entity.accountName}"%"</if>
-            <if test="entity.refOptyCode!=null and entity.refOptyCode!=''"> AND REF_OPTY_CODE LIKE "%"#{entity.refOptyCode}"%"</if>
+            <if test="entity.refOptyName!=null and entity.refOptyName!=''"> AND (SELECT NAME FROM HC_OPTY WHERE CODE = T1.REF_OPTY_CODE) LIKE "%"#{entity.refOptyName}"%"</if>
             <if test="entity.ownerDeptCode!=null and entity.ownerDeptCode!=''">AND OWN_DEPT_CODE=#{entity.ownerDeptCode}</if>
             <if test="entity.orderType!=null and entity.orderType!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = `TYPE` AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderType}"%"</if>
             <if test="entity.orderEntity!=null and entity.orderEntity!=''"> AND ORDER_ENTITY LIKE "%"#{entity.orderEntity}"%"</if>

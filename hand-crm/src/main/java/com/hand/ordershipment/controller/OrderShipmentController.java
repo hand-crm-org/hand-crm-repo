@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api("订单发到货相关api")
 public class OrderShipmentController {
+
     @Value(value = "${lang.language}")
     private String langId;
 

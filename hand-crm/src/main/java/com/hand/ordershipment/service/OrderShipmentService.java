@@ -7,6 +7,7 @@ import com.hand.ordershipment.access.vo.OrderShipmentVO;
 import java.util.List;
 
 public interface OrderShipmentService {
+
     /**
      * 新建订单发到货
      * @UpdateBy liudh
