@@ -48,4 +48,16 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
     }
+
+    @Override
+    public ResultDTO modifyOrder(OrderVO orderVO) {
+        if (!StringUtil.isEmpty(orderVO.getCode()) && !StringUtil.isEmpty(orderVO.getUpdatedBy())) {
+            int count = orderDao.updateOrder(orderVO);
+            if (count > 0) {
+                return ResultDTO.success();
+            }
+            return ResultDTO.error("修改订单信息失败");
+        }
+        return ResultDTO.error("缺失参数");
+    }
 }

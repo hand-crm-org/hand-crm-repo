@@ -24,4 +24,12 @@ public interface OrderService {
      * @Return List<OrderVO>
      */
     List<OrderVO> getOderList(PageQuery<OrderVO> pageQuery);
+
+    /**
+     * 更新销售订单
+     * @UpdateBy liudh
+     * @param orderVO
+     * @Return int
+     */
+    ResultDTO modifyOrder(OrderVO orderVO);
 }

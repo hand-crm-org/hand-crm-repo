@@ -30,4 +30,12 @@ public interface OrderDao {
      * @return
      */
     int queryOrderCount(PageQuery<OrderVO> pageQuery);
+
+    /**
+     * 修改销售订单信息
+     * @UpdateBy LIUDH
+     * @param orderVO
+     * @Return int
+     */
+    int updateOrder(OrderVO orderVO);
 }

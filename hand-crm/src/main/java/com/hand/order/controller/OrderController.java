@@ -5,6 +5,7 @@ import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import com.hand.order.access.vo.OrderVO;
 import com.hand.order.service.OrderService;
+import com.hand.orderpayment.access.vo.OrderPaymentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,13 +26,13 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @ApiOperation(value="新建商机活动")
+    @ApiOperation(value="新建销售订单")
     @PostMapping("/add-order-info")
     public ResultDTO addOrder(@RequestBody OrderVO orderVO){
         return orderService.addOrder(orderVO);
     }
 
-    @ApiOperation(value="查询商机活动")
+    @ApiOperation(value="查询销售订单")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
@@ -64,7 +65,7 @@ public class OrderController {
             @ApiImplicitParam(paramType="query", name="orderStatus", value="订单状态", dataType="String"),
     })
     @GetMapping("/get-order-info")
-    public ServiceData getOppActiveInfo(int currentPage, int pageSize,
+    public ServiceData getOrderInfo(int currentPage, int pageSize,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "orderNumber",required = false) String orderNumber,
                                         @RequestParam(value = "accountCode",required = false) String accountCode, @RequestParam(value = "accountName",required = false) String accountName,
                                         @RequestParam(value = "accountAddrCode",required = false) String accountAddrCode, @RequestParam(value = "refOptyCode",required = false) String refOptyCode,
@@ -108,5 +109,11 @@ public class OrderController {
         orderVO.setLangId(langId);
         PageQuery<OrderVO> pageQuery = new PageQuery<OrderVO>(orderVO, currentPage, pageSize);
         return  ServiceData.success(orderService.getOderList(pageQuery), pageQuery.getMapOfPageQuery());
+    }
+
+    @ApiOperation(value="修改销售订单")
+    @PutMapping("/modify-order")
+    public ResultDTO modifyOrder(@RequestBody OrderVO orderVO){
+        return orderService.modifyOrder(orderVO);
     }
 }
