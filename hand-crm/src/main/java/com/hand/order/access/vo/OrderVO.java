@@ -52,7 +52,16 @@ public class OrderVO {
     private String city;
     private String county;
     private String street;
+    private String addr1;
     private String langId;
+
+    public String getAddr1() {
+        return addr1;
+    }
+
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
+    }
 
     public String getState() {
         return state;
