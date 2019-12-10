@@ -21,7 +21,7 @@
         INSERT
         INTO
         HC_ORDER(CODE,CREATED,CREATED_BY,ORDER_NUM,ACCNT_CODE,ACCNT_ADDR_CODE,REF_OPTY_CODE,OWN_DEPT_CODE,`TYPE`,ORDER_ENTITY,ORDER_PROP,COUNTRY,RATE,REATED_FLG,TOTAL_AMOUNT,RATED_AMOUNT,UNRATED_AMOUNT,CURRENCY,INDUSTY,SUB_INDUSTY,SALES_METHOD,ORDER_CONDITION,SHIP_CONDITION,SIGN_TIME,EFFECT_TIME,APPROVED_TIME,STATUS)
-        VALUES (#{code},sysdate(),#{updatedBy},#{orderNumber},#{accountCode},#{accountAddrCode},#{refOptyCode},#{ownerDeptCode},#{orderTypeCode},#{orderEntity},#{orderProperty},#{country},#{rate},#{amountRatedFlag},#{totalAmount},#{ratedAmount},#{unratedAmount},#{currencyCode},#{industy},#{subIndusty},#{salesMethodCode},#{orderCondition},#{shipCondition},#{orderSignTime},#{orderEffectTime},#{orderApproveTime},#{orderStatusCode})
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderNumber},#{accountCode},#{accountAddrCode},#{refOptyCode},#{ownerDeptCode},#{orderTypeCode},#{orderEntity},#{orderProperty},#{countryCode},#{rate},#{amountRatedFlag},#{totalAmount},#{ratedAmount},#{unratedAmount},#{currencyCode},#{industyCode},#{subIndustyCode},#{salesMethodCode},#{orderCondition},#{shipCondition},#{orderSignTime},#{orderEffectTime},#{orderApproveTime},#{orderStatusCode})
     </insert>
     <update id="updateOrder" parameterType="com.hand.order.access.vo.OrderVO">
         UPDATE
@@ -53,11 +53,13 @@
         T1.REF_OPTY_CODE as refOptyCode,
         (SELECT NAME FROM HC_OPTY WHERE CODE = T1.REF_OPTY_CODE) as refOptyName,
         T1.OWN_DEPT_CODE as ownerDeptCode,
+        (SELECT NAME FROM HC_ORG WHERE CODE = T1.OWN_DEPT_CODE) as ownerDeptName,
         T1.TYPE as orderTypeCode,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TYPE AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderType,
         T1.ORDER_ENTITY as orderEntity,
         T1.ORDER_PROP as orderProperty,
-        T1.COUNTRY as country,
+        T1.COUNTRY as countryCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.COUNTRY AND TYPE = 'ADDR_COUNTRY' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as country,
         T1.RATE as rate,
         T1.REATED_FLG as amountRatedFlag,
         T1.TOTAL_AMOUNT as totalAmount,
@@ -65,8 +67,10 @@
         T1.UNRATED_AMOUNT as unratedAmount,
         T1.CURRENCY as currencyCode,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as currency,
-        T1.INDUSTY as industy,
-        T1.SUB_INDUSTY as subIndusty,
+        T1.INDUSTY as industyCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as industy,
+        T1.SUB_INDUSTY as subIndustyCode,
+        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as subIndusty,
         T1.SALES_METHOD as salesMethodCode,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as salesMethod,
         T1.ORDER_CONDITION as orderCondition,
@@ -96,15 +100,15 @@
             <if test="entity.orderType!=null and entity.orderType!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = `TYPE` AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderType}"%"</if>
             <if test="entity.orderEntity!=null and entity.orderEntity!=''"> AND ORDER_ENTITY LIKE "%"#{entity.orderEntity}"%"</if>
             <if test="entity.orderProperty!=null and entity.orderProperty!=''"> AND ORDER_PROP LIKE "%"#{entity.orderProperty}"%"</if>
-            <if test="entity.country!=null and entity.country!=''"> AND COUNTRY LIKE "%"#{entity.country}"%"</if>
+            <if test="entity.country!=null and entity.country!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.COUNTRY AND TYPE = 'ADDR_COUNTRY' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.country}"%"</if>
             <if test="entity.rate!=null and entity.rate!=''"> AND RATE LIKE "%"#{entity.rate}"%"</if>
             <if test="entity.amountRatedFlag!=null and entity.amountRatedFlag!=''"> AND REATED_FLG LIKE "%"#{entity.amountRatedFlag}"%"</if>
             <if test="entity.totalAmount!=null and entity.totalAmount!=''"> AND TOTAL_AMOUNT LIKE "%"#{entity.totalAmount}"%"</if>
             <if test="entity.ratedAmount!=null and entity.ratedAmount!=''"> AND RATED_AMOUNT LIKE "%"#{entity.ratedAmount}"%"</if>
             <if test="entity.unratedAmount!=null and entity.unratedAmount!=''"> AND UNRATED_AMOUNT LIKE "%"#{entity.unratedAmount}"%"</if>
             <if test="entity.currency!=null and entity.currency!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.currency}"%"</if>
-            <if test="entity.industy!=null and entity.industy!=''"> AND INDUSTY LIKE "%"#{entity.industy}"%"</if>
-            <if test="entity.subIndusty!=null and entity.subIndusty!=''"> AND SUB_INDUSTY LIKE "%"#{entity.subIndusty}"%"</if>
+            <if test="entity.industy!=null and entity.industy!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.industy}"%"</if>
+            <if test="entity.subIndusty!=null and entity.subIndusty!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.subIndusty}"%"</if>
             <if test="entity.salesMethod!=null and entity.salesMethod!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.salesMethod}"%"</if>
             <if test="entity.orderCondition!=null and entity.orderCondition!=''"> AND ORDER_CONDITION LIKE "%"#{entity.orderCondition}"%"</if>
             <if test="entity.orderStatus!=null and entity.orderStatus!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderStatus}"%"</if>
@@ -123,15 +127,15 @@
         <if test="orderTypeCode!=null and orderTypeCode!=''">,TYPE=#{orderTypeCode}</if>
         <if test="orderEntity!=null and orderEntity!=''">,ORDER_ENTITY=#{orderEntity}</if>
         <if test="orderProperty!=null and orderProperty!=''">,ORDER_PROP=#{orderProperty}</if>
-        <if test="country!=null and country!=''">,COUNTRY=#{country}</if>
+        <if test="countryCode!=null and countryCode!=''">,COUNTRY=#{countryCode}</if>
         <if test="rate!=null and rate!=''">,RATE=#{rate}</if>
         <if test="amountRatedFlag!=null and amountRatedFlag!=''">,REATED_FLG=#{amountRatedFlag}</if>
         <if test="totalAmount!=null and totalAmount!=''">,TOTAL_AMOUNT=#{totalAmount}</if>
         <if test="ratedAmount!=null and ratedAmount!=''">,RATED_AMOUNT=#{ratedAmount}</if>
         <if test="unratedAmount!=null and unratedAmount!=''">,UNRATED_AMOUNT=#{unratedAmount}</if>
         <if test="currencyCode!=null and currencyCode!=''">,CURRENCY=#{currencyCode}</if>
-        <if test="industy!=null and industy!=''">,INDUSTY=#{industy}</if>
-        <if test="subIndusty!=null and subIndusty!=''">,SUB_INDUSTY=#{subIndusty}</if>
+        <if test="industyCode!=null and industyCode!=''">,INDUSTY=#{industyCode}</if>
+        <if test="subIndustyCode!=null and subIndustyCode!=''">,SUB_INDUSTY=#{subIndustyCode}</if>
         <if test="salesMethodCode!=null and salesMethodCode!=''">,SALES_METHOD=#{salesMethodCode}</if>
         <if test="orderCondition!=null and orderCondition!=''">,ORDER_CONDITION=#{orderCondition}</if>
         <if test="shipCondition!=null and shipCondition!=''">,SHIP_CONDITION=#{shipCondition}</if>

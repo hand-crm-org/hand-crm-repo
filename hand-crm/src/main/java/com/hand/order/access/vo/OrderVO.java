@@ -27,6 +27,7 @@ public class OrderVO {
     private String orderEntity;//经营单位（签约主体）
     private String orderProperty;//合同属性
     private String country;//国家
+    private String countryCode;//国家
     private Double rate;// 税率
     private String amountRatedFlag;//合同金额是否含税
     private Double totalAmount;//签单金额
@@ -35,7 +36,9 @@ public class OrderVO {
     private String currency;//币种
     private String currencyCode;//币种
     private String industy;//行业
+    private String industyCode;
     private String subIndusty;//子行业
+    private String subIndustyCode;//子行业
     private String salesMethod;//销售模式
     private String salesMethodCode;//销售模式
     private String orderCondition;//合同生效条件
@@ -54,6 +57,30 @@ public class OrderVO {
     private String street;
     private String addr1;
     private String langId;
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getIndustyCode() {
+        return industyCode;
+    }
+
+    public void setIndustyCode(String industyCode) {
+        this.industyCode = industyCode;
+    }
+
+    public String getSubIndustyCode() {
+        return subIndustyCode;
+    }
+
+    public void setSubIndustyCode(String subIndustyCode) {
+        this.subIndustyCode = subIndustyCode;
+    }
 
     public String getAddr1() {
         return addr1;
