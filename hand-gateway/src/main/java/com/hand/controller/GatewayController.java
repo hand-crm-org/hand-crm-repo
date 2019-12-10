@@ -28,7 +28,7 @@ public class GatewayController {
     private static String METHOD_PUT = "PUT";
     private static String METHOD_DELETE = "DELETE";
 
-    @PostMapping(value = "/doDemo",produces = {"application/json; charset=UTF-8"})
+    @PostMapping(value = "/execute",produces = {"application/json; charset=UTF-8"})
     public String doRequest(HttpServletRequest request) {
         Map<String, String> headerMap = new HashMap<>();
         Map<String, String> paramsMap = new HashMap<>();
