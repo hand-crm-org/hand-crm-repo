@@ -17,6 +17,24 @@ public class ListOfValueVO {
     private String actFlg;//生效标识
     private String desc;//描述
     private String nameList;//独立语言代码集合
+    private String parentCode;//父值列表编码
+    private String parentVal;//父值列表显示值
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    public String getParentVal() {
+        return parentVal;
+    }
+
+    public void setParentVal(String parentVal) {
+        this.parentVal = parentVal;
+    }
 
     public String getCode() {
         return code;

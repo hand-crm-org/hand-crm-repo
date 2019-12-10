@@ -18,7 +18,7 @@ public class OpportunityProductServiceImpl implements OpportunityProductService 
     @Override
     public ResultDTO addOpportunityProd(OpportunityProductVO opportunityProductVO) {
         if (!StringUtil.isEmpty(opportunityProductVO.getOptyCode())&& !StringUtil.isEmpty(opportunityProductVO.getUpdatedBy())
-                && !StringUtil.isEmpty(opportunityProductVO.getProductCode()) && !StringUtil.isEmpty(opportunityProductVO.getPrimaryFlag())
+                && !StringUtil.isEmpty(opportunityProductVO.getPrimaryFlag())
                 && (opportunityProductVO.getExpectSignTime()!=null) && (opportunityProductVO.getAmount()!=null))
         {
             String code = StringUtil.getCode();
@@ -58,7 +58,7 @@ public class OpportunityProductServiceImpl implements OpportunityProductService 
 
     @Override
     public ResultDTO deleteOpportunityProd(OpportunityProductVO opportunityProductVO) {
-        if(!StringUtil.isEmpty(opportunityProductVO.getUpdatedBy())) {
+        if(!StringUtil.isEmpty(opportunityProductVO.getCode())) {
             int count = opportunityProductDao.deleteOpportunityProd(opportunityProductVO);
             if (count > 0) {
                 return ResultDTO.success();

@@ -6,6 +6,7 @@ import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
 import com.hand.opportunityteam.access.vo.OpportunityTeamVO;
 import com.hand.opportunityteam.service.OpportunityTeamService;
+import com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,7 +25,7 @@ public class OpportunityTeamController {
     OpportunityTeamService opportunityTeamService;
 
     @ApiOperation(value="新建商机团队")
-    @PostMapping("/addOpportunityTeam")
+    @PostMapping("/add-opportunity-team")
     public ResultDTO addOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
         return opportunityTeamService.addOpportunityTeam(opportunityTeamVO);
     }
@@ -46,8 +47,8 @@ public class OpportunityTeamController {
             @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
     })
-    @GetMapping("/getOppTeamInfo")
-    public ServiceData getOppInfo(int currentPage, int pageSize,
+    @GetMapping("/get-opportunity-team-info")
+    public ServiceData getOppTeamInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "optyName",required = false) String optyName,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "empName",required = false) String empName,
                                   @RequestParam(value = "empWorkPhone",required = false) String empWorkPhone, @RequestParam(value = "empPersonalPhone",required = false) String empPersonalPhone,
@@ -73,8 +74,15 @@ public class OpportunityTeamController {
     }
 
     @ApiOperation(value="修改商机团队")
-    @PutMapping("/modifyOpportunityTeam")
+    @PutMapping("/modify-opportunity-team")
     public ResultDTO modifyOpportunityTeam(@RequestBody OpportunityTeamVO opportunityTeamVO){
         return opportunityTeamService.modifyOpportunityTeam(opportunityTeamVO);
+    }
+
+    @ApiOperation(value="删除商机团队")
+    @ApiImplicitParam(paramType="query", name="code", value="商机团队code", dataType="String")
+    @DeleteMapping("/delete-opportunity-team")
+    public ResultDTO deleteOpportunityTeam(@RequestParam(value = "code",required = false)String code){
+        return opportunityTeamService.deleteOpportunityTeam(code);
     }
 }

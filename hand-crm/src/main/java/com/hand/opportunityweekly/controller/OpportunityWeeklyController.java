@@ -26,7 +26,7 @@ public class OpportunityWeeklyController {
     OpportunityWeeklyService opportunityWeeklyService;
 
     @ApiOperation(value="新建商机周报")
-    @PostMapping("/addOpportunityWeekly")
+    @PostMapping("/add-opportunity-weekly")
     public ResultDTO addOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.addOpportunityWeekly(opportunityWeeklyVO);
     }
@@ -45,15 +45,13 @@ public class OpportunityWeeklyController {
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updatedName", value="更新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="actived", value="生效时间", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="Status", value="周报状态", dataType="String"),
     })
-    @GetMapping("/getOppWeeklyInfo")
+    @GetMapping("/get-opportunity-weekly-info")
     public ServiceData getOppWeeklyInfo(int currentPage, int pageSize,
                                         @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
-                                        @RequestParam(value = "weeklySummary",required = false) String weeklySummary, @RequestParam(value = "status",required = false) String status,
+                                        @RequestParam(value = "weeklySummary",required = false) String weeklySummary,
                                         @RequestParam(value = "weeklyRisk",required = false) String weeklyRisk, @RequestParam(value = "weeklyPushStatus",required = false) String weeklyPushStatus,
-                                        @RequestParam(value = "actived",required = false) String actived, @RequestParam(value = "created",required = false) String created,
+                                        @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "updated",required = false) String updated,
                                         @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "optyCode",required = false) String optyCode){
         OpportunityWeeklyVO opportunityWeeklyVO = new OpportunityWeeklyVO();
@@ -61,13 +59,11 @@ public class OpportunityWeeklyController {
         opportunityWeeklyVO.setOptyCode(optyCode);
         opportunityWeeklyVO.setName(name);
         opportunityWeeklyVO.setWeeklySummary(weeklySummary);
-        opportunityWeeklyVO.setStatus(status);
         opportunityWeeklyVO.setWeeklyPushStatus(weeklyPushStatus);
         opportunityWeeklyVO.setWeeklyRisk(weeklyRisk);
         opportunityWeeklyVO.setLangId(langId);
         opportunityWeeklyVO.setCreatedName(createdName);
         opportunityWeeklyVO.setUpdatedName(updatedName);
-        opportunityWeeklyVO.setActived(DateFormatUtil.strToDate(actived));
         opportunityWeeklyVO.setCreated(DateFormatUtil.strToDate(created));
         opportunityWeeklyVO.setUpdated(DateFormatUtil.strToDate(updated));
         PageQuery<OpportunityWeeklyVO> pageQuery = new PageQuery<OpportunityWeeklyVO>(opportunityWeeklyVO, currentPage, pageSize);
@@ -75,13 +71,13 @@ public class OpportunityWeeklyController {
     }
 
     @ApiOperation(value="修改商机周报")
-    @PutMapping("/modifyOpportunityWeekly")
+    @PutMapping("/modify-opportunity-weekly")
     public ResultDTO modifyOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.modifyOpportunityWeekly(opportunityWeeklyVO);
     }
 
     @ApiOperation(value="删除商机周报")
-    @DeleteMapping("/deleteOpportunityWeekly")
+    @DeleteMapping("/delete-opportunity-weekly")
     public ResultDTO deleteOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.deleteOpportunityWeekly(opportunityWeeklyVO);
     }

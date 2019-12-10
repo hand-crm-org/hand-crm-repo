@@ -15,7 +15,9 @@ public class AccountAddressVO {
     private String phNum;//联系方式
     private String priFlg;//是否主要
     private String type;//地址类型
+    private String typeCode;//地址类型code
     private String status;//状态
+    private String langId;
 
     /**
      * 地址信息
@@ -27,6 +29,22 @@ public class AccountAddressVO {
     private String street;
     private String addr1;
     private String addr2;
+
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
+    }
+
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
 
     public String getCode() {
         return code;

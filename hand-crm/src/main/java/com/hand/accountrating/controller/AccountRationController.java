@@ -43,7 +43,7 @@ public class AccountRationController {
             @ApiImplicitParam(paramType = "query",name = "comment",value = "备注",dataType = "String"),
             @ApiImplicitParam(paramType = "query",name = "attachmentCode",value = "评级附件",dataType = "String")
     })
-    @GetMapping("/get-accountRating-list")
+    @GetMapping("/get-account-rating-info")
     public ServiceData getAccountRatingList(int currentPage, int pageSize,
                                             @RequestParam(value = "accountCode",required = false)String accountCode, @RequestParam(value = "status",required = false)String status,
                                             @RequestParam(value = "ratingLevel",required = false)String ratingLevel, @RequestParam(value = "qixinLevel",required = false)String qixinLevel,
@@ -69,13 +69,13 @@ public class AccountRationController {
         return ServiceData.success(accountRatingService.getAccountRatingList(pageQuery), pageQuery.getMapOfPageQuery());
     }
     @ApiOperation("新建客户评级")
-    @PostMapping("add-accountRating")
+    @PostMapping("add-account-rating")
     public ResultDTO addAccountRating(@RequestBody AccountRatingVO accountRatingVO){
         accountRatingVO.setVersion(accountRatingService.queryAccountRatingVersion(accountRatingVO).getVersion());
         return accountRatingService.addAccountRating(accountRatingVO);
     }
     @ApiOperation("更新客户评级")
-    @PutMapping("modify-accountRating")
+    @PutMapping("modify-account-rating")
     public ResultDTO modifyAccountRating(@RequestBody AccountRatingVO accountRatingVO) {
         return accountRatingService.modifyAccountRating(accountRatingVO);
     }

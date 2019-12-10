@@ -15,6 +15,7 @@
         T1.TYPE as typeCode,
         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'OPTY_TEAM_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = 'CHS' ) AS `type`,
         T1.EMP_CODE as empCode,
+        T1.DESC as `desc`,
         (SELECT NAME FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empName,
         (SELECT WORK_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empWorkPhone,
 		(SELECT PERSONAL_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empPersonalPhone,
@@ -45,8 +46,8 @@
     </sql>
 
     <insert id="insertOpportunityTeam" parameterType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
-        INSERT INTO HC_OPTY_TEAM(CODE,CREATED,CREATED_BY,TYPE,OPTY_CODE,EMP_CODE,PRI_FLG)
-        VALUES (#{code},sysdate(),#{updatedBy},#{typeCode},#{optyCode},#{empCode},#{primaryFlag})
+        INSERT INTO HC_OPTY_TEAM(CODE,CREATED,CREATED_BY,TYPE,OPTY_CODE,EMP_CODE,PRI_FLG,`DESC`)
+        VALUES (#{code},sysdate(),#{updatedBy},#{typeCode},#{optyCode},#{empCode},#{primaryFlag},#{desc})
     </insert>
 
     <select id="queryOpportunityTeam" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityteam.access.vo.OpportunityTeamVO">
@@ -76,5 +77,8 @@
         <include refid="updateConditionSql"></include>
         WHERE CODE=#{code}
     </update>
-
+    <delete id="deleteOpportunityTeam" parameterType="String">
+        DELETE FROM HC_OPTY_TEAM
+        WHERE CODE=#{code}
+    </delete>
 </mapper>

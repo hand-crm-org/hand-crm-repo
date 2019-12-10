@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.ordershipment.access.dao.OrderShipmentDao">
+    <select id="queryOrderShipmentList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.ordershipment.access.vo.OrderShipmentVO">
+        <include refid="queryAllSql"></include>
+        FROM
+        HC_ORDER_SHIP T1
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="queryOrderShipmentCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+        SELECT count(*)
+        FROM HC_ORDER_SHIP
+        WHERE
+        1=1
+        <include refid="queryALLConditionSql"></include>
+    </select>
+    <insert id="insertOrderShipment" parameterType="com.hand.ordershipment.access.vo.OrderShipmentVO">
+        INSERT
+        INTO
+        HC_ORDER_SHIP(CODE,CREATED,CREATED_BY,ORDER_CODE,SHIP_NUM,SHIP_COND,SHIP_DATE,RECE_COND,RECE_DATE,`DESC`,LIMITED_DATE)
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderCode},#{shipNumber},#{shipCondition},#{shipDate},#{receiveCondition},#{receiveDate},#{description},#{limitedDays})
+    </insert>
+    <update id="updateOrderShipment" parameterType="com.hand.ordershipment.access.vo.OrderShipmentVO">
+        UPDATE
+        HC_ORDER_SHIP
+        SET UPDATED=sysdate(),
+        <include refid="updateAllConditionSql"></include>
+        WHERE
+        CODE = #{code}
+    </update>
+    <delete id="deleteOrderShipment" parameterType="String">
+        DELETE
+        FROM
+        HC_ORDER_SHIP
+        WHERE
+        CODE = #{code}
+    </delete>
+    
+    <sql id="queryAllSql">
+        SELECT
+        T1.CODE as code,
+        T1.CREATED as created,
+        T1.CREATED_BY as createdBy,
+        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        T1.UPDATED as updated,
+        T1.UPDATED_BY as updatedBy,
+        T1.ORDER_CODE as orderCode,
+        T1.SHIP_NUM as shipNumber,
+        T1.SHIP_COND as shipCondition,
+        T1.SHIP_DATE as shipDate,
+        T1.RECE_COND as receiveCondition,
+        T1.RECE_DATE as receiveDate,
+        T1.LIMITED_DATE as limitedDays,
+        T1.DESC as description
+    </sql>
+    <sql id="queryALLConditionSql">
+        <if test="entity!=null">
+            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
+            <if test="entity.shipNumber!=null and entity.shipNumber!=''"> AND SHIP_NUM LIKE "%"#{entity.shipNumber}"%"</if>
+            <if test="entity.shipCondition!=null and entity.shipCondition!=''">AND SHIP_COND=#{entity.shipCondition}</if>
+            <if test="entity.shipDate!=null"> AND SHIP_DATE = #{entity.shipDate}</if>
+            <if test="entity.receiveCondition!=null and entity.receiveCondition!=''"> AND RECE_COND LIKE "%"#{entity.receiveCondition}"%"</if>
+            <if test="entity.receiveDate!=null"> AND RECE_DATE = #{entity.receiveDate}</if>
+            <if test="entity.limitedDays!=null and entity.limitedDays!=''"> AND LIMITED_DATE = #{entity.limitedDays}</if>
+            <if test="entity.description!=null and entity.description!=''"> AND `DESC` LIKE "%"#{entity.description}"%"</if>
+        </if>
+    </sql>
+    <sql id="updateAllConditionSql">
+        <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
+        <if test="shipNumber!=null and shipNumber!=''">,SHIP_NUM=#{shipNumber}</if>
+        <if test="shipCondition!=null and shipCondition!=''">,SHIP_COND=#{shipCondition}</if>
+        <if test="shipDate!=null">,SHIP_DATE=#{shipDate}</if>
+        <if test="receiveCondition!=null and receiveCondition!=''">,RECE_COND=#{receiveCondition}</if>
+        <if test="receiveDate!=null">,RECE_DATE=#{receiveDate}</if>
+        <if test="limitedDays!=null and limitedDays!=''">,LIMITED_DATE=#{limitedDays}</if>
+        <if test="description!=null and description!=''">,`DESC`=#{description}</if>
+    </sql>
+</mapper>

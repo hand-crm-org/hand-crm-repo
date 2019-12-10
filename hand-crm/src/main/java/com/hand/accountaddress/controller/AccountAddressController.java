@@ -14,16 +14,20 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api("客户-地址相关api")
 public class AccountAddressController {
+    @Value(value = "${lang.language}")
+    private String langId;
+
     @Autowired
     AccountAddressServcice accountAddressServcice;
 
     @ApiOperation(value="新建客户-地址")
-    @PostMapping("/addAccountAddr")
+    @PostMapping("/add-account-address")
     public ResultDTO addAccount(@RequestBody AccountAddressVO accountAddressVO){
         return accountAddressServcice.addAccountAddr(accountAddressVO);
     }
@@ -43,7 +47,7 @@ public class AccountAddressController {
             @ApiImplicitParam(paramType="query", name="type", value="地址类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="status", value="状态", dataType="String")
     })
-    @GetMapping("/getAcntAddrInfo")
+    @GetMapping("/get-account-address-info")
     public ServiceData getAccInfo(int currentPage, int pageSize,
                                   String accntCode,String country,String state,String city,String county,
                                   String street,String addr1,String desc,String type,String status){
@@ -58,12 +62,13 @@ public class AccountAddressController {
         addressVO.setDesc(desc);
         addressVO.setType(type);
         addressVO.setStatus(status);
+        addressVO.setLangId(langId);
         PageQuery<AccountAddressVO> pageQuery = new PageQuery<AccountAddressVO>(addressVO, currentPage, pageSize);
         return  ServiceData.success(accountAddressServcice.getAccountAddr(pageQuery), pageQuery.getMapOfPageQuery());
     }
 
     @ApiOperation(value="修改客户-地址")
-    @PutMapping("/modifyAcntAddr")
+    @PutMapping("/modify-account-address")
     public ResultDTO modifyAccount(@RequestBody AccountAddressVO accountAddressVO){
         return accountAddressServcice.modifyAccountAddr(accountAddressVO);
     }

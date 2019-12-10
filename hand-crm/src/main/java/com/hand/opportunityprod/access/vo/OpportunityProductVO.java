@@ -20,10 +20,53 @@ public class OpportunityProductVO {
     private Date expectSignTime;//预计签单时间
     private String productCode;//产品Code
     private String productName;//产品名称
-    private String productCategory;//产品类别
-    private String productType;//产品类型
+    private String productNum;//产品编码
+    private String productCtlg;//产品大类
+    private String productCtgy;//产品小类
+    private String productCtlgCode;//产品大类
+    private String productCtgyCode;//产品小类
     private String primaryFlag;//主要标识
     private String langId;
+
+    public String getProductCtlgCode() {
+        return productCtlgCode;
+    }
+
+    public void setProductCtlgCode(String productCtlgCode) {
+        this.productCtlgCode = productCtlgCode;
+    }
+
+    public String getProductCtgyCode() {
+        return productCtgyCode;
+    }
+
+    public void setProductCtgyCode(String productCtgyCode) {
+        this.productCtgyCode = productCtgyCode;
+    }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
+    }
+
+    public String getProductCtlg() {
+        return productCtlg;
+    }
+
+    public void setProductCtlg(String productCtlg) {
+        this.productCtlg = productCtlg;
+    }
+
+    public String getProductCtgy() {
+        return productCtgy;
+    }
+
+    public void setProductCtgy(String productCtgy) {
+        this.productCtgy = productCtgy;
+    }
 
     public String getCode() {
         return code;
@@ -121,14 +164,6 @@ public class OpportunityProductVO {
         this.productName = productName;
     }
 
-    public String getProductType() {
-        return productType;
-    }
-
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
-
     public String getPrimaryFlag() {
         return primaryFlag;
     }
@@ -145,11 +180,4 @@ public class OpportunityProductVO {
         this.langId = langId;
     }
 
-    public String getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
-    }
 }

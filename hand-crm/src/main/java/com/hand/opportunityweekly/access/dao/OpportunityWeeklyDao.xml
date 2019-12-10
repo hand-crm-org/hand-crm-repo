@@ -15,9 +15,7 @@
         T1.WEEKLY_SUMMERY as weeklySummary,
         T1.WEEKLY_RISK as weeklyRisk,
         (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.WEEKLY_PUSH AND TYPE = 'OPTY_WEEKLY_P_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as weeklyPushStatus,
-        T1.WEEKLY_PUSH as weeklyPushStatusCode,
-        T1.ACTIVED as actived,
-        T1.STATUS as Status
+        T1.WEEKLY_PUSH as weeklyPushStatusCode
     </sql>
     <sql id="queryALLConditionSql">
         <if test="entity!=null">
@@ -30,7 +28,6 @@
             <if test="entity.weeklyPushStatus!=null and entity.weeklyPushStatus!=''"> AND  (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.WEEKLY_PUSH AND TYPE = 'OPTY_WEEKLY_P_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.weeklyPushStatus}"%"</if>
             <if test="entity.weeklyRisk!=null and entity.weeklyRisk!=''"> AND  T1.WEEKLY_RISK LIKE "%"#{entity.weeklyRisk}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
-            <if test="entity.actived!=null">AND DATE_FORMAT(T1.ACTIVED,'%Y-%m-%d') = DATE_FORMAT(#{entity.actived},'%Y-%m-%d')</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -41,14 +38,12 @@
             <if test="weeklySummary!=null and weeklySummary!=''">,WEEKLY_SUMMERY=#{weeklySummary}</if>
             <if test="weeklyRisk!=null and weeklyRisk!=''">,WEEKLY_RISK=#{weeklyRisk}</if>
             <if test="weeklyPushStatusCode!=null and weeklyPushStatusCode!=''">,WEEKLY_PUSH=#{weeklyPushStatusCode}</if>
-            <if test="actived!=null">,ACTIVED=#{actived}</if>
-            <if test="Status!=null">,STATUS=#{Status}</if>
         </if>
     </sql>
 
     <insert id="insertOpportunityWeekly" parameterType="com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO">
-        INSERT INTO HC_OPTY_WEEKLY(CODE,CREATED,CREATED_BY,OPTY_CODE,NAME,WEEKLY_SUMMERY,WEEKLY_RISK,WEEKLY_PUSH,ACTIVED,STATUS)
-        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{name},#{weeklySummary},#{weeklyRisk},#{weeklyPushStatusCode},#{actived},#{Status})
+        INSERT INTO HC_OPTY_WEEKLY(CODE,CREATED,CREATED_BY,OPTY_CODE,NAME,WEEKLY_SUMMERY,WEEKLY_RISK,WEEKLY_PUSH)
+        VALUES (#{code},sysdate(),#{updatedBy},#{optyCode},#{name},#{weeklySummary},#{weeklyRisk},#{weeklyPushStatusCode})
     </insert>
 
     <select id="queryOpportunityWeekly" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.opportunityweekly.access.vo.OpportunityWeeklyVO">

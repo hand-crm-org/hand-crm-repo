@@ -38,4 +38,12 @@ public interface OpportunityTeamDao {
      * @Return int
      */
     int updateOpportunityTeam(OpportunityTeamVO opportunityTeamVO);
+
+    /**
+     * 删除商机团队信息
+     * UpdateBy LIUDH
+     * @param code
+     * @return int
+     */
+    int deleteOpportunityTeam(String code);
 }

@@ -23,9 +23,10 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
      */
     @Override
     public ResultDTO addBusinessOpty(BusinessOpportunityVO businessOptyVO){
-        if(!StringUtil.isEmpty(businessOptyVO.getCode())&&!StringUtil.isEmpty(businessOptyVO.getOptycode())
-        &&!StringUtil.isEmpty(businessOptyVO.getBrand())&&!StringUtil.isEmpty(businessOptyVO.getGoodness())
-        &&!StringUtil.isEmpty(businessOptyVO.getBadness())){
+        if(!StringUtil.isEmpty(businessOptyVO.getOptycode())&&!StringUtil.isEmpty(businessOptyVO.getBrand())
+         &&!StringUtil.isEmpty(businessOptyVO.getGoodness()) &&!StringUtil.isEmpty(businessOptyVO.getBadness())){
+            String code = StringUtil.getCode();
+            businessOptyVO.setCode(code);
             int count = businessOptyDao.insertBusinessOpty(businessOptyVO);
             if(count > 0){
                 return ResultDTO.success();
@@ -44,6 +45,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
     @Override
     public List<BusinessOpportunityVO> getBusinessOpty(PageQuery<BusinessOpportunityVO> pageQuery) {
         int count = businessOptyDao.queryBusinessOptyCount(pageQuery);
+        pageQuery.setCount(count);
         if(count > 0) {
             return businessOptyDao.queryBusinessOpty(pageQuery);
         }

@@ -26,7 +26,7 @@ public class OpportunityController {
     OpportunityService opportunityService;
 
     @ApiOperation(value="新建商机")
-    @PostMapping("/addOpportunity")
+    @PostMapping("/add-opportunity")
     public ResultDTO addOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.addOpportunity(opportunityVO);
     }
@@ -40,11 +40,13 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="type", value="商机类型", dataType="String"),
             @ApiImplicitParam(paramType="query", name="status", value="商机状态", dataType="String"),
             @ApiImplicitParam(paramType="query", name="accntCode", value="客户编码", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="accntName", value="客户", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optySource", value="商机来源", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optyFsctAmount", value="预计销售额度（万）", dataType="Double"),
             @ApiImplicitParam(paramType="query", name="expectSignTime", value="预计签单时间", dataType="String"),
             @ApiImplicitParam(paramType="query", name="desc", value="备注", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="ownOrgCode", value="归属部门", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="ownOrgCode", value="归属部门Code", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="orgName", value="归属部门", dataType="String"),
             @ApiImplicitParam(paramType="query", name="lostReason", value="失单原因", dataType="String"),
             @ApiImplicitParam(paramType="query", name="finalUse", value="最终用途", dataType="String"),
             @ApiImplicitParam(paramType="query", name="createdName", value="创建人", dataType="String"),
@@ -55,7 +57,7 @@ public class OpportunityController {
             @ApiImplicitParam(paramType="query", name="prSales", value="商机负责人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="optyStage", value="商机阶段", dataType="String"),
     })
-    @GetMapping("/getOppInfo")
+    @GetMapping("/get-opportunity-info")
     public ServiceData getOppInfo(int currentPage, int pageSize,
                                   @RequestParam(value = "code",required = false) String code, @RequestParam(value = "name",required = false) String name,
                                   @RequestParam(value = "type",required = false) String type, @RequestParam(value = "status",required = false) String status,
@@ -66,7 +68,8 @@ public class OpportunityController {
                                   @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                   @RequestParam(value = "updatedName",required = false) String updatedName, @RequestParam(value = "updated",required = false) String updated,
                                   @RequestParam(value = "winRate",required = false) String winRate, @RequestParam(value = "prSales",required = false) String prSales,
-                                  @RequestParam(value = "optyStage",required = false) String optyStage){
+                                  @RequestParam(value = "optyStage",required = false) String optyStage, @RequestParam(value = "accntName",required = false) String accntName,
+                                  @RequestParam(value = "orgName",required = false) String orgName){
         OpportunityVO opportunityVO = new OpportunityVO();
         opportunityVO.setCode(code);
         opportunityVO.setWinRate(winRate);
@@ -75,7 +78,9 @@ public class OpportunityController {
         opportunityVO.setName(name);
         opportunityVO.setType(type);
         opportunityVO.setStatus(status);
+        opportunityVO.setAccntName(accntName);
         opportunityVO.setLangId(langId);
+        opportunityVO.setOrgName(orgName);
         opportunityVO.setAccntCode(accntCode);
         opportunityVO.setOptySource(optySource);
         if(StringUtil.isEmpty(optyFsctAmount)){
@@ -98,7 +103,7 @@ public class OpportunityController {
     }
 
     @ApiOperation(value="修改商机")
-    @PutMapping("/modifyOpportunity")
+    @PutMapping("/modify-opportunity")
     public ResultDTO modifyOpportunity(@RequestBody OpportunityVO opportunityVO){
         return opportunityService.modifyOpportunity(opportunityVO);
     }
