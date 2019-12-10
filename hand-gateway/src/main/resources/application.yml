@@ -1,8 +1,9 @@
+#网关地址
 server:
-  port: 8080
-  context-path: /hand/
-
+  port: 4040
+  context-path: /hand/interface/
+#服务地址
 url:
   host: localhost
-  port: 4040
+  port: 8080
   name: hand-crm
