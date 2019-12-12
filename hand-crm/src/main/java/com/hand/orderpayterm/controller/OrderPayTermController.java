@@ -75,7 +75,7 @@ public class OrderPayTermController {
 
     @ApiOperation(value="删除订单付款条件")
     @DeleteMapping("/delete-order-payterm")
-    public ResultDTO deleteOrderPayterm(@RequestBody OrderPayTermVO orderPayTermVO){
+    public ResultDTO deleteOrderPayterm(OrderPayTermVO orderPayTermVO){
         return orderPayTermService.removeOrderPayTerm(orderPayTermVO);
     }
 }

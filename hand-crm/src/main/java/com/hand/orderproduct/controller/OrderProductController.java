@@ -54,9 +54,10 @@ public class OrderProductController {
                                         @RequestParam(value = "productUnit",required = false) String productUnit, @RequestParam(value = "productQuantity",required = false) String productQuantity,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "productPrice",required = false) String productPrice, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "description",required = false) String description){
+                                        @RequestParam(value = "description",required = false) String description, @RequestParam(value = "orderCode",required = false) String orderCode){
         OrderProductVO orderProductVO = new OrderProductVO();
         orderProductVO.setCode(code);
+        orderProductVO.setOrderCode(orderCode);
         orderProductVO.setProductNum(productNum);
         orderProductVO.setProductCtlg(productCtlg);
         orderProductVO.setProductCtgy(productCtgy);

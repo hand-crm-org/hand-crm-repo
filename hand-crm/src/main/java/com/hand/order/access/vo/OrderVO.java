@@ -43,9 +43,9 @@ public class OrderVO {
     private String salesMethodCode;//销售模式
     private String orderCondition;//合同生效条件
     private String shipCondition;//发货条件
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat( pattern="yyyy-MM-dd", timezone="GMT+8")
     private Date orderSignTime;//合同签订时间
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat( pattern="yyyy-MM-dd", timezone="GMT+8")
     private Date orderEffectTime;//合同生效时间
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date orderApproveTime;//审批通过时间
