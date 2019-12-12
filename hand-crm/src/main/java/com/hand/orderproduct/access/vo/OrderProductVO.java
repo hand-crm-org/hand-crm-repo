@@ -18,11 +18,29 @@ public class OrderProductVO {
     private String productNum;//产品编码
     private String productCtlg;//产品大类
     private String productCtgy;//产品小类
+    private String productCtlgCode;//产品大类
+    private String productCtgyCode;//产品小类
     private String productUnit;//单位
     private String productPrice;//单价
     private String productQuantity;//数量
     private String description;//备注
     private String langId;
+
+    public String getProductCtlgCode() {
+        return productCtlgCode;
+    }
+
+    public void setProductCtlgCode(String productCtlgCode) {
+        this.productCtlgCode = productCtlgCode;
+    }
+
+    public String getProductCtgyCode() {
+        return productCtgyCode;
+    }
+
+    public void setProductCtgyCode(String productCtgyCode) {
+        this.productCtgyCode = productCtgyCode;
+    }
 
     public String getLangId() {
         return langId;

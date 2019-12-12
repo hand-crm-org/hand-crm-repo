@@ -77,7 +77,7 @@ public class OrderPaymentController {
 
     @ApiOperation(value="删除订单付款条件")
     @DeleteMapping("/delete-order-payment")
-    public ResultDTO deleteOrderPayment(@RequestBody OrderPaymentVO orderPaymentVO){
+    public ResultDTO deleteOrderPayment(OrderPaymentVO orderPaymentVO){
         return orderPaymentService.removeOrderPayment(orderPaymentVO);
     }
 }

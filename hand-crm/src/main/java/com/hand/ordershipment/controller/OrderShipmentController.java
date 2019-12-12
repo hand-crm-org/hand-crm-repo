@@ -80,7 +80,7 @@ public class OrderShipmentController {
 
     @ApiOperation(value="删除订单发到货")
     @DeleteMapping("/delete-order-shipment")
-    public ResultDTO deleteOrderShipment(@RequestBody OrderShipmentVO orderShipmentVO){
+    public ResultDTO deleteOrderShipment(OrderShipmentVO orderShipmentVO){
         return orderShipmentService.removeOrderShipment(orderShipmentVO);
     }
 }

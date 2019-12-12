@@ -83,7 +83,7 @@ public class OpportunityProductController {
 
     @ApiOperation(value="删除商机产品")
     @DeleteMapping("/delete-opportunity-product")
-    public ResultDTO deleteOpportunityProd(@RequestBody OpportunityProductVO opportunityProductVO){
+    public ResultDTO deleteOpportunityProd(OpportunityProductVO opportunityProductVO){
         return opportunityProductService.deleteOpportunityProd(opportunityProductVO);
     }
 }

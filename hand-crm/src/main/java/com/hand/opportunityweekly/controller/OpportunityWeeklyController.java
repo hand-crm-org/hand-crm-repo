@@ -78,7 +78,7 @@ public class OpportunityWeeklyController {
 
     @ApiOperation(value="删除商机周报")
     @DeleteMapping("/delete-opportunity-weekly")
-    public ResultDTO deleteOpportunityWeekly(@RequestBody OpportunityWeeklyVO opportunityWeeklyVO){
+    public ResultDTO deleteOpportunityWeekly(OpportunityWeeklyVO opportunityWeeklyVO){
         return opportunityWeeklyService.deleteOpportunityWeekly(opportunityWeeklyVO);
     }
 }

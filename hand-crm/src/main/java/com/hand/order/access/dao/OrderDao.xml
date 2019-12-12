@@ -129,6 +129,7 @@
         <if test="orderProperty!=null and orderProperty!=''">,ORDER_PROP=#{orderProperty}</if>
         <if test="countryCode!=null and countryCode!=''">,COUNTRY=#{countryCode}</if>
         <if test="rate!=null and rate!=''">,RATE=#{rate}</if>
+        <if test="rate==0.0">,RATE=#{rate}</if>
         <if test="amountRatedFlag!=null and amountRatedFlag!=''">,REATED_FLG=#{amountRatedFlag}</if>
         <if test="totalAmount!=null and totalAmount!=''">,TOTAL_AMOUNT=#{totalAmount}</if>
         <if test="ratedAmount!=null and ratedAmount!=''">,RATED_AMOUNT=#{ratedAmount}</if>

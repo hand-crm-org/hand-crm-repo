@@ -84,7 +84,7 @@ public class OpportunityActivityController {
 
     @ApiOperation(value="删除商机活动")
     @DeleteMapping("/delete-opportunity-activity")
-    public ResultDTO deleteOpportunityActive(@RequestBody OpportunityActivityVO opportunityActivityVO){
+    public ResultDTO deleteOpportunityActive(OpportunityActivityVO opportunityActivityVO){
         return opportunityActivityServcie.deleteOpportunityActivity(opportunityActivityVO);
     }
 }

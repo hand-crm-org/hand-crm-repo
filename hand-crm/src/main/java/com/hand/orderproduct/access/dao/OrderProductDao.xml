@@ -21,7 +21,7 @@
         INSERT
         INTO
         HC_ORDER_ITEM(CODE,CREATED,CREATED_BY,ORDER_CODE,PROD_NUM,PROD_CTLG,PROD_CTGY,PROD_QTY,PROD_PRICE,`DESC`,PROD_UNIT)
-        VALUES (#{code},sysdate(),#{updatedBy},#{orderCode},#{productNum},#{productCtlg},#{productCtgy},#{productQuantity},#{productPrice},#{description},#{productUnit})
+        VALUES (#{code},sysdate(),#{updatedBy},#{orderCode},#{productNum},#{productCtlgCode},#{productCtgyCode},#{productQuantity},#{productPrice},#{description},#{productUnit})
     </insert>
     <update id="updateOrderProd" parameterType="com.hand.orderproduct.access.vo.OrderProductVO">
         UPDATE
@@ -49,8 +49,10 @@
         T1.UPDATED_BY as updatedBy,
         T1.ORDER_CODE as orderCode,
         T1.PROD_NUM as productNum,
-        T1.PROD_CTLG as productCtlg,
-        T1.PROD_CTGY as productCtgy,
+        T1.PROD_CTLG as productCtlgCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as productCtlg,
+        T1.PROD_CTGY as productCtgyCode,
+        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as productCtgy,
         T1.PROD_UNIT as productUnit,
         T1.PROD_PRICE as productPrice,
         T1.PROD_QTY as productQuantity,
@@ -65,8 +67,8 @@
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
             <if test="entity.productNum!=null and entity.productNum!=''"> AND PROD_NUM LIKE "%"#{entity.productNum}"%"</if>
-            <if test="entity.productCtlg!=null and entity.productCtlg!=''">AND PROD_CTLG=#{entity.productCtlg}</if>
-            <if test="entity.productCtgy!=null and entity.productCtgy!=''"> AND PROD_CTGY = #{entity.productCtgy}</if>
+            <if test="entity.productCtlg!=null and entity.productCtlg!=''">AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId})=#{entity.productCtlg}</if>
+            <if test="entity.productCtgy!=null and entity.productCtgy!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) = #{entity.productCtgy}</if>
             <if test="entity.productUnit!=null and entity.productUnit!=''"> AND PROD_UNIT LIKE "%"#{entity.productUnit}"%"</if>
             <if test="entity.productPrice!=null and entity.productPrice!=''"> AND PROD_PRICE = #{entity.productPrice}</if>
             <if test="entity.productQuantity!=null and entity.productQuantity!=''"> AND PROD_QTY = #{entity.productQuantity}</if>
@@ -76,8 +78,8 @@
     <sql id="updateAllConditionSql">
         <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
         <if test="productNum!=null and productNum!=''">,PROD_NUM=#{productNum}</if>
-        <if test="productCtlg!=null and productCtlg!=''">,PROD_CTLG=#{productCtlg}</if>
-        <if test="productCtgy!=null and productCtgy!=''">,PROD_CTGY=#{productCtgy}</if>
+        <if test="productCtlgCode!=null and productCtlgCode!=''">,PROD_CTLG=#{productCtlgCode}</if>
+        <if test="productCtgyCode!=null and productCtgyCode!=''">,PROD_CTGY=#{productCtgyCode}</if>
         <if test="productUnit!=null and productUnit!=''">,PROD_UNIT=#{productUnit}</if>
         <if test="productPrice!=null and productPrice!=''">,PROD_PRICE=#{productPrice}</if>
         <if test="productQuantity!=null and productQuantity!=''">,PROD_QTY=#{productQuantity}</if>

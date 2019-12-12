@@ -80,7 +80,7 @@ public class OrderProductController {
 
     @ApiOperation(value="删除订单产品")
     @DeleteMapping("/delete-order-product")
-    public ResultDTO deleteOrderProd(@RequestBody OrderProductVO orderProductVO){
+    public ResultDTO deleteOrderProd(OrderProductVO orderProductVO){
         return orderProductService.removeOrderProd(orderProductVO);
     }
 }

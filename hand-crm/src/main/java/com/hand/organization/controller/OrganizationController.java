@@ -73,7 +73,7 @@ public class OrganizationController {
     }
     @ApiOperation(value="组织信息更新")
     @PutMapping("/modifyOrg")
-    public ResultDTO modifyOrg(@RequestBody OrganizationVO organizationVO){
+    public ResultDTO modifyOrg(OrganizationVO organizationVO){
         if (organizationService.modifyOrg(organizationVO)){
             return ResultDTO.success();
         }
