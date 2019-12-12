@@ -54,9 +54,10 @@ public class OrderShipmentController {
                                         @RequestParam(value = "receiveCondition",required = false) String receiveCondition, @RequestParam(value = "receiveDate",required = false) String receiveDate,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "limitedDays",required = false) Integer limitedDays, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "description",required = false) String description){
+                                        @RequestParam(value = "description",required = false) String description,@RequestParam(value = "orderCode",required = false) String orderCode){
         OrderShipmentVO orderShipmentVO = new OrderShipmentVO();
         orderShipmentVO.setCode(code);
+        orderShipmentVO.setOrderCode(orderCode);
         orderShipmentVO.setShipDate(DateFormatUtil.strToDate(shipDate));
         orderShipmentVO.setReceiveDate(DateFormatUtil.strToDate(receiveDate));
         orderShipmentVO.setShipCondition(shipCondition);

@@ -51,9 +51,10 @@ public class OrderPayTermController {
                                         @RequestParam(value = "payAmount",required = false) Double payAmount, @RequestParam(value = "payTime",required = false) String payTime,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "payMethod",required = false) String payMethod, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "description",required = false) String description){
+                                        @RequestParam(value = "description",required = false) String description,@RequestParam(value = "orderCode",required = false) String orderCode){
         OrderPayTermVO orderPayTermVO = new OrderPayTermVO();
         orderPayTermVO.setCode(code);
+        orderPayTermVO.setOrderCode(orderCode);
         orderPayTermVO.setPayCondition(payCondition);
         orderPayTermVO.setPayAmount(payAmount);
         orderPayTermVO.setPayTime(DateFormatUtil.strToDate(payTime));

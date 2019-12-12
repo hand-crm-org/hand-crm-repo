@@ -52,9 +52,11 @@ public class OrderPaymentController {
                                         @RequestParam(value = "planPaymentAmount",required = false) Double planPaymentAmount, @RequestParam(value = "planPaymentTime",required = false) String planPaymentTime,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
                                         @RequestParam(value = "billAmount",required = false) Double billAmount, @RequestParam(value = "updated",required = false) String updated,
-                                        @RequestParam(value = "description",required = false) String description, @RequestParam(value = "receivedAmount",required = false) Double receivedAmount){
+                                        @RequestParam(value = "description",required = false) String description, @RequestParam(value = "receivedAmount",required = false) Double receivedAmount,
+                                        @RequestParam(value = "orderCode",required = false) String orderCode){
         OrderPaymentVO orderPaymentVO = new OrderPaymentVO();
         orderPaymentVO.setCode(code);
+        orderPaymentVO.setOrderCode(orderCode);
         orderPaymentVO.setPaymentName(paymentName);
         orderPaymentVO.setPlanPaymentAmount(planPaymentAmount);
         orderPaymentVO.setPlanPaymentTime(DateFormatUtil.strToDate(planPaymentTime));
