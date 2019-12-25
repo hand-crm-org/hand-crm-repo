@@ -20,8 +20,8 @@ public class OrderProductServiceImpl implements OrderProductService {
     public ResultDTO addOrderProd(OrderProductVO orderProductVO) {
         if (!StringUtil.isEmpty(orderProductVO.getProductCtlg()) && !StringUtil.isEmpty(orderProductVO.getUpdatedBy())
                 && !StringUtil.isEmpty(orderProductVO.getProductCtgy()) && !StringUtil.isEmpty(orderProductVO.getProductNum())
-                && !StringUtil.isEmpty(orderProductVO.getProductUnit()) && !StringUtil.isEmpty(orderProductVO.getProductPrice())
-                && !StringUtil.isEmpty(orderProductVO.getProductQuantity())) {
+                && !StringUtil.isEmpty(orderProductVO.getProductUnit()) && orderProductVO.getProductPrice()!=null
+                && orderProductVO.getProductQuantity()!=null) {
             String code = StringUtil.getCode();
             orderProductVO.setCode(code);
             int count = orderProductDao.insertOrderProd(orderProductVO);

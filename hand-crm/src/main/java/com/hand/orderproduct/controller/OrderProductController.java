@@ -39,21 +39,21 @@ public class OrderProductController {
             @ApiImplicitParam(paramType="query", name="productNum", value="产品编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="productCtlg", value="产品大类", dataType="String"),
             @ApiImplicitParam(paramType="query", name="productCtgy", value="产品小类", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="productUnit", value="产品单位", dataType="Double"),
-            @ApiImplicitParam(paramType="query", name="productQuantity", value="产品数量", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productUnit", value="产品单位", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productQuantity", value="产品数量", dataType="Double"),
             @ApiImplicitParam(paramType="query", name="createdName", value="创建人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="created", value="创建日期", dataType="String"),
             @ApiImplicitParam(paramType="query", name="updated", value="更新时间", dataType="String"),
-            @ApiImplicitParam(paramType="query", name="productPrice", value="产品单价", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="productPrice", value="产品单价", dataType="Double"),
             @ApiImplicitParam(paramType="query", name="description", value="备注", dataType="String"),
     })
     @GetMapping("/get-order-product-info")
     public ServiceData getOrderProdInfo(int currentPage, int pageSize,
                                         @RequestParam(value = "code",required = false) String code, @RequestParam(value = "productNum",required = false) String productNum,
                                         @RequestParam(value = "productCtlg",required = false) String productCtlg, @RequestParam(value = "productCtgy",required = false) String productCtgy,
-                                        @RequestParam(value = "productUnit",required = false) String productUnit, @RequestParam(value = "productQuantity",required = false) String productQuantity,
+                                        @RequestParam(value = "productUnit",required = false) String productUnit, @RequestParam(value = "productQuantity",required = false) Double productQuantity,
                                         @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "created",required = false) String created,
-                                        @RequestParam(value = "productPrice",required = false) String productPrice, @RequestParam(value = "updated",required = false) String updated,
+                                        @RequestParam(value = "productPrice",required = false) Double productPrice, @RequestParam(value = "updated",required = false) String updated,
                                         @RequestParam(value = "description",required = false) String description, @RequestParam(value = "orderCode",required = false) String orderCode){
         OrderProductVO orderProductVO = new OrderProductVO();
         orderProductVO.setCode(code);

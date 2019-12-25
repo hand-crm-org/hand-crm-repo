@@ -67,8 +67,8 @@
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
             <if test="entity.productNum!=null and entity.productNum!=''"> AND PROD_NUM LIKE "%"#{entity.productNum}"%"</if>
-            <if test="entity.productCtlg!=null and entity.productCtlg!=''">AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId})=#{entity.productCtlg}</if>
-            <if test="entity.productCtgy!=null and entity.productCtgy!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) = #{entity.productCtgy}</if>
+            <if test="entity.productCtlg!=null and entity.productCtlg!=''">AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = PROD_CTLG AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId})like "%"#{entity.productCtlg}"%"</if>
+            <if test="entity.productCtgy!=null and entity.productCtgy!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = PROD_CTGY AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) like "%"#{entity.productCtgy}"%"</if>
             <if test="entity.productUnit!=null and entity.productUnit!=''"> AND PROD_UNIT LIKE "%"#{entity.productUnit}"%"</if>
             <if test="entity.productPrice!=null and entity.productPrice!=''"> AND PROD_PRICE = #{entity.productPrice}</if>
             <if test="entity.productQuantity!=null and entity.productQuantity!=''"> AND PROD_QTY = #{entity.productQuantity}</if>

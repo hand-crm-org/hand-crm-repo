@@ -21,8 +21,8 @@ public class OrderProductVO {
     private String productCtlgCode;//产品大类
     private String productCtgyCode;//产品小类
     private String productUnit;//单位
-    private String productPrice;//单价
-    private String productQuantity;//数量
+    private Double productPrice;//单价
+    private Double productQuantity;//数量
     private String description;//备注
     private String langId;
 
@@ -138,19 +138,19 @@ public class OrderProductVO {
         this.productUnit = productUnit;
     }
 
-    public String getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
     }
 
-    public String getProductQuantity() {
+    public Double getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(String productQuantity) {
+    public void setProductQuantity(Double productQuantity) {
         this.productQuantity = productQuantity;
     }
 

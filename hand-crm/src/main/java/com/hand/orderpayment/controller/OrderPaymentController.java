@@ -6,7 +6,6 @@ import com.hand.frame.util.DateFormatUtil;
 import com.hand.frame.util.PageQuery;
 import com.hand.orderpayment.access.vo.OrderPaymentVO;
 import com.hand.orderpayment.service.OrderPaymentService;
-import com.hand.orderpayterm.access.vo.OrderPayTermVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -30,7 +29,7 @@ public class OrderPaymentController {
         return orderPaymentService.addOrderPayment(orderPaymentVO);
     }
 
-    @ApiOperation(value="查询订单付款条件")
+    @ApiOperation(value="查询订单回款")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="query", name="currentPage", value="当前页", dataType="int"),
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
@@ -71,13 +70,13 @@ public class OrderPaymentController {
         return  ServiceData.success(orderPaymentService.getOrderPayment(pageQuery), pageQuery.getMapOfPageQuery());
     }
 
-    @ApiOperation(value="修改订单付款条件")
+    @ApiOperation(value="修改订单回款")
     @PutMapping("/modify-order-payment")
     public ResultDTO modifyOrderPayment(@RequestBody OrderPaymentVO orderPaymentVO){
         return orderPaymentService.modifyOrderPayment(orderPaymentVO);
     }
 
-    @ApiOperation(value="删除订单付款条件")
+    @ApiOperation(value="删除订单回款")
     @DeleteMapping("/delete-order-payment")
     public ResultDTO deleteOrderPayment(OrderPaymentVO orderPaymentVO){
         return orderPaymentService.removeOrderPayment(orderPaymentVO);
