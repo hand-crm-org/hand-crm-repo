@@ -65,7 +65,7 @@
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
             <if test="entity.shipNumber!=null and entity.shipNumber!=''"> AND SHIP_NUM LIKE "%"#{entity.shipNumber}"%"</if>
-            <if test="entity.shipCondition!=null and entity.shipCondition!=''">AND SHIP_COND=#{entity.shipCondition}</if>
+            <if test="entity.shipCondition!=null and entity.shipCondition!=''">AND SHIP_COND like "%"#{entity.shipCondition}"%"</if>
             <if test="entity.shipDate!=null"> AND SHIP_DATE = #{entity.shipDate}</if>
             <if test="entity.receiveCondition!=null and entity.receiveCondition!=''"> AND RECE_COND LIKE "%"#{entity.receiveCondition}"%"</if>
             <if test="entity.receiveDate!=null"> AND RECE_DATE = #{entity.receiveDate}</if>
