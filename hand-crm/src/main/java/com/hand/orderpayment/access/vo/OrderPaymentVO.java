@@ -17,6 +17,7 @@ public class OrderPaymentVO {
     private String orderCode;//订单头编码
     private String paymentName;//收款名称
     private Double planPaymentAmount;//计划收款金额
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date planPaymentTime;//计划收款时间
     private Double billAmount;//开票金额
     private Double receivedAmount;//收款金额
