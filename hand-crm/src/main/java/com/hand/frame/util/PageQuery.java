@@ -13,10 +13,11 @@ public class PageQuery<T> {
 	private int count;//总行数
 	
 	public PageQuery(T entity,int currentPage,int pageSize){
-		if(currentPage<=0 )
-			this.start = 1;
-		else
-			this.start = (currentPage-1)*pageSize;
+		if(currentPage<=0 ) {
+            this.start = 1;
+        } else {
+            this.start = (currentPage-1)*pageSize;
+        }
 		
 		this.end = this.start+pageSize+1;
 		this.currentPage = currentPage;

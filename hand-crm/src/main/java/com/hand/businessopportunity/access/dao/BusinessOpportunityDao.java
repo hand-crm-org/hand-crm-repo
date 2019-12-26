@@ -11,10 +11,10 @@ public interface BusinessOpportunityDao {
     /**
      * 新建商机竞品
      * @UpdateBy fuzw
-     * @param BusinessOptyVO
+     * @param businessOpportunityVO
      * @Return int
      */
-    int insertBusinessOpty(BusinessOpportunityVO BusinessOptyVO);
+    int insertBusinessOpty(BusinessOpportunityVO businessOpportunityVO);
 
     /**
      * 根据条件查询商机竞品

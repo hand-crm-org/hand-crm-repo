@@ -1,11 +1,11 @@
 package com.hand.frame.model;
 
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.util.Map;
+
 public class ServiceData {
-RetCode code = RetCode.Success;  //操作结果
+RetCode code = RetCode.Success;		// 操作结果
 	
 	Object bo = null; //返回的数据对象,在返回异常编码时,这个对象可设置详细的异常信息
 	

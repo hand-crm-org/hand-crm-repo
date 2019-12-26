@@ -13,8 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 @RestController
@@ -45,7 +43,7 @@ public class ListOfValueController {
                                    Integer level,String actFlg,String desc,String nameList,String parentVal){
         if(nameList!=null) {
             LstOfValList lstOfValList = new LstOfValList();
-            nameList = lstOfValList.listOfValList(nameList);
+            nameList = LstOfValList.listOfValList(nameList);
         }
         ListOfValueVO listOfValueVO = new ListOfValueVO();
         listOfValueVO.setCode(code);

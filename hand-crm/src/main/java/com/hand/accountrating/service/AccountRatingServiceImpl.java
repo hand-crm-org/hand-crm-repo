@@ -63,9 +63,9 @@ public class AccountRatingServiceImpl implements AccountRatingService {
         AccountRatingVO ratingVO = new AccountRatingVO();
         try{
             ratingVO = accountRatingDao.queryAccountRatingVersion(accountRatingVO);
-            if(ratingVO!=null)
+            if(ratingVO!=null) {
                 ratingVO.setVersion(accountRatingDao.queryAccountRatingVersion(accountRatingVO).getVersion()+1);
-            else {
+            } else {
                 ratingVO = new AccountRatingVO();
                 ratingVO.setVersion(1);
             }
