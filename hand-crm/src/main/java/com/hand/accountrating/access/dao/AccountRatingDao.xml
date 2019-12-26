@@ -3,9 +3,8 @@
 <mapper namespace="com.hand.accountrating.access.dao.AccountRatingDao">
     <select id="queryAccountRatingList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountrating.access.vo.AccountRatingVO">
         <include refid="queryAllSql"></include>
-        WHERE
-        T1.ACCNT_CODE = #{entity.accountCode}
-        AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
+        FROM
+        HC_ACCNT_RAT T1
         <include refid="queryAllAccountRatingSql"></include>
         limit #{start},#{pageSize}
     </select>
@@ -16,9 +15,6 @@
         SELECT COUNT(*)
         FROM
         HC_ACCNT_RAT T1
-        WHERE
-        T1.ACCNT_CODE = #{entity.accountCode}
-        AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
         <include refid="queryAllAccountRatingSql"></include>
     </select>
     <insert id="insertAccountRating" parameterType="com.hand.accountrating.access.vo.AccountRatingVO">
@@ -48,15 +44,13 @@
         T1.START_DATE as startDate,
         T1.END_DATE as endDate,
         T1.`STATUS` as statusCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
+		T2.VAL AS `status`,
         T1.CREDIT_ALL as creditAll,
         T1.CREDIT_USED as creditUsed,
         T1.ATT_CODE as attachmentCode,
         T1.VERSION as version,
         T1.CURRENCY as currency,
         T1.COMMENT as comment
-        FROM
-        HC_ACCNT_RAT T1
     </sql>
     <sql id="updateAccountRatingSql">
         <if test="code!=null">
@@ -96,6 +90,10 @@
         </if>
     </sql>
     <sql id="queryAllAccountRatingSql">
+        LEFT JOIN HC_LST_OF_VAL T2 ON T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = "CHS"
+        WHERE
+        T1.ACCNT_CODE = #{entity.accountCode}
+        AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''">
                 AND CODE=#{entity.code}
