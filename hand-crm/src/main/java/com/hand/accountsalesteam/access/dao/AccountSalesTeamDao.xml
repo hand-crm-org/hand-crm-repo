@@ -2,42 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.accountsalesteam.access.dao.AccountSalesTeamDao">
     <select id="queryAccountSalesTeamList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.accountsalesteam.access.vo.AccountSalesTeamVO">
-        SELECT
-        T1.CODE code,
-        T1.CREATED created,
-        T1.CREATED_BY createdBy,
-        T1.UPDATED updated,
-        T1.UPDATED_BY updatedBy,
-        T1.ACCNT_CODE accntCode,
-        T1.EMP_CODE empCode,
-        T1.PRI_FLG priFlg,
-        T1.DESC `desc`,
-        T1.STATUS status,
-        T1.TEAM_ROLE teamRoleCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TEAM_ROLE AND TYPE = 'TEAM_ROLE_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) teamRole,
-        T2.NAME empName,
-        T2.WORK_NUM empPhoneNum,
-        (SELECT NAME FROM HC_POSTN WHERE CODE = T2.PRI_POSTN_CODE) empPosition
+        <include refid="queryAccountSalesTeamListAllSql"></include>
         FROM
-        HC_ACCNT_POSTN T1, HC_EMP T2
-        WHERE
-        T1.ACCNT_CODE = #{entity.accntCode}
-        AND T1.EMP_CODE = T2.CODE
-        AND T1.STATUS = 'Active'
-
+        HC_ACCNT_POSTN T1
         <include refid="queryAllConditionSql"></include>
-
         limit #{start},#{pageSize}
     </select>
     <select id="queryAccountSalesTeamCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
-        HC_ACCNT_POSTN T1, HC_EMP T2
-        WHERE
-        T1.ACCNT_CODE = #{entity.accntCode}
-        AND T1.EMP_CODE = T2.CODE
-        AND T1.STATUS = 'Active'
-
+        HC_ACCNT_POSTN T1
         <include refid="queryAllConditionSql"></include>
 
     </select>
@@ -63,22 +37,29 @@
         WHERE
         CODE = #{code}
     </delete>
-    <sql id="queryAllSql">
-        SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        ACCNT_CODE as accntCode,
-        EMP_CODE as empCode,
-        PRI_FLG as priFlg,
-        STATUS as status,
-        `DESC` as `desc`
-        FROM
-        HC_ACCNT_POSTN
+    <sql id="queryAccountSalesTeamListAllSql">
+    SELECT
+	    T1.CODE code,
+        T1.CREATED created,
+        T1.CREATED_BY createdBy,
+        T1.UPDATED updated,
+        T1.UPDATED_BY updatedBy,
+        T1.ACCNT_CODE accntCode,
+        T1.EMP_CODE empCode,
+        T1.PRI_FLG priFlg,
+        T1.DESC `desc`,
+        T1.STATUS status,
+        T1.TEAM_ROLE teamRoleCode,
+		T3.VAL as teamRole,
+        T2.NAME empName,
+        T2.WORK_NUM empPhoneNum,
+        T4.`NAME` AS empPosition
     </sql>
     <sql id="queryAllConditionSql">
+        LEFT JOIN HC_EMP T2 ON T1.ACCNT_CODE = "4f3s213ib2" AND T1.EMP_CODE = T2.CODE AND T1.STATUS = 'Active'
+        LEFT JOIN HC_LST_OF_VAL T3 ON T3.`NAME` = T1.TEAM_ROLE AND T3.TYPE = 'TEAM_ROLE_TYPE' AND T3.ACT_FLG = 'Y' AND T3.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_POSTN T4 ON  T4.CODE = T2.PRI_POSTN_CODE
+        WHERE T2.`CODE` IS NOT NULL
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
