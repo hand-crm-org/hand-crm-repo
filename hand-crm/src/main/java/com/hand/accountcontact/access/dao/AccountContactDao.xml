@@ -3,11 +3,8 @@
 <mapper namespace="com.hand.accountcontact.access.dao.AccountContactDao">
     <select id="queryAccountContactList" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.contact.access.vo.ContactVO">
         <include refid="queryAllSql"></include>
-        WHERE
-        T1.CODE = T2.CTCT_CODE
-        AND
-        T2.ACCNT_CODE = #{entity.accntCode}
-        AND T2.STATUS = 'Active'
+        FROM
+        HC_CTCT T1
         <include refid="queryAllConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
@@ -37,7 +34,7 @@
         WHERE CODE=#{code}
     </update>
     <sql id="queryAllSql">
-        SELECT
+	SELECT
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
@@ -52,10 +49,8 @@
         T1.JOB_TITLE as jobTitle,
         T1.DESC as `desc`,
         T1.HOBBY as hobby,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) AS `status`,
+		T3.VAL as `STATUS`,
         T1.STATUS as statusCode
-        FROM
-        HC_CTCT T1, HC_ACCNT_CTCT T2
     </sql>
     <sql id="updateConditionSql">
         <if test="updatedBy!=null and updatedBy!=''">UPDATED_BY=#{updatedBy}</if>
@@ -65,13 +60,16 @@
         <if test="desc!=null and desc!=''">,`DESC` = #{desc}</if>
     </sql>
     <sql id="queryAllConditionSql">
+        LEFT JOIN  HC_ACCNT_CTCT T2 on T1.`CODE` = T2.CTCT_CODE  AND T2.`STATUS` = "ACTIVE"
+        LEFT JOIN HC_LST_OF_VAL T3 ON T1.`STATUS` = T3.`NAME` AND T3.TYPE = 'ACCOUNT_STATUS' AND T3.ACT_FLG = 'Y' AND T3.LANG_ID =#{entity.langId}
+        WHERE T2.`CODE` IS NOT NULL
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
             <if test="entity.createdBy!=null and entity.createdBy!=''"> AND T1.CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
             <if test="entity.updated!=null"> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.status!=null and entity.status!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} )  LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND T3.VAL  LIKE "%"#{entity.status}"%"</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND T1.DESC LIKE "%"#{entity.desc}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.nameForeign!=null and entity.nameForeign!=''"> AND T1.NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"</if>
