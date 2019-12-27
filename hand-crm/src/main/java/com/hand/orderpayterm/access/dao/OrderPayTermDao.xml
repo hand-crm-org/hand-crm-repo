@@ -5,16 +5,12 @@
         <include refid="queryAllSql"></include>
         FROM
         HC_ORDER_TERM T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryPayTermCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT count(*)
-        FROM HC_ORDER_TERM
-        WHERE
-        1=1
+        FROM HC_ORDER_TERM T1
         <include refid="queryALLConditionSql"></include>
     </select>
     <insert id="insertPayTerm" parameterType="com.hand.orderpayterm.access.vo.OrderPayTermVO">
@@ -44,7 +40,7 @@
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        EMPC.NAME as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
         T1.ORDER_CODE as orderCode,
@@ -55,10 +51,13 @@
         T1.DESC as description
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON EMPC.CODE = T1.CREATED_BY
+        WHERE
+        1=1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
             <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
