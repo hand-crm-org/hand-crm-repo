@@ -5,16 +5,12 @@
         <include refid="queryAllSql"></include>
         FROM
         HC_ORDER_ITEM T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryOrderProdCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT count(*)
-        FROM HC_ORDER_ITEM
-        WHERE
-        1=1
+        FROM HC_ORDER_ITEM T1
         <include refid="queryALLConditionSql"></include>
     </select>
     <insert id="insertOrderProd" parameterType="com.hand.orderproduct.access.vo.OrderProductVO">
@@ -59,6 +55,9 @@
         T1.DESC as description
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON EMPC.CODE = T1.CREATED_BY
+        WHERE
+        1=1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
