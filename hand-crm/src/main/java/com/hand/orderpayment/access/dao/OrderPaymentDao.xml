@@ -5,16 +5,12 @@
         <include refid="queryAllSql"></include>
         FROM
         HC_ORDER_PAY T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryPaymentCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT count(*)
-        FROM HC_ORDER_PAY
-        WHERE
-        1=1
+        FROM HC_ORDER_PAY T1
         <include refid="queryALLConditionSql"></include>
     </select>
     <insert id="insertPayment" parameterType="com.hand.orderpayment.access.vo.OrderPaymentVO">
@@ -35,8 +31,6 @@
         DELETE
         FROM
         HC_ORDER_PAY
-        WHERE
-        CODE = #{code}
     </delete>
 
     <sql id="queryAllSql">
@@ -44,7 +38,7 @@
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        EMPC.NAME as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
         T1.ORDER_CODE as orderCode,
@@ -56,19 +50,23 @@
         T1.DESC as description
     </sql>
     <sql id="queryALLConditionSql">
+
+        LEFT JOIN HC_EMP EMPC ON EMPC.CODE = T1.CREATED_BY
+        WHERE
+        1=1
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
-            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.orderCode!=null and entity.orderCode!=''"> AND ORDER_CODE = #{entity.orderCode}</if>
-            <if test="entity.paymentName!=null and entity.paymentName!=''"> AND NAME LIKE "%"#{entity.paymentName}"%"</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.orderCode!=null and entity.orderCode!=''"> AND T1.ORDER_CODE = #{entity.orderCode}</if>
+            <if test="entity.paymentName!=null and entity.paymentName!=''"> AND T1.NAME LIKE "%"#{entity.paymentName}"%"</if>
             <if test="entity.planPaymentAmount!=null and entity.planPaymentAmount!=''">AND PLAN_PAY_AMOUNT=#{entity.planPaymentAmount}"%"</if>
-            <if test="entity.planPaymentTime!=null"> AND PLAN_PAY_TIME LIKE "%"#{entity.planPaymentTime}</if>
-            <if test="entity.billAmount!=null and entity.billAmount!=''">AND BIILL_AMOUNT=#{entity.billAmount}"%"</if>
-            <if test="entity.receivedAmount!=null and entity.receivedAmount!=''"> AND RECEIVE_AMOUNT LIKE "%"#{entity.receivedAmount}"%"</if>
-            <if test="entity.description!=null and entity.description!=''"> AND `DESC` LIKE "%"#{entity.description}"%"</if>
+            <if test="entity.planPaymentTime!=null"> AND T1.PLAN_PAY_TIME LIKE "%"#{entity.planPaymentTime}</if>
+            <if test="entity.billAmount!=null and entity.billAmount!=''">AND T1.BIILL_AMOUNT=#{entity.billAmount}"%"</if>
+            <if test="entity.receivedAmount!=null and entity.receivedAmount!=''"> AND T1.RECEIVE_AMOUNT LIKE "%"#{entity.receivedAmount}"%"</if>
+            <if test="entity.description!=null and entity.description!=''"> AND T1.`DESC` LIKE "%"#{entity.description}"%"</if>
         </if>
     </sql>
     <sql id="updateAllConditionSql">
