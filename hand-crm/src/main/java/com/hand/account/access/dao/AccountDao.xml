@@ -5,9 +5,9 @@
        select
 	T1.`CODE`	as code,
 	T1.CREATED	as created,
-	T1.CREATED_BY	as createdBy,
+	EMPC.NAME	as createdBy,
 	T1.UPDATED	as updated,
-	T1.UPDATED_BY	as updatedBy,
+	EMPU.NAME	as updatedBy,
 	T1.`NAME`	as name,
 	T1.NAME_ENU	as nameEnu,
 	T1.TAX_CODE	as taxCode,
@@ -72,13 +72,17 @@
         HC_ACCNT_POSTN S2 on T1.CODE = S2.ACCNT_CODE AND S2.TEAM_ROLE = 'Leader'
         LEFT JOIN
         HC_EMP S1 on S1.CODE = S2.EMP_CODE
+        LEFT JOIN
+        HC_EMP EMPC ON T1.CREATED_BY=EMPC.CODE
+        LEFT JOIN
+        HC_EMP EMPU ON T1.UPDATED_BY=EMPU.CODE
         WHERE 1=1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.`CODE`=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND T1.CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.nameEnu!=null and entity.nameEnu!=''"> AND T1.NAME_ENU LIKE "%"#{entity.nameEnu}"%"</if>
             <if test="entity.taxCode!=null and entity.taxCode!=''"> AND T1.TAX_CODE LIKE "%"#{entity.taxCode}"%"</if>
@@ -98,6 +102,7 @@
             <if test="entity.county!=null and entity.county!=''"> AND T6.COUNTY LIKE "%"#{entity.county}"%"</if>
             <if test="entity.street!=null and entity.street!=''"> AND T6.STREET LIKE "%"#{entity.street}"%"</if>
         </if>
+
     </sql>
     <sql id="updateConditionSql">
         <if test="code!=null">

@@ -5,9 +5,9 @@
        SELECT
         T1.CODE as code,
         T1.CREATED as created,
-        T1.CREATED_BY as createdBy,
+        EMPC.NAME as createdBy,
         T1.UPDATED as updated,
-        T1.UPDATED_BY as updatedBy,
+        EMPU.NAME as updatedBy,
         T1.ACCNT_CODE as accntCode,
         T1.ADDR_CODE as addrCode,
         T1.DESC as 'desc',
@@ -26,17 +26,19 @@
         T2.ADDR2 as addr2
     </sql>
     <sql id="queryALLConditionSql">
-        LEFT JOIN 	HC_ADDR T2 ON T1.ACCNT_CODE = "A001" AND T1.ADDR_CODE = T2.CODE AND T1.STATUS = 'Active'   AND T1.ADDR_CODE = T2.CODE
+        LEFT JOIN 	HC_ADDR T2 ON T1.ADDR_CODE = T2.CODE AND T1.STATUS = 'Active'
         LEFT JOIN   HC_LST_OF_VAL T3 ON T3.`NAME` = T1.TYPE AND T3.TYPE = 'ACCOUNT_ADDRESS_TYPE' AND T3.ACT_FLG = 'Y' AND T3.LANG_ID = #{entity.langId}
-        WHERE T2.`CODE` IS NOT NULL
+        LEFT JOIN  HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN  HC_EMP EMPU ON T1.UPDATED_BY = EMPU.CODE
+        WHERE T2.CODE IS NOT NULL
         AND T1.ACCNT_CODE = #{entity.accntCode}
         AND T1.STATUS = 'Active'
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND T1.CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"</if>
             <if test="entity.addrCode!=null and entity.addrCode!=''"> AND T1.ADDR_CODE = #{entity.addrCode}</if>
             <if test="entity.country!=null and entity.country!=''"> AND T2.COUNTRY LIKE "%"#{entity.country}"%"</if>
             <if test="entity.state!=null and entity.state!=''"> AND T2.STATE LIKE "%"#{entity.state}"%"</if>

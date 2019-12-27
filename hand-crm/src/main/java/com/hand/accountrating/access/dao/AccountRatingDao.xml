@@ -35,9 +35,9 @@
         SELECT
         T1.CODE as code,
         T1.CREATED as created,
-        T1.CREATED_BY as createdBy,
+        EMPC.NAME as createdBy,
         T1.UPDATED as updated,
-        T1.UPDATED_BY as updatedBy,
+        EMPU.NAME as updatedBy,
         T1.ACCNT_CODE as accountCode,
         T1.RAT_LEVEL as ratingLevel,
         T1.QX_LEVEL as qixinLevel,
@@ -91,60 +91,62 @@
     </sql>
     <sql id="queryAllAccountRatingSql">
         LEFT JOIN HC_LST_OF_VAL T2 ON T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = "CHS"
+        LEFT JOIN HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN HC_EMP EMPU ON T1.UPDATED_BY = EMPU.CODE
         WHERE
         T1.ACCNT_CODE = #{entity.accountCode}
         AND (T1.STATUS = 'Active' OR T1.STATUS = 'New')
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''">
-                AND CODE=#{entity.code}
+                AND T1.CODE=#{entity.code}
             </if>
             <if test="entity.created!=null">
-                AND CREATED LIKE "%"#{entity.created}"%"
+                AND T1.CREATED LIKE "%"#{entity.created}"%"
             </if>
             <if test="entity.createdBy!=null and entity.createdBy!=''">
-                AND CREATED_BY LIKE "%"#{entity.createdBy}"%"
+                AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"
             </if>
             <if test="entity.updated!=null">
-                AND UPDATED LIKE "%"#{entity.updated}"%"
+                AND T1.UPDATED LIKE "%"#{entity.updated}"%"
             </if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''">
-                AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"
+                AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"
             </if>
             <if test="entity.accountCode!=null and entity.accountCode!=''">
-                AND ACCNT_CODE = #{entity.accountCode}
+                AND T1.ACCNT_CODE = #{entity.accountCode}
             </if>
             <if test="entity.status!=null and entity.status!=''">
-                AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'ACCOUNT_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.status}"%"
+                AND T2.VAL LIKE "%"#{entity.status}"%"
             </if>
             <if test="entity.ratingLevel!=null and entity.ratingLevel!=''">
-                AND RAT_LEVEL = #{entity.ratingLevel}
+                AND T1.RAT_LEVEL = #{entity.ratingLevel}
             </if>
             <if test="entity.qixinLevel!=null and entity.qixinLevel!=''">
-                AND QX_LEVEL = #{entity.qixinLevel}
+                AND T1.QX_LEVEL = #{entity.qixinLevel}
             </if>
             <if test="entity.startDate!=null">
-                AND START_DATE = #{entity.startDate}
+                AND T1.START_DATE = #{entity.startDate}
             </if>
             <if test="entity.endDate!=null">
-                AND END_DATE = #{entity.endDate}
+                AND T1.END_DATE = #{entity.endDate}
             </if>
             <if test="entity.version!=null and entity.version!=''">
-                AND VERSION = #{entity.version}
+                AND T1.VERSION = #{entity.version}
             </if>
             <if test="entity.currency!=null and entity.currency!=''">
-                AND CURRENCY = #{entity.currency}
+                AND T1.CURRENCY = #{entity.currency}
             </if>
             <if test="entity.comment!=null and entity.comment!=''">
-                AND COMMENT LIKE "%"#{entity.comment}"%"
+                AND T1.COMMENT LIKE "%"#{entity.comment}"%"
             </if>
             <if test="entity.creditAll!=null">
-                AND CREDIT_ALL = #{entity.creditAll}
+                AND T1.CREDIT_ALL = #{entity.creditAll}
             </if>
             <if test="entity.creditUsed!=null">
-                AND CREDIT_USED = #{entity.creditUsed}
+                AND T1.CREDIT_USED = #{entity.creditUsed}
             </if>
             <if test="entity.attachmentCode!=null and entity.attachmentCode!=''">
-                AND ATT_CODE LIKE "%"#{entity.attachmentCode}"%"
+                AND T1.ATT_CODE LIKE "%"#{entity.attachmentCode}"%"
             </if>
         </if>
     </sql>

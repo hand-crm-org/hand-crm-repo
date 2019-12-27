@@ -3,31 +3,34 @@
 <mapper namespace="com.hand.businessopportunity.access.dao.BusinessOpportunityDao">
     <sql id="queryAllBusinessOptyInfoSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        OPTY_CODE as optycode,
-        BRAND as brand,
-        QUOTATION as quotation,
-        GOODNESS as goodness,
-        BADNESS as badness,
-        COMMENTS as comments
+        T1.CODE as code,
+        T1.CREATED as created,
+        EMPC.NAME as createdBy,
+        T1.UPDATED as updated,
+        EMPU.NAME as updatedBy,
+        T1.OPTY_CODE as optycode,
+        T1.BRAND as brand,
+        T1.QUOTATION as quotation,
+        T1.GOODNESS as goodness,
+        T1.BADNESS as badness,
+        T1.COMMENTS as comments
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN HC_EMP EMPU ON T1.UPDATED_BY = EMPU.CODE
+        WHERE 1=1
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
-            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.optycode!=null and entity.optycode!=''"> AND OPTY_CODE LIKE "%"#{entity.optycode}"%"</if>
-            <if test="entity.brand!=null and entity.brand!=''"> AND BRAND LIKE "%"#{entity.brand}"%"</if>
-            <if test="entity.quotation!=null and entity.quotation!=''"> AND QUOTATION LIKE "%"#{entity.quotation}"%"</if>
-            <if test="entity.goodness!=null and entity.goodness!=''"> AND GOODNESS LIKE "%"#{entity.goodness}"%"</if>
-            <if test="entity.badness!=null and entity.badness!=''">AND BADNESS=#{entity.badness}</if>
-            <if test="entity.comments!=null and entity.comments!=''"> AND COMMENTS=#{entity.comments}</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.optycode!=null and entity.optycode!=''"> AND T1.OPTY_CODE LIKE "%"#{entity.optycode}"%"</if>
+            <if test="entity.brand!=null and entity.brand!=''"> AND T1.BRAND LIKE "%"#{entity.brand}"%"</if>
+            <if test="entity.quotation!=null and entity.quotation!=''"> AND T1.QUOTATION LIKE "%"#{entity.quotation}"%"</if>
+            <if test="entity.goodness!=null and entity.goodness!=''"> AND T1.GOODNESS LIKE "%"#{entity.goodness}"%"</if>
+            <if test="entity.badness!=null and entity.badness!=''">AND T1.BADNESS=#{entity.badness}</if>
+            <if test="entity.comments!=null and entity.comments!=''"> AND T1.COMMENTS=#{entity.comments}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -49,9 +52,7 @@
     <select id="queryBusinessOpty" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.businessopportunity.access.vo.BusinessOpportunityVO">
         <include refid="queryAllBusinessOptyInfoSql"></include>
         FROM
-        HC_OPTY_COMP
-        WHERE
-        1=1
+        HC_OPTY_COMP T1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
@@ -59,9 +60,7 @@
     <select id="queryBusinessOptyCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
-        HC_OPTY_COMP
-        WHERE
-        1=1
+        HC_OPTY_COMP T1
         <include refid="queryALLConditionSql"></include>
     </select>
 

@@ -3,16 +3,12 @@
 <mapper namespace="com.hand.contact.access.dao.ContactDao">
     <select id="queryContactList" parameterType="com.hand.contact.access.vo.ContactVO" resultType="com.hand.contact.access.vo.ContactVO">
         <include refid="queryAllSql"></include>
-        WHERE
-        1=1
         <include refid="queryAllConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryContactCount" parameterType="com.hand.contact.access.vo.ContactVO" resultType="int">
         SELECT COUNT(*)
-        FROM HC_CTCT
-        WHERE
-        1=1
+        FROM HC_CTCT T1
         <include refid="queryAllConditionSql"></include>
     </select>
     <update id="updateContact" parameterType="com.hand.contact.access.vo.ContactVO">
@@ -44,42 +40,45 @@
         <if test="status!=null and hobby!=''"> , STATUS = #{status}</if>
     </sql>
     <sql id="queryAllConditionSql">
+        LEFT JOIN HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN HC_EMP EMPU ON T1.UPDATED_BY = EMPU.CODE
+        WHERE 1=1
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
-            <if test="entity.updated!=null"> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.objCode!=null and entity.objCode!=''"> AND OBJ_CODE = #{entity.objCode}</if>
-            <if test="entity.serviceCode!=null and entity.serviceCode!=''"> AND SERVICE_CODE = #{entity.serviceCode}</if>
-            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
-            <if test="entity.nameForeign!=null and entity.nameForeign!=''"> AND NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"</if>
-            <if test="entity.phNum!=null and entity.phNum!=''"> AND PH_NUM LIKE "%"#{entity.phNum}"%"</if>
-            <if test="entity.email!=null and entity.email!=''"> AND EMAIL  LIKE "%"#{entity.email}"%"</if>
-            <if test="entity.jobTitle!=null and entity.jobTitle!=''"> AND JOB_TITLE LIKE "%"#{entity.jobTitle}"%"</if>
-            <if test="entity.hobby!=null and entity.hobby!=''"> AND HOBBY LIKE "%"#{entity.hobby}"%"</if>
-            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
-            <if test="entity.status!=null and entity.hobby!=''"> AND STATUS LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null"> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.objCode!=null and entity.objCode!=''"> AND T1.OBJ_CODE = #{entity.objCode}</if>
+            <if test="entity.serviceCode!=null and entity.serviceCode!=''"> AND T1.SERVICE_CODE = #{entity.serviceCode}</if>
+            <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.nameForeign!=null and entity.nameForeign!=''"> AND T1.NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"</if>
+            <if test="entity.phNum!=null and entity.phNum!=''"> AND T1.PH_NUM LIKE "%"#{entity.phNum}"%"</if>
+            <if test="entity.email!=null and entity.email!=''"> AND T1.EMAIL  LIKE "%"#{entity.email}"%"</if>
+            <if test="entity.jobTitle!=null and entity.jobTitle!=''"> AND T1.JOB_TITLE LIKE "%"#{entity.jobTitle}"%"</if>
+            <if test="entity.hobby!=null and entity.hobby!=''"> AND T1.HOBBY LIKE "%"#{entity.hobby}"%"</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND T1.`DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.status!=null and entity.hobby!=''"> AND T1.STATUS LIKE "%"#{entity.status}"%"</if>
         </if>
     </sql>
     <sql id="queryAllSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        OBJ_CODE as objCode,
-        SERVICE_CODE as serviceCode,
-        NAME as name,
-        NAME_FOREIGN as nameForeign,
-        PH_NUM as phNum,
-        EMAIL as email,
-        JOB_TITLE as jobTitle,
-        HOBBY as hobby,
-        `DESC` as `desc`,
-        STATUS as status
+        T1.CODE as code,
+        T1.CREATED as created,
+        EMPC.NAME as createdBy,
+        T1.UPDATED as updated,
+        EMPU.NAME as updatedBy,
+        T1.OBJ_CODE as objCode,
+        T1.SERVICE_CODE as serviceCode,
+        T1.NAME as name,
+        T1.NAME_FOREIGN as nameForeign,
+        T1.PH_NUM as phNum,
+        T1.EMAIL as email,
+        T1.JOB_TITLE as jobTitle,
+        T1.HOBBY as hobby,
+        T1.`DESC` as `desc`,
+        T1.STATUS as status
         FROM
-        HC_CTCT
+        HC_CTCT T1
     </sql>
 </mapper>

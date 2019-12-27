@@ -14,31 +14,29 @@
 
     <select id="queryEmployee" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.employee.access.vo.EmployeeVO">
         SELECT
-        CODE code,
-        CREATED created,
-        CREATED_BY createdBy,
-        UPDATED updated,
-        UPDATED_BY updatedBy,
-        USER_FLG userFlg,
-        LOGIN login,
-        PASSWORD password,
-        NAME name,
-        NAME_FOREIGN nameForeign,
-        NAME_SHORT nameShort,
-        WORK_NUM workNum,
-        PERSONAL_NUM personalNum,
-        WECHAT_NUM wechatNum,
-        QQ_NUM qqNum,
-        OPEN_ID openId,
-        EMAIL email,
-        JOB_LEVEL jobLevel,
-        PRI_POSTN_CODE priPostnCode,
-        ADDR_CODE addrCode,
-        STATUS status
+        T1.CODE code,
+        T1.CREATED created,
+        EMPC.NAME createdBy,
+        T1.UPDATED updated,
+        EMPC.NAME updatedBy,
+        T1.USER_FLG userFlg,
+        T1.LOGIN login,
+        T1.PASSWORD password,
+        T1.NAME name,
+        T1.NAME_FOREIGN nameForeign,
+        T1.NAME_SHORT nameShort,
+        T1.WORK_NUM workNum,
+        T1.PERSONAL_NUM personalNum,
+        T1.WECHAT_NUM wechatNum,
+        T1.QQ_NUM qqNum,
+        T1.OPEN_ID openId,
+        T1.EMAIL email,
+        T1.JOB_LEVEL jobLevel,
+        T1.PRI_POSTN_CODE priPostnCode,
+        T1.ADDR_CODE addrCode,
+        T1.STATUS status
         FROM
-        HC_EMP
-        WHERE
-        1=1
+        HC_EMP T1
         <include refid="queryCondition"></include>
         limit #{start},#{pageSize}
     </select>
@@ -47,9 +45,7 @@
         SELECT
         COUNT(*)
         FROM
-        HC_EMP
-        WHERE
-        1=1
+        HC_EMP T1
         <include refid="queryCondition"></include>
     </select>
 
@@ -72,69 +68,73 @@
     </delete>
 
     <sql id="queryCondition">
+        LEFT JOIN HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN HC_EMP EMPU ON T1.CREATED_BY = EMPU.CODE
+        WHERE
+        1=1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''">
-                AND CODE = #{entity.code}
+                AND T1.CODE = #{entity.code}
             </if>
             <if test="entity.created!=null and entity.created!=''">
-                AND DATE_FORMAT(CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')
+                AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')
             </if>
             <if test="entity.createdBy!=null and entity.createdBy!=''">
-                AND CREATED_BY = #{entity.createdBy}
+                AND EMPC.NAME = #{entity.createdBy}
             </if>
             <if test="entity.updated!=null and entity.updated!=''">
-                AND DATE_FORMAT(UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')
+                AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')
             </if>
             <if test="entity.updatedBy!=null and entity.updatedBy!=''">
-                AND UPDATED_BY = #{entity.updatedBy}
+                AND EMPU.NAME = #{entity.updatedBy}
             </if>
             <if test="entity.userFlg!=null and entity.userFlg!=''">
-                AND USER_FLG = #{entity.userFlg}
+                AND T1.USER_FLG = #{entity.userFlg}
             </if>
             <if test="entity.login!=null and entity.login!=''">
-                AND LOGIN LIKE #{entity.login}"%"
+                AND T1.LOGIN LIKE #{entity.login}"%"
             </if>
             <if test="entity.password!=null and entity.password!=''">
-                AND PASSWORD = #{entity.password}
+                AND T1.PASSWORD = #{entity.password}
             </if>
             <if test="entity.name!=null and entity.name!=''">
-                AND NAME LIKE "%"#{entity.name}"%"
+                AND T1.NAME LIKE "%"#{entity.name}"%"
             </if>
             <if test="entity.nameForeign!=null and entity.nameForeign!=''">
-                AND NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"
+                AND T1.NAME_FOREIGN LIKE "%"#{entity.nameForeign}"%"
             </if>
             <if test="entity.nameShort!=null and entity.nameShort!=''">
-                AND NAME_SHORT LIKE "%"#{entity.nameShort}"%"
+                AND T1.NAME_SHORT LIKE "%"#{entity.nameShort}"%"
             </if>
             <if test="entity.workNum!=null and entity.workNum!=''">
-                AND WORK_NUM LIKE "%"#{entity.workNum}"%"
+                AND T1.WORK_NUM LIKE "%"#{entity.workNum}"%"
             </if>
             <if test="entity.personalNum!=null and entity.personalNum!=''">
-                AND PERSONAL_NUM LIKE "%"#{entity.personalNum}"%"
+                AND T1.PERSONAL_NUM LIKE "%"#{entity.personalNum}"%"
             </if>
             <if test="entity.wechatNum!=null and entity.wechatNum!=''">
-                AND WECHAT_NUM LIKE "%"#{entity.wechatNum}"%"
+                AND T1.WECHAT_NUM LIKE "%"#{entity.wechatNum}"%"
             </if>
             <if test="entity.qqNum!=null and entity.qqNum!=''">
-                AND QQ_NUM LIKE "%"#{entity.qqNum}"%"
+                AND T1.QQ_NUM LIKE "%"#{entity.qqNum}"%"
             </if>
             <if test="entity.openId!=null and entity.openId!=''">
-                AND OPEN_ID = #{entity.openId}
+                AND T1.OPEN_ID = #{entity.openId}
             </if>
             <if test="entity.email!=null and entity.email!=''">
-                AND EMAIL LIKE "%"#{entity.email}"%"
+                AND T1.EMAIL LIKE "%"#{entity.email}"%"
             </if>
             <if test="entity.jobLevel!=null and entity.jobLevel!=''">
-                AND JOB_LEVEL LIKE "%"#{entity.jobLevel}"%"
+                AND T1.JOB_LEVEL LIKE "%"#{entity.jobLevel}"%"
             </if>
             <if test="entity.priPostnCode!=null and entity.priPostnCode!=''">
-                AND PRI_POSTN_CODE = #{entity.priPostnCode}
+                AND T1.PRI_POSTN_CODE = #{entity.priPostnCode}
             </if>
             <if test="entity.addrCode!=null and entity.addrCode!=''">
-                AND ADDR_CODE = #{entity.addrCode}
+                AND T1.ADDR_CODE = #{entity.addrCode}
             </if>
             <if test="entity.status!=null and entity.status!=''">
-                AND STATUS LIKE "%"#{entity.status}"%"
+                AND T1.STATUS LIKE "%"#{entity.status}"%"
             </if>
         </if>
     </sql>
