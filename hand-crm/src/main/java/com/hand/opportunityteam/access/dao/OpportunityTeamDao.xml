@@ -2,37 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.opportunityteam.access.dao.OpportunityTeamDao">
     <sql id="queryAllOppoInfoSql">
-        SELECT
+          SELECT
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-		(SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+		EMPC.NAME as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
-		(SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) as updatedName,
+		EMPC.NAME as updatedName,
         T1.OPTY_CODE as optyCode,
-        (SELECT NAME FROM HC_OPTY WHERE CODE = T1.OPTY_CODE) as optyName,
+        OPTY.NAME as optyName,
         T1.TYPE as typeCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'OPTY_TEAM_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = 'CHS' ) AS `type`,
+		LOV1.VAL AS `type`,
         T1.EMP_CODE as empCode,
         T1.DESC as `desc`,
-        (SELECT NAME FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empName,
-        (SELECT WORK_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empWorkPhone,
-		(SELECT PERSONAL_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) as empPersonalPhone,
+        EMP.`NAME` as empName,
+        EMP.WORK_NUM as empWorkPhone,
+		EMP.PERSONAL_NUM as empPersonalPhone,
         T1.PRI_FLG as primaryFlag
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON EMPC.`CODE` = T1.CREATED_BY
+        LEFT JOIN HC_EMP EMPU ON EMPU.`CODE` = T1.UPDATED_BY
+        LEFT JOIN HC_OPTY OPTY ON OPTY.`CODE` = T1.OPTY_CODE
+        LEFT JOIN HC_LST_OF_VAL LOV1 ON T1.TYPE = LOV1.`NAME` AND LOV1.TYPE = 'OPTY_TEAM_TYPE' AND LOV1.ACT_FLG = 'Y' AND LOV1.LANG_ID = 'CHS'
+        LEFT JOIN HC_EMP EMP ON EMP.`CODE` = T1.EMP_CODE
+        WHERE
+        1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
-            <if test="entity.optyName!=null and entity.optyName!=''"> AND (SELECT NAME FROM HC_OPTY WHERE CODE = T1.OPTY_CODE) LIKE "%"#{entity.optyName}"%"</if>
-            <if test="entity.type!=null and entity.type!=''"> AND  ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.TYPE = `NAME` AND TYPE = 'OPTY_TEAM_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = 'CHS' ) LIKE "%"#{entity.type}"%"</if>
-            <if test="entity.empName!=null and entity.empName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empName}"%"</if>
-            <if test="entity.empWorkPhone!=null and entity.empWorkPhone!=''"> AND (SELECT WORK_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empWorkPhone}"%"</if>
-            <if test="entity.empPersonalPhone!=null and entity.empPersonalPhone!=''"> AND (SELECT PERSONAL_NUM FROM HC_EMP WHERE CODE = T1.EMP_CODE) LIKE "%"#{entity.empPersonalPhone}"%"</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedName}"%"</if>
+            <if test="entity.optyName!=null and entity.optyName!=''"> AND OPTY.NAME LIKE "%"#{entity.optyName}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND  LOV1.VAL LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.empName!=null and entity.empName!=''"> AND EMP.NAME LIKE "%"#{entity.empName}"%"</if>
+            <if test="entity.empWorkPhone!=null and entity.empWorkPhone!=''"> AND EMP.WORK_NUM LIKE "%"#{entity.empWorkPhone}"%"</if>
+            <if test="entity.empPersonalPhone!=null and entity.empPersonalPhone!=''"> AND EMP.PERSONAL_NUM LIKE "%"#{entity.empPersonalPhone}"%"</if>
             <if test="entity.primaryFlag!=null and entity.primaryFlag!=''"> AND T1.PRI_FLG=#{entity.primaryFlag}</if>
         </if>
     </sql>
@@ -54,9 +62,6 @@
         <include refid="queryAllOppoInfoSql"></include>
         FROM
         HC_OPTY_TEAM T1
-        WHERE
-        1=1
-        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
         order by T1.UPDATED desc
         limit #{start},#{pageSize}
@@ -66,9 +71,6 @@
         SELECT COUNT(*)
         FROM
         HC_OPTY_TEAM T1
-        WHERE
-        1=1
-        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
     </select>
 
