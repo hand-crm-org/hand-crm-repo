@@ -12,13 +12,15 @@
         T1.DESC as `desc`,
         T1.PROD_LEVEL as prodLevel,
         T1.TYPE as typeCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TYPE AND TYPE = 'PROD_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as type,
+        LOV.VAL as type,
         T1.EXT_CODE as extCode,
         T1.PAR_CODE as parCode,
         T1.STATUS as status,
         T1.CATEGORY as category
     </sql>
     <sql id="queryALLConditionSql">
+        left JOIN HC_LST_OF_VAL LOV ON LOV.`NAME` = T1.TYPE AND LOV.TYPE = 'PROD_TYPE' AND LOV.ACT_FLG = 'Y' AND LOV.LANG_ID = #{entity.langId}
+        WHERE 1 = 1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
@@ -57,8 +59,6 @@
         <include refid="queryAllProdInfoSql"></include>
         FROM
         HC_PROD T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>       
         limit #{start},#{pageSize}
     </select>
@@ -66,9 +66,7 @@
     <select id="queryProductCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT COUNT(*)
         FROM
-        HC_PROD
-        WHERE
-        1=1
+        HC_PROD T1
         <include refid="queryALLConditionSql"></include>
     </select>
 
