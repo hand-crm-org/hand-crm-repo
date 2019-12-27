@@ -5,16 +5,12 @@
         <include refid="queryAllSql"></include>
         FROM
         HC_ORDER T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryOrderCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
         SELECT count(*)
-        FROM HC_ORDER
-        WHERE
-        1=1
+        FROM HC_ORDER T1
         <include refid="queryALLConditionSql"></include>
     </select>
     <insert id="insertOrder" parameterType="com.hand.order.access.vo.OrderVO">
@@ -40,78 +36,96 @@
     </delete>
     <sql id="queryAllSql">
         SELECT
-        T1.CODE as code,
+        T1.`CODE` as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-        (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+        EMPC.`NAME` as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
+		EMPU.`NAME` AS updatedName,
         T1.ORDER_NUM as orderNumber,
         T1.ACCNT_CODE as accountCode,
-        (SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accountName,
+        ACCNT.NAME as accountName,
         T1.ACCNT_ADDR_CODE as accountAddrCode,
         T1.REF_OPTY_CODE as refOptyCode,
-        (SELECT NAME FROM HC_OPTY WHERE CODE = T1.REF_OPTY_CODE) as refOptyName,
+        OPTY.`NAME` as refOptyName,
         T1.OWN_DEPT_CODE as ownerDeptCode,
-        (SELECT NAME FROM HC_ORG WHERE CODE = T1.OWN_DEPT_CODE) as ownerDeptName,
+		ORG.NAME as ownerDeptName,
         T1.TYPE as orderTypeCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.TYPE AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderType,
+        LOV1.VAL as orderType,
         T1.ORDER_ENTITY as orderEntity,
         T1.ORDER_PROP as orderProperty,
         T1.COUNTRY as countryCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.COUNTRY AND TYPE = 'ADDR_COUNTRY' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as country,
+        LOV2.VAL as country,
         T1.RATE as rate,
         T1.REATED_FLG as amountRatedFlag,
         T1.TOTAL_AMOUNT as totalAmount,
         T1.RATED_AMOUNT as ratedAmount,
         T1.UNRATED_AMOUNT as unratedAmount,
         T1.CURRENCY as currencyCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as currency,
+        LOV3.VAL as currency,
         T1.INDUSTY as industyCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as industy,
+        LOV4.VAL as industy,
         T1.SUB_INDUSTY as subIndustyCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as subIndusty,
+        LOV5.VAL as subIndusty,
         T1.SALES_METHOD as salesMethodCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as salesMethod,
+        LOV6.VAL as salesMethod,
         T1.ORDER_CONDITION as orderCondition,
         T1.SHIP_CONDITION as shipCondition,
         T1.SIGN_TIME as orderSignTime,
         T1.EFFECT_TIME as orderEffectTime,
         T1.APPROVED_TIME as orderApproveTime,
         T1.STATUS as orderStatusCode,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as orderStatus,
-        (SELECT STATE FROM HC_ADDR WHERE CODE = (SELECT ADDR_CODE FROM HC_ACCNT_ADDR WHERE T1.ACCNT_ADDR_CODE = CODE)) as state,
-        (SELECT CITY FROM HC_ADDR WHERE CODE = (SELECT ADDR_CODE FROM HC_ACCNT_ADDR WHERE T1.ACCNT_ADDR_CODE = CODE)) as city,
-        (SELECT COUNTY FROM HC_ADDR WHERE CODE = (SELECT ADDR_CODE FROM HC_ACCNT_ADDR WHERE T1.ACCNT_ADDR_CODE = CODE)) as county,
-        (SELECT STREET FROM HC_ADDR WHERE CODE = (SELECT ADDR_CODE FROM HC_ACCNT_ADDR WHERE T1.ACCNT_ADDR_CODE = CODE)) as street,
-        (SELECT ADDR1 FROM HC_ADDR WHERE CODE = (SELECT ADDR_CODE FROM HC_ACCNT_ADDR WHERE T1.ACCNT_ADDR_CODE = CODE)) as addr1
+        LOV7.VAL as orderStatus,
+        ADDR.STATE as state,
+        ADDR.CITY as city,
+		ADDR.COUNTY as county,
+        ADDR.STREET as street,
+        ADDR.ADDR1 as addr1
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON EMPC.`CODE` = T1.CREATED_BY
+        LEFT JOIN HC_EMP EMPU ON EMPU.`CODE` = T1.UPDATED_BY
+        LEFT JOIN HC_ACCNT ACCNT ON ACCNT.`CODE` = T1.ACCNT_CODE
+        LEFT JOIN HC_OPTY OPTY ON OPTY.`CODE` = T1.REF_OPTY_CODE
+        LEFT JOIN HC_ORG ORG ON  ORG.`CODE` = T1.OWN_DEPT_CODE
+        LEFT JOIN HC_LST_OF_VAL LOV1 ON LOV1.`NAME` = T1.TYPE AND LOV1.TYPE = 'ORDER_TYPE' AND LOV1.ACT_FLG = 'Y' AND LOV1.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV2 ON LOV2.`NAME` = T1.COUNTRY AND LOV2.TYPE = 'ADDR_COUNTRY' AND LOV2.ACT_FLG = 'Y' AND LOV2.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV3 ON LOV3.`NAME` = T1.CURRENCY AND LOV3.TYPE = 'CURRENCY_TYPE' AND LOV3.ACT_FLG = 'Y' AND LOV3.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV4 ON T1.INDUSTY = LOV4.`NAME` AND LOV4.TYPE = 'INDUSTRY_TYPE' AND LOV4.ACT_FLG = 'Y' AND LOV4.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV5 ON T1.SUB_INDUSTY = LOV5.`NAME` AND LOV5.TYPE = 'SUB_INDUSTRY_TYPE' AND LOV5.ACT_FLG = 'Y' AND LOV5.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV6 ON LOV6.`NAME` = T1.SALES_METHOD AND LOV6.TYPE = 'SALES_METHOD' AND LOV6.ACT_FLG = 'Y' AND LOV6.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_LST_OF_VAL LOV7 ON LOV7.`NAME` = T1.`STATUS` AND LOV7.TYPE = 'ORDER_STATUS' AND LOV7.ACT_FLG = 'Y' AND LOV7.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_ACCNT_ADDR AA ON T1.ACCNT_ADDR_CODE = AA.`CODE`
+        LEFT JOIN HC_ADDR ADDR ON AA.ADDR_CODE = ADDR.`CODE`
+        WHERE
+        1=1
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
-            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.updated!=null "> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND T1.UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedNAME}"%"</if>
             <if test="entity.orderNumber!=null and entity.orderNumber!=''"> AND ORDER_NUM LIKE "%"#{entity.orderNumber}"%"</if>
-            <if test="entity.accountName!=null and entity.accountName!=''"> AND (SELECT NAME FROM HC_ACCNT WHERE CODE = ACCNT_CODE) LIKE "%"#{entity.accountName}"%"</if>
-            <if test="entity.refOptyName!=null and entity.refOptyName!=''"> AND (SELECT NAME FROM HC_OPTY WHERE CODE = T1.REF_OPTY_CODE) LIKE "%"#{entity.refOptyName}"%"</if>
+            <if test="entity.accountName!=null and entity.accountName!=''"> AND ACCNT.NAME LIKE "%"#{entity.accountName}"%"</if>
+            <if test="entity.refOptyName!=null and entity.refOptyName!=''"> AND OPTY.NAME LIKE "%"#{entity.refOptyName}"%"</if>
             <if test="entity.ownerDeptCode!=null and entity.ownerDeptCode!=''">AND OWN_DEPT_CODE=#{entity.ownerDeptCode}</if>
-            <if test="entity.orderType!=null and entity.orderType!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = `TYPE` AND TYPE = 'ORDER_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderType}"%"</if>
+            <if test="entity.orderType!=null and entity.orderType!=''"> AND LOV1.VAL LIKE "%"#{entity.orderType}"%"</if>
             <if test="entity.orderEntity!=null and entity.orderEntity!=''"> AND ORDER_ENTITY LIKE "%"#{entity.orderEntity}"%"</if>
             <if test="entity.orderProperty!=null and entity.orderProperty!=''"> AND ORDER_PROP LIKE "%"#{entity.orderProperty}"%"</if>
-            <if test="entity.country!=null and entity.country!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.COUNTRY AND TYPE = 'ADDR_COUNTRY' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.country}"%"</if>
+            <if test="entity.country!=null and entity.country!=''"> AND LOV2.VAL LIKE "%"#{entity.country}"%"</if>
             <if test="entity.rate!=null and entity.rate!=''"> AND RATE LIKE "%"#{entity.rate}"%"</if>
             <if test="entity.amountRatedFlag!=null and entity.amountRatedFlag!=''"> AND REATED_FLG LIKE "%"#{entity.amountRatedFlag}"%"</if>
             <if test="entity.totalAmount!=null and entity.totalAmount!=''"> AND TOTAL_AMOUNT LIKE "%"#{entity.totalAmount}"%"</if>
             <if test="entity.ratedAmount!=null and entity.ratedAmount!=''"> AND RATED_AMOUNT LIKE "%"#{entity.ratedAmount}"%"</if>
             <if test="entity.unratedAmount!=null and entity.unratedAmount!=''"> AND UNRATED_AMOUNT LIKE "%"#{entity.unratedAmount}"%"</if>
-            <if test="entity.currency!=null and entity.currency!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = CURRENCY AND TYPE = 'CURRENCY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.currency}"%"</if>
-            <if test="entity.industy!=null and entity.industy!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.INDUSTY = `NAME` AND TYPE = 'INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.industy}"%"</if>
-            <if test="entity.subIndusty!=null and entity.subIndusty!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.SUB_INDUSTY = `NAME` AND TYPE = 'SUB_INDUSTRY_TYPE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.subIndusty}"%"</if>
-            <if test="entity.salesMethod!=null and entity.salesMethod!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = SALES_METHOD AND TYPE = 'SALES_METHOD' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.salesMethod}"%"</if>
+            <if test="entity.currency!=null and entity.currency!=''"> AND LOV3.VAL LIKE "%"#{entity.currency}"%"</if>
+            <if test="entity.industy!=null and entity.industy!=''"> AND LOV4.VAL LIKE "%"#{entity.industy}"%"</if>
+            <if test="entity.subIndusty!=null and entity.subIndusty!=''"> AND LOV5.VAL LIKE "%"#{entity.subIndusty}"%"</if>
+            <if test="entity.salesMethod!=null and entity.salesMethod!=''"> AND LOV6.VAL LIKE "%"#{entity.salesMethod}"%"</if>
             <if test="entity.orderCondition!=null and entity.orderCondition!=''"> AND ORDER_CONDITION LIKE "%"#{entity.orderCondition}"%"</if>
-            <if test="entity.orderStatus!=null and entity.orderStatus!=''"> AND (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = STATUS AND TYPE = 'ORDER_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.orderStatus}"%"</if>
+            <if test="entity.orderStatus!=null and entity.orderStatus!=''"> AND LOV7.VAL LIKE "%"#{entity.orderStatus}"%"</if>
             <if test="entity.orderSignTime!=null"> AND SIGN_TIME LIKE "%"#{entity.orderSignTime}"%"</if>
             <if test="entity.orderEffectTime!=null"> AND EFFECT_TIME LIKE "%"#{entity.orderEffectTime}"%"</if>
             <if test="entity.orderApproveTime!=null"> AND APPROVED_TIME LIKE "%"#{entity.orderApproveTime}"%"</if>

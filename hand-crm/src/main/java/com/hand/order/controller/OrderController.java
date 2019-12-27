@@ -5,7 +5,6 @@ import com.hand.frame.model.ServiceData;
 import com.hand.frame.util.PageQuery;
 import com.hand.order.access.vo.OrderVO;
 import com.hand.order.service.OrderService;
-import com.hand.orderpayment.access.vo.OrderPaymentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -38,6 +37,7 @@ public class OrderController {
             @ApiImplicitParam(paramType="query", name="pageSize", value="页大小", dataType="int"),
             @ApiImplicitParam(paramType="query", name="code", value="订单头编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="createdName", value="创建人", dataType="String"),
+            @ApiImplicitParam(paramType="query", name="updatedName", value="跟新人", dataType="String"),
             @ApiImplicitParam(paramType="query", name="orderNumber", value="订单编号", dataType="String"),
             @ApiImplicitParam(paramType="query", name="accountCode", value="客户编码", dataType="String"),
             @ApiImplicitParam(paramType="query", name="accountName", value="客户", dataType="String"),
@@ -66,7 +66,8 @@ public class OrderController {
     })
     @GetMapping("/get-order-info")
     public ServiceData getOrderInfo(int currentPage, int pageSize,
-                                        @RequestParam(value = "createdName",required = false) String createdName, @RequestParam(value = "orderNumber",required = false) String orderNumber,
+                                        @RequestParam(value = "createdName",required = false) String createdName,
+                                        @RequestParam(value = "updatedName",required = false) String updatedName,@RequestParam(value = "orderNumber",required = false) String orderNumber,
                                         @RequestParam(value = "accountCode",required = false) String accountCode, @RequestParam(value = "accountName",required = false) String accountName,
                                         @RequestParam(value = "accountAddrCode",required = false) String accountAddrCode, @RequestParam(value = "refOptyCode",required = false) String refOptyCode,
                                         @RequestParam(value = "orderType",required = false) String orderType, @RequestParam(value = "ownerDeptCode",required = false) String ownerDeptCode,
@@ -89,6 +90,7 @@ public class OrderController {
         orderVO.setOrderType(orderType);
         orderVO.setOwnerDeptCode(ownerDeptCode);
         orderVO.setCreatedName(createdName);
+        orderVO.setUpdatedName(updatedName);
         orderVO.setOrderEntity(orderEntity);
         orderVO.setOrderProperty(orderProperty);
         orderVO.setCountry(country);

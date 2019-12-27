@@ -14,6 +14,7 @@ public class OrderVO {
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date updated;//更新日期
     private String updatedBy;//更新人
+    private String updatedName;
     private String orderNumber;//订单编号
     private String accountCode;//客户编码
     private String accountName;//客户
@@ -57,102 +58,6 @@ public class OrderVO {
     private String street;
     private String addr1;
     private String langId;
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public String getIndustyCode() {
-        return industyCode;
-    }
-
-    public void setIndustyCode(String industyCode) {
-        this.industyCode = industyCode;
-    }
-
-    public String getSubIndustyCode() {
-        return subIndustyCode;
-    }
-
-    public void setSubIndustyCode(String subIndustyCode) {
-        this.subIndustyCode = subIndustyCode;
-    }
-
-    public String getAddr1() {
-        return addr1;
-    }
-
-    public void setAddr1(String addr1) {
-        this.addr1 = addr1;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getLangId() {
-        return langId;
-    }
-
-    public void setLangId(String langId) {
-        this.langId = langId;
-    }
-
-    public String getRefOptyName() {
-        return refOptyName;
-    }
-
-    public void setRefOptyName(String refOptyName) {
-        this.refOptyName = refOptyName;
-    }
-
-    public String getOwnerDeptName() {
-        return ownerDeptName;
-    }
-
-    public void setOwnerDeptName(String ownerDeptName) {
-        this.ownerDeptName = ownerDeptName;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
 
     public String getCode() {
         return code;
@@ -202,6 +107,14 @@ public class OrderVO {
         this.updatedBy = updatedBy;
     }
 
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
     public String getOrderNumber() {
         return orderNumber;
     }
@@ -216,6 +129,14 @@ public class OrderVO {
 
     public void setAccountCode(String accountCode) {
         this.accountCode = accountCode;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getAccountAddrCode() {
@@ -234,12 +155,28 @@ public class OrderVO {
         this.refOptyCode = refOptyCode;
     }
 
+    public String getRefOptyName() {
+        return refOptyName;
+    }
+
+    public void setRefOptyName(String refOptyName) {
+        this.refOptyName = refOptyName;
+    }
+
     public String getOwnerDeptCode() {
         return ownerDeptCode;
     }
 
     public void setOwnerDeptCode(String ownerDeptCode) {
         this.ownerDeptCode = ownerDeptCode;
+    }
+
+    public String getOwnerDeptName() {
+        return ownerDeptName;
+    }
+
+    public void setOwnerDeptName(String ownerDeptName) {
+        this.ownerDeptName = ownerDeptName;
     }
 
     public String getOrderType() {
@@ -280,6 +217,14 @@ public class OrderVO {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public Double getRate() {
@@ -346,12 +291,28 @@ public class OrderVO {
         this.industy = industy;
     }
 
+    public String getIndustyCode() {
+        return industyCode;
+    }
+
+    public void setIndustyCode(String industyCode) {
+        this.industyCode = industyCode;
+    }
+
     public String getSubIndusty() {
         return subIndusty;
     }
 
     public void setSubIndusty(String subIndusty) {
         this.subIndusty = subIndusty;
+    }
+
+    public String getSubIndustyCode() {
+        return subIndustyCode;
+    }
+
+    public void setSubIndustyCode(String subIndustyCode) {
+        this.subIndustyCode = subIndustyCode;
     }
 
     public String getSalesMethod() {
@@ -424,5 +385,53 @@ public class OrderVO {
 
     public void setOrderStatusCode(String orderStatusCode) {
         this.orderStatusCode = orderStatusCode;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAddr1() {
+        return addr1;
+    }
+
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
+    }
+
+    public String getLangId() {
+        return langId;
+    }
+
+    public void setLangId(String langId) {
+        this.langId = langId;
     }
 }
