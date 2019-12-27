@@ -2,30 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.opportunityweekly.access.dao.OpportunityWeeklyDao">
     <sql id="queryAllOppoInfoSql">
-        SELECT
+    SELECT
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-		(SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+		EMPC.NAME as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
-		(SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) as updatedName,
+		EMPU.NAME as updatedName,
         T1.OPTY_CODE as optyCode,
         T1.NAME as name,
         T1.WEEKLY_SUMMERY as weeklySummary,
         T1.WEEKLY_RISK as weeklyRisk,
-        (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.WEEKLY_PUSH AND TYPE = 'OPTY_WEEKLY_P_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) as weeklyPushStatus,
+        LOV1.VAL as weeklyPushStatus,
         T1.WEEKLY_PUSH as weeklyPushStatusCode
+
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON EMPC.`CODE`= T1.CREATED_BY
+        LEFT JOIN HC_EMP EMPU ON EMPU.`CODE`= T1.UPDATED_BY
+        LEFT JOIN HC_LST_OF_VAL LOV1 ON LOV1.`NAME` = T1.WEEKLY_PUSH AND LOV1.TYPE = 'OPTY_WEEKLY_P_STATUS' AND LOV1.ACT_FLG = 'Y' AND LOV1.LANG_ID = #{entity.langId}
+        WHERE
+        1=1
+        AND T1.OPTY_CODE = #{entity.optyCode}
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedName}"%"</if>
             <if test="entity.weeklySummary!=null and entity.weeklySummary!=''"> AND T1.WEEKLY_SUMMERY LIKE "%"#{entity.weeklySummary}"%"</if>
-            <if test="entity.weeklyPushStatus!=null and entity.weeklyPushStatus!=''"> AND  (SELECT VAL FROM HC_LST_OF_VAL WHERE `NAME` = T1.WEEKLY_PUSH AND TYPE = 'OPTY_WEEKLY_P_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId}) LIKE "%"#{entity.weeklyPushStatus}"%"</if>
+            <if test="entity.weeklyPushStatus!=null and entity.weeklyPushStatus!=''"> AND LOV1.VAL LIKE "%"#{entity.weeklyPushStatus}"%"</if>
             <if test="entity.weeklyRisk!=null and entity.weeklyRisk!=''"> AND  T1.WEEKLY_RISK LIKE "%"#{entity.weeklyRisk}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
         </if>
@@ -50,9 +57,6 @@
         <include refid="queryAllOppoInfoSql"></include>
         FROM
         HC_OPTY_WEEKLY T1
-        WHERE
-        1=1
-        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
         order by T1.UPDATED desc
         limit #{start},#{pageSize}
@@ -62,9 +66,6 @@
         SELECT COUNT(*)
         FROM
         HC_OPTY_WEEKLY T1
-        WHERE
-        1=1
-        AND T1.OPTY_CODE = #{entity.optyCode}
         <include refid="queryALLConditionSql"></include>
     </select>
 
