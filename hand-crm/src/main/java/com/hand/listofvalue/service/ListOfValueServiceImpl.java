@@ -20,7 +20,7 @@ public class ListOfValueServiceImpl implements ListOfValueService{
 
     @Override
     public List<ListOfValueVO> getLstOfVaL(PageQuery<ListOfValueVO> pageQuery) {
-        int count = listOfValueDao.queryLstOfVaLCount(pageQuery);
+        int count = listOfValueDao.queryListOfValCount(pageQuery);
         pageQuery.setCount(count);
         if(count > 0) {
             return listOfValueDao.queryLstOfVaL(pageQuery);

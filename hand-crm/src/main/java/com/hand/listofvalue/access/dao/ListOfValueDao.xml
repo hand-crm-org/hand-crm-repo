@@ -8,7 +8,7 @@
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
-    <select id="queryLstOfVaLCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
+    <select id="queryListOfValCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
 		SELECT count(*)
 		FROM HC_LST_OF_VAL T1
         <include refid="queryALLConditionSql"></include>

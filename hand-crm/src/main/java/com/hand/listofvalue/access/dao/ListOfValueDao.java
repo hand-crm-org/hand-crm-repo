@@ -22,7 +22,7 @@ public interface ListOfValueDao {
      * @param pageQuery
      * @Return int
      */
-    int queryLstOfVaLCount(PageQuery<ListOfValueVO> pageQuery);
+    int queryListOfValCount(PageQuery<ListOfValueVO> pageQuery);
     /**
      * 新建唯一性验证（独立语言代码+语言+Type+父code 和 显示值+语言+type+父code唯一）
      * @UpdateBy lln
