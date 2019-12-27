@@ -6,53 +6,63 @@
         T1.CODE as code,
         T1.CREATED as created,
         T1.CREATED_BY as createdBy,
-				(SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) as createdName,
+		EMPC.NAME as createdName,
         T1.UPDATED as updated,
         T1.UPDATED_BY as updatedBy,
-				(SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) as updatedName,
+		EMPU.NAME as updatedName,
         T1.NAME as name,
         T1.TYPE as type,
         T1.STATUS as statusCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as `status`,
+        LOV1.VAL as `status`,
         T1.ACCNT_CODE as accntCode,
-				(SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) as accntName,
+		ACCNT.`NAME` as accntName,
         T1.OPTY_SOURCE as optySourceCode,
-         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_SOURCE = `NAME` AND TYPE = 'OPTY_SOURCE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as `optySource`,
+        LOV2.VAL as `optySource`,
         T1.OPTY_FSCT_AMOUNT as optyFsctAmount,
         T1.EXPECT_SIGN_TIME as expectSignTime,
         T1.DESC as `desc`,
         T1.OWN_ORG_CODE as ownOrgCode,
-				(SELECT NAME FROM HC_ORG WHERE CODE = T1.OWN_ORG_CODE) as orgName,
+		ORG.NAME as orgName,
         T1.LOST_REASON as lostReason,
         T1.FINAL_USE as finalUse,
         T1.WIN_RATE as winRate,
-         ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.WIN_RATE = `NAME` AND TYPE = 'OPTY_WIN_RATE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as winRateCode,
+        LOV3.VAL as winRateCode,
         T1.PR_SALES_CODE as prSalesCode,
-        ( SELECT S1.NAME FROM HC_EMP S1 WHERE T1.PR_SALES_CODE = S1.CODE) as prSales,
+        EMP.NAME as prSales,
         T1.OPTY_STAGE as optyStageCode,
-        ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_STAGE = `NAME` AND TYPE = 'OPTY_STAGE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) as optyStage
-    </sql>
+        LOV4.VAL as optyStage
+        </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC  ON EMPC.`CODE` = T1.CREATED_BY
+        LEFT JOIN HC_EMP EMPU  ON EMPU.`CODE` =T1.UPDATED_BY
+        LEFT JOIN HC_LST_OF_VAL LOV1 ON T1.`STATUS` = LOV1.`NAME` AND LOV1.TYPE = 'OPTY_STATUS' AND LOV1.ACT_FLG = 'Y' AND LOV1.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_ACCNT ACCNT ON ACCNT.`CODE` = T1.ACCNT_CODE
+        LEFT JOIN HC_LST_OF_VAL LOV2 ON T1.OPTY_SOURCE = LOV2.`NAME` AND LOV2.TYPE = 'OPTY_SOURCE' AND LOV2.ACT_FLG = 'Y' AND LOV2.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_ORG ORG ON ORG.`CODE` = T1.OWN_ORG_CODE
+        LEFT JOIN HC_LST_OF_VAL LOV3 ON T1.WIN_RATE = LOV3.`NAME` AND LOV3.TYPE = 'OPTY_WIN_RATE' AND LOV3.ACT_FLG = 'Y' AND LOV3.LANG_ID = #{entity.langId}
+        LEFT JOIN HC_EMP EMP ON T1.PR_SALES_CODE = EMP.CODE
+        LEFT JOIN HC_LST_OF_VAL LOV4 ON T1.OPTY_STAGE = LOV4.`NAME` AND LOV4.TYPE = 'OPTY_STAGE' AND LOV4.ACT_FLG = 'Y' AND LOV4.LANG_ID = #{entity.langId}
+        where 1 = 1
         <if test="entity!=null">
             <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
             <if test="entity.created!=null"> AND DATE_FORMAT(T1.CREATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.created},'%Y-%m-%d')</if>
-            <if test="entity.createdName!=null and entity.createdName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.CREATED_BY) LIKE "%"#{entity.createdName}"%"</if>
+            <if test="entity.createdName!=null and entity.createdName!=''"> AND EMPC.NAME LIKE "%"#{entity.createdName}"%"</if>
             <if test="entity.updated!=null "> AND DATE_FORMAT(T1.UPDATED,'%Y-%m-%d') = DATE_FORMAT(#{entity.updated},'%Y-%m-%d')</if>
-            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND (SELECT NAME FROM HC_EMP WHERE CODE = T1.UPDATED_BY) LIKE "%"#{entity.updatedName}"%"</if>
+            <if test="entity.updatedName!=null and entity.updatedName!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedName}"%"</if>
             <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.type!=null and entity.type!=''"> AND T1.TYPE LIKE "%"#{entity.type}"%"</if>
-            <if test="entity.status!=null and entity.status!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.`STATUS` = `NAME` AND TYPE = 'OPTY_STATUS' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.status}"%"</if>
-            <if test="entity.accntName!=null and entity.accntName!=''"> AND (SELECT NAME FROM HC_ACCNT WHERE CODE = T1.ACCNT_CODE) LIKE "%"#{entity.accntName}"%"</if>
-            <if test="entity.optySource!=null and entity.optySource!=''"> AND T1.OPTY_SOURCE LIKE "%"#{entity.optySource}"%"</if>
+            <if test="entity.status!=null and entity.status!=''"> AND LOV1.VAL LIKE "%"#{entity.status}"%"</if>
+            <if test="entity.accntName!=null and entity.accntName!=''"> AND ACCNT.NAME LIKE "%"#{entity.accntName}"%"</if>
+            <if test="entity.optySource!=null and entity.optySource!=''"> AND LOV2.VAL LIKE "%"#{entity.optySource}"%"</if>
             <if test="entity.optyFsctAmount!=null and entity.optyFsctAmount!=''"> AND T1.OPTY_FSCT_AMOUNT=#{entity.optyFsctAmount}</if>
             <if test="entity.expectSignTime!=null and entity.expectSignTime!=''"> AND T1.DATE_FORMAT(EXPECT_SIGN_TIME,'%Y-%m-%d') = DATE_FORMAT(#{entity.expectSignTime},'%Y-%m-%d')</if>
             <if test="entity.desc!=null and entity.desc!=''"> AND T1.DESC LIKE "%"#{entity.desc}"%"</if>
-            <if test="entity.orgName!=null and entity.orgName!=''"> AND (SELECT NAME FROM HC_ORG WHERE CODE = T1.OWN_ORG_CODE) LIKE "%"#{entity.orgName}"%"</if>
+            <if test="entity.orgName!=null and entity.orgName!=''"> AND ORG.NAME LIKE "%"#{entity.orgName}"%"</if>
             <if test="entity.lostReason!=null and entity.lostReason!=''"> AND T1.LOST_REASON LIKE "%"#{entity.lostReason}"%"</if>
             <if test="entity.finalUse!=null and entity.finalUse!=''"> AND T1.FINAL_USE LIKE "%"#{entity.finalUse}"%"</if>
-            <if test="entity.prSales!=null and entity.prSales!=''"> AND ( SELECT S1.NAME FROM HC_EMP S1 WHERE T1.PR_SALES_CODE = S1.CODE) LIKE "%"#{entity.prSales}"%"</if>
-            <if test="entity.winRate!=null and entity.winRate!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.WIN_RATE = `NAME` AND TYPE = 'OPTY_WIN_RATE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) LIKE "%"#{entity.winRate}"%"</if>
-            <if test="entity.optyStage!=null and entity.optyStage!=''"> AND ( SELECT VAL FROM HC_LST_OF_VAL WHERE T1.OPTY_STAGE = `NAME` AND TYPE = 'OPTY_STAGE' AND ACT_FLG = 'Y' AND LANG_ID = #{entity.langId} ) = #{entity.optyStage}</if>
+            <if test="entity.prSales!=null and entity.prSales!=''"> AND EMP.NAME LIKE "%"#{entity.prSales}"%"</if>
+            <if test="entity.winRate!=null and entity.winRate!=''"> AND LOV3.VAL LIKE "%"#{entity.winRate}"%"</if>
+            <if test="entity.optyStage!=null and entity.optyStage!=''"> AND LOV4.VAL = #{entity.optyStage}</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
@@ -85,8 +95,6 @@
         <include refid="queryAllOppoInfoSql"></include>
         FROM
         HC_OPTY T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
         order by T1.UPDATED desc
         limit #{start},#{pageSize}
@@ -96,8 +104,6 @@
         SELECT COUNT(*)
         FROM
         HC_OPTY T1
-        WHERE
-        1=1
         <include refid="queryALLConditionSql"></include>
     </select>
 

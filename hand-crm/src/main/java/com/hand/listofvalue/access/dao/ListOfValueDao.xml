@@ -4,17 +4,13 @@
     <select id="queryLstOfVaL" parameterType="com.hand.frame.util.PageQuery" resultType="com.hand.listofvalue.access.vo.ListOfValueVO">
         <include refid="queryAllSql"></include>
         FROM
-        HC_LST_OF_VAL
-        WHERE
-        1=1
+        HC_LST_OF_VAL T1
         <include refid="queryALLConditionSql"></include>
         limit #{start},#{pageSize}
     </select>
     <select id="queryLstOfVaLCount" parameterType="com.hand.frame.util.PageQuery" resultType="int">
 		SELECT count(*)
-		FROM HC_LST_OF_VAL
-		WHERE
-        1=1
+		FROM HC_LST_OF_VAL T1
         <include refid="queryALLConditionSql"></include>
 	</select>
     <select id="toUniqueVerify" resultType="int">
@@ -44,40 +40,44 @@
     </update>
     <sql id="queryAllSql">
         SELECT
-        CODE as code,
-        CREATED as created,
-        CREATED_BY as createdBy,
-        UPDATED as updated,
-        UPDATED_BY as updatedBy,
-        TYPE as type,
-        LANG_ID as langId,
-        VAL as val,
-        NAME as name,
-        PAR_LST_CODE as parLstCode,
-        LEVEL as level,
-        ACT_FLG as actFlg,
-        `DESC` as `desc`,
-        PARENT_CODE as parentCode,
-        PARENT_VAL as parentVal
+        T1.CODE as code,
+        T1.CREATED as created,
+        EMPC.NAME as createdBy,
+        T1.UPDATED as updated,
+        EMPU.NAME as updatedBy,
+        T1.TYPE as type,
+        T1.LANG_ID as langId,
+        T1.VAL as val,
+        T1.NAME as name,
+        T1.PAR_LST_CODE as parLstCode,
+        T1.LEVEL as level,
+        T1.ACT_FLG as actFlg,
+        T1.`DESC` as `desc`,
+        T1.PARENT_CODE as parentCode,
+        T1.PARENT_VAL as parentVal
     </sql>
     <sql id="queryALLConditionSql">
+        LEFT JOIN HC_EMP EMPC ON T1.CREATED_BY = EMPC.CODE
+        LEFT JOIN HC_EMP EMPU ON T1.CREATED_BY = EMPU.CODE
+        WHERE
+        1=1
         <if test="entity!=null">
-            <if test="entity.code!=null and entity.code!=''"> AND CODE=#{entity.code}</if>
-            <if test="entity.created!=null"> AND CREATED LIKE "%"#{entity.created}"%"</if>
-            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND CREATED_BY LIKE "%"#{entity.createdBy}"%"</if>
-            <if test="entity.updated!=null "> AND UPDATED LIKE "%"#{entity.updated}"%"</if>
-            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND UPDATED_BY LIKE "%"#{entity.updatedBy}"%"</if>
-            <if test="entity.type!=null and entity.type!=''"> AND TYPE LIKE "%"#{entity.type}"%"</if>
-            <if test="entity.type==null or entity.type==''"> AND TYPE <![CDATA[<>]]> 'LOV_TYPE'</if>
-            <if test="entity.langId!=null and entity.langId!=''"> AND LANG_ID LIKE "%"#{entity.langId}"%"</if>
-            <if test="entity.val!=null and entity.val!=''"> AND VAL LIKE "%"#{entity.val}"%"</if>
-            <if test="entity.name!=null and entity.name!=''"> AND NAME LIKE "%"#{entity.name}"%"</if>
+            <if test="entity.code!=null and entity.code!=''"> AND T1.CODE=#{entity.code}</if>
+            <if test="entity.created!=null"> AND T1.CREATED LIKE "%"#{entity.created}"%"</if>
+            <if test="entity.createdBy!=null and entity.createdBy!=''"> AND EMPC.NAME LIKE "%"#{entity.createdBy}"%"</if>
+            <if test="entity.updated!=null "> AND T1.UPDATED LIKE "%"#{entity.updated}"%"</if>
+            <if test="entity.updatedBy!=null and entity.updatedBy!=''"> AND EMPU.NAME LIKE "%"#{entity.updatedBy}"%"</if>
+            <if test="entity.type!=null and entity.type!=''"> AND T1.TYPE LIKE "%"#{entity.type}"%"</if>
+            <if test="entity.type==null or entity.type==''"> AND T1.TYPE <![CDATA[<>]]> 'LOV_TYPE'</if>
+            <if test="entity.langId!=null and entity.langId!=''"> AND T1.LANG_ID LIKE "%"#{entity.langId}"%"</if>
+            <if test="entity.val!=null and entity.val!=''"> AND T1.VAL LIKE "%"#{entity.val}"%"</if>
+            <if test="entity.name!=null and entity.name!=''"> AND T1.NAME LIKE "%"#{entity.name}"%"</if>
             <if test="entity.parLstCode!=null and entity.parLstCode!=''">AND PAR_LST_CODE=#{entity.parLstCode}</if>
-            <if test="entity.level!=null and entity.level!=''"> AND LEVEL=#{entity.level}</if>
-            <if test="entity.actFlg!=null and entity.actFlg!=''"> AND ACT_FLG LIKE "%"#{entity.actFlg}"%"</if>
-            <if test="entity.desc!=null and entity.desc!=''"> AND `DESC` LIKE "%"#{entity.desc}"%"</if>
-            <if test="entity.parentVal!=null and entity.parentVal!=''"> AND PARENT_VAL LIKE "%"#{entity.parentVal}"%"</if>
-            <if test="entity.nameList!=null and entity.nameList!=''"> AND NAME IN(${entity.nameList})</if>
+            <if test="entity.level!=null and entity.level!=''"> AND T1.LEVEL=#{entity.level}</if>
+            <if test="entity.actFlg!=null and entity.actFlg!=''"> AND T1.ACT_FLG LIKE "%"#{entity.actFlg}"%"</if>
+            <if test="entity.desc!=null and entity.desc!=''"> AND T1.`DESC` LIKE "%"#{entity.desc}"%"</if>
+            <if test="entity.parentVal!=null and entity.parentVal!=''"> AND T1.PARENT_VAL LIKE "%"#{entity.parentVal}"%"</if>
+            <if test="entity.nameList!=null and entity.nameList!=''"> AND T1.NAME IN(${entity.nameList})</if>
         </if>
     </sql>
     <sql id="updateConditionSql">
